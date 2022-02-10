@@ -1,0 +1,30 @@
+.sections {
+  &__main {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 200px auto;
+  }
+
+  &__page-heading {
+    text-align: left;
+  }
+
+  &__content {
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 500px;
+    text-align: left;
+  }
+}
+
+/* desktops */
+@media (min-width: 960px) {
+}
+
+/* tablet */
+@media (min-width: 480px) and (max-width: 768px) {
+}
+
+/* mobile */
+@media (max-width: 480px) {
+}

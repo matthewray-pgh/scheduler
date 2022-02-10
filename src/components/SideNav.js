@@ -45,6 +45,12 @@ export const SideNav = () => {
           </Link>
         </li>
         <li>
+          <Link to="/sections">
+            <FontAwesomeIcon className="aside__nav--icon" icon={faTasks} />
+            <span className="aside__nav--text">Sections</span>
+          </Link>
+        </li>
+        <li>
           <Link to="/people">
             <FontAwesomeIcon className="aside__nav--icon" icon={faUsers} />
             <span className="aside__nav--text">People</span>

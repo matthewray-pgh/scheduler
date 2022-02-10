@@ -10,6 +10,7 @@ import People from "./pages/People.js";
 import Configuration from "./pages/Configuration.js";
 import Dashboard from "./pages/Dashboard.js";
 import Shifts from "./pages/Shifts.js";
+import Sections from "./pages/Sections.js";
 
 const App = () => {
   return (
@@ -24,6 +25,9 @@ const App = () => {
           </Route>
           <Route path="/shifts">
             <Shifts />
+          </Route>
+          <Route path="/sections">
+            <Sections />
           </Route>
           <Route path="/dailySchedule">
             <DailySchedule />
