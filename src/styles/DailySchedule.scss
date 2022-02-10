@@ -1,0 +1,136 @@
+.daily-header {
+  text-align: start;
+  padding: 20px;
+
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.daily-status-controls {
+  margin: 0 auto;
+  height: 50px;
+  text-align: center;
+  width: 600px;
+  padding: 10px 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.daily-status-control__button {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  min-width: 120px;
+  margin: 5px;
+
+  background-color: rgba(255, 255, 255, 0.75);
+  border: solid 1px rgb(199, 199, 199);
+
+  font-size: 13px;
+
+  cursor: pointer;
+  transition: 350ms;
+}
+
+.daily-status-control__button--text {
+  justify-self: left;
+  padding: 5px;
+  align-self: center;
+}
+
+.daily-grid {
+  margin: 10px;
+  font-size: 12px;
+  border-top: solid 3px rgb(219, 219, 219);
+  /* border-radius: 5px; */
+}
+
+.daily-grid__header {
+  background-color: rgb(233, 233, 233);
+  border-bottom: solid 3px rgb(219, 219, 219);
+}
+
+.daily-grid__header-cell {
+  padding: 5px;
+  border: 1px solid rgb(233, 233, 233);
+}
+
+.daily-grid__table-body {
+}
+
+.daily-grid__table-row {
+  border-bottom: solid 3px rgb(219, 219, 219);
+}
+
+.daily-grid__table-cell {
+  margin: 2px 0;
+  padding: 5px;
+  border: 1px solid rgb(233, 233, 233);
+}
+
+.daily-grid__table-cell:hover {
+  background-color: rgb(233, 233, 233);
+  cursor: pointer;
+}
+
+.daily-grid__table-cell--gray-single {
+  background-color: rgba(214, 214, 214, 0.25);
+  padding: 5px;
+}
+
+.daily-grid__table-cell--green-single {
+  background-color: rgba(35, 145, 40, 0.25);
+  border: rgba(35, 145, 40, 0.5) solid 3px;
+  padding: 5px;
+}
+
+.daily-grid__table-cell--green-single:hover {
+  background-color: rgba(35, 145, 40, 0.5);
+  cursor: pointer;
+}
+
+.daily-grid-form {
+  width: 300px;
+  margin: 10px auto;
+  display: grid;
+}
+
+.daily-grid-form__input-group {
+  margin: 10px 5px;
+  padding: 0 5px;
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  justify-items: left;
+  border: solid 1px var(--gray);
+}
+
+.daily-grid-form__input-label {
+  color: var(--blue);
+}
+
+.daily-grid-form__input {
+  padding: 5px;
+  width: 90%;
+  border: none;
+
+  font-size: 16px;
+}
+
+.daily-grid-form__button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px;
+  background-color: var(--blue);
+  color: rgb(233, 233, 233);
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .daily-status-controls {
+    min-height: 200px;
+    max-width: 90%;
+    width: 100%;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}

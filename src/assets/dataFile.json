@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "available": [0, 1, 1, 0, 1, 0, 1],
+    "schedule": [{ "day": 0, "shift": 2, "start": "11", "section": "" }]
+  },
+  {
+    "id": 2,
+    "available": [1, 0, 1, 0, 1, 1, 0],
+    "schedule": []
+  },
+  {
+    "id": 3,
+    "available": [1, 0, 0, 0, 0, 0, 1],
+    "schedule": [
+      {
+        "day": 2,
+        "shift": 3,
+        "start": "5",
+        "section": ""
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "available": [0, 0, 1, 1, 1, 0, 1],
+    "schedule": []
+  }
+]

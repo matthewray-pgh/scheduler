@@ -1,0 +1,55 @@
+:root {
+  --gray: rgba(199, 199, 199, 1);
+  --light-gray: rgba(199, 199, 199, 1);
+  --green: rgba(36, 139, 8, 1);
+  --green-opacity: rgba(36, 139, 8, 0.5);
+  --orange: rgba(211, 131, 11, 1);
+  --orange-opacity: rgba(211, 131, 11, 0.5);
+  --blue: rgba(12, 70, 158, 1);
+  --blue-opacity: rgba(32, 93, 184, 0.5);
+  --dark: rgb(68, 68, 68);
+  --dark-hover: rgb(58, 58, 58);
+  --white: rgb(255, 255, 255);
+}
+
+.app {
+  text-align: center;
+  min-height: 100vh;
+}
+
+.app-container {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.app-link {
+  color: #61dafb;
+}
+
+.button {
+  background: #4169e1;
+  color: #fff;
+  font-weight: bold;
+
+  min-width: 100px;
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #1c3b97;
+}
+
+.text-field {
+  border: solid 1px #dedede;
+  padding: 5px;
+  margin: 5px;
+  min-width: 50px;
+}

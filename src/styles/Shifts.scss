@@ -1,0 +1,24 @@
+.shifts {
+  &-main {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 200px auto;
+  }
+
+  &-grid-row {
+    display: grid;
+    border: solid 1px var(--light-gray);
+  }
+}
+
+/* desktops */
+@media (min-width: 960px) {
+}
+
+/* tablet */
+@media (min-width: 480px) and (max-width: 768px) {
+}
+
+/* mobile */
+@media (max-width: 480px) {
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "shiftStatus": [
+      {
+        "id": 0,
+        "name": "unavailable",
+        "abbrev": "avail",
+        "description": null,
+        "workStatus": false,
+        "color": "#A9A9A9"
+      },
+      {
+        "id": 1,
+        "name": "available - am",
+        "abbrev": "AM",
+        "description": null,
+        "workStatus": true,
+        "color": "#00b300"
+      },
+      {
+        "id": 2,
+        "name": "available - pm",
+        "abbrev": "PM",
+        "description": null,
+        "workStatus": true,
+        "color": "#00b300"
+      },
+      {
+        "id": 3,
+        "name": "available - double",
+        "abbrev": "Double",
+        "description": null,
+        "workStatus": true,
+        "color": "#00b300"
+      },
+      {
+        "id": 4,
+        "name": "request-off",
+        "abbrev": "R/O",
+        "description": null,
+        "workStatus": false,
+        "color": "#A9A9A9"
+      },
+      {
+        "id": 5,
+        "name": "suspension",
+        "abbrev": "SUSP",
+        "description": null,
+        "workStatus": false,
+        "color": "#ff0000"
+      }
+    ]
+  },
+  {
+    "OrderOfDays": [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ]
+  }
+]

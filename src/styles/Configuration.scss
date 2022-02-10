@@ -1,0 +1,36 @@
+/* mobile */
+@media (max-width: 600px) {
+  .config-main-content {
+  }
+
+  .table {
+  }
+}
+
+/* full screen */
+@media (min-width: 600px) {
+  .page-header-bar {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+
+    min-height: 50px;
+    border: solid 1px #ddd;
+    margin: 1em;
+    align-items: center;
+  }
+
+  .page-header-title {
+    font-size: 1.25em;
+    font-weight: bold;
+    color: #8a8a8a;
+  }
+
+  .page-header-details {
+    justify-self: left;
+  }
+
+  .config-main-content {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+}

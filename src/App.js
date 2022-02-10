@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./styles/App.scss";
 
-function App() {
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import Home from "./pages/Home.js";
+import { DailySchedule } from "./pages/DailySchedule.js";
+import Schedule from "./pages/Schedule.js";
+import People from "./pages/People.js";
+import Configuration from "./pages/Configuration.js";
+import Dashboard from "./pages/Dashboard.js";
+import Shifts from "./pages/Shifts.js";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="app">
+        <Switch>
+          <Route path="/people">
+            <People />
+          </Route>
+          <Route path="/schedule">
+            <Schedule />
+          </Route>
+          <Route path="/shifts">
+            <Shifts />
+          </Route>
+          <Route path="/dailySchedule">
+            <DailySchedule />
+          </Route>
+          <Route path="/configuration">
+            <Configuration />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;

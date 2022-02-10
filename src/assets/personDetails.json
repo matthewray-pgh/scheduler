@@ -1,0 +1,254 @@
+[
+  {
+    "id": 0,
+    "firstName": "Barb",
+    "lastName": "J",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 1, 1, 1, 1, 1, 0]
+  },
+  {
+    "id": 1,
+    "firstName": "Lisa",
+    "lastName": "H",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 1, 1, 0, 0, 0, 0]
+  },
+  {
+    "id": 2,
+    "firstName": "Tara",
+    "lastName": "G",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 1, 1, 0, 1, 1, 1]
+  },
+  {
+    "id": 3,
+    "firstName": "Beverly",
+    "lastName": "H",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 0, 0, 1, 0, 1, 0]
+  },
+  {
+    "id": 4,
+    "firstName": "Carol",
+    "lastName": "W",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 0, 1, 1, 1, 1, 0]
+  },
+  {
+    "id": 5,
+    "firstName": "Stephanie",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 1, 0, 0, 0, 0, 1]
+  },
+  {
+    "id": 6,
+    "firstName": "Josh",
+    "lastName": "F",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 1, 1, 1, 1, 0, 1]
+  },
+  {
+    "id": 7,
+    "firstName": "Sarah",
+    "lastName": "T",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 0, 0, 0, 0, 0, 0]
+  },
+  {
+    "id": 8,
+    "firstName": "Tara",
+    "lastName": "L",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 0, 1, 1, 0, 0, 0]
+  },
+  {
+    "id": 9,
+    "firstName": "Sarah",
+    "lastName": "L",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 0, 0, 0, 1, 1, 1]
+  },
+  {
+    "id": 10,
+    "firstName": "Josh",
+    "lastName": "M",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 0, 0, 0, 1, 1, 1]
+  },
+  {
+    "id": 11,
+    "firstName": "Mary",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 0, 0, 0, 0, 0, 0]
+  },
+  {
+    "id": 12,
+    "firstName": "Alyssa",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 1, 1, 0, 1, 1, 1]
+  },
+  {
+    "id": 13,
+    "firstName": "Heather",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 0, 1, 1, 1, 1, 1]
+  },
+  {
+    "id": 14,
+    "firstName": "Korynn",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 0, 1, 0, 1, 1, 1]
+  },
+  {
+    "id": 15,
+    "firstName": "Aubrey",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 1, 1, 1, 1, 1, 1]
+  },
+  {
+    "id": 16,
+    "firstName": "Tori",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 1, 1, 0, 1, 1, 1]
+  },
+  {
+    "id": 17,
+    "firstName": "Katie",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 0, 1, 1, 0, 1, 1]
+  },
+  {
+    "id": 18,
+    "firstName": "Brian",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 0, 0, 0, 0, 1, 1]
+  },
+  {
+    "id": 19,
+    "firstName": "Shannnon",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 1, 1, 1, 1, 1, 1]
+  },
+  {
+    "id": 20,
+    "firstName": "Jaime",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 1, 1, 1, 1, 1, 1]
+  },
+  {
+    "id": 21,
+    "firstName": "Hope",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 0, 0, 0, 0, 1, 1]
+  },
+  {
+    "id": 22,
+    "firstName": "Joanna",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 0, 0, 0, 0, 1, 1]
+  },
+  {
+    "id": 23,
+    "firstName": "Colleen",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 1, 1, 1, 0, 1, 1]
+  },
+  {
+    "id": 24,
+    "firstName": "Deanna",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [0, 0, 0, 1, 0, 0, 0]
+  },
+  {
+    "id": 25,
+    "firstName": "Maura",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 1, 1, 1, 1, 1, 1]
+  },
+  {
+    "id": 26,
+    "firstName": "Jenna",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 1, 1, 1, 1, 1, 1]
+  },
+  {
+    "id": 27,
+    "firstName": "Lindsey",
+    "lastName": "",
+    "email": null,
+    "position": [1],
+    "active": 1,
+    "available": [1, 1, 1, 1, 1, 1, 1]
+  }
+]

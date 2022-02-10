@@ -1,0 +1,43 @@
+[
+  {
+    "personId": 0,
+    "personName": "lastName, firstName",
+    "schedule": [
+      {
+        "day": 0,
+        "available": [0],
+        "shifts": []
+      },
+      {
+        "day": 1,
+        "available": [1],
+        "shifts": []
+      },
+      {
+        "day": 2,
+        "available": [0],
+        "shifts": []
+      },
+      {
+        "day": 3,
+        "available": [],
+        "shifts": []
+      },
+      {
+        "day": 4,
+        "available": [1],
+        "shifts": []
+      },
+      {
+        "day": 5,
+        "available": [],
+        "shifts": []
+      },
+      {
+        "day": 6,
+        "available": [1],
+        "shifts": []
+      }
+    ]
+  }
+]

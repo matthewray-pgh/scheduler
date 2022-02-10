@@ -1,0 +1,124 @@
+.shift-select-container {
+  background-color: #f0f0f0;
+  padding: 10px;
+  visibility: visible;
+}
+
+.hide-cell {
+  visibility: hidden;
+}
+
+.shift-select-card-employee-information {
+  font-size: 0.9em;
+}
+
+.shift-select-card-form {
+  font-size: 0.9em;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  padding: 5px 20px;
+}
+
+.shift-select-card-form-label {
+  text-align: right;
+  align-self: center;
+}
+
+.shift-selector-card-shift-list {
+  min-height: 100px;
+  padding: 10px;
+}
+
+.shift-selector-card-form-controls {
+  padding: 10px 5px;
+  justify-content: end;
+}
+
+/* mobile */
+@media (max-width: 600px) {
+  .shift-select-container {
+    height: 220px;
+
+    animation: 0.5s slideUp;
+    animation-fill-mode: forwards;
+  }
+
+  .hide-cell {
+    height: 10px;
+
+    animation: 0.5s slideDown;
+    animation-fill-mode: backwards;
+  }
+}
+
+/* full screen */
+@media (min-width: 600px) {
+  .shift-select-container {
+    width: 200px;
+
+    animation: 0.5s slideIn;
+    animation-fill-mode: forwards;
+  }
+
+  .hide-cell {
+    width: 0;
+
+    animation: 0.5s slideOut;
+    animation-fill-mode: backwards;
+  }
+}
+
+/* animations */
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    width: 0;
+    visibility: hidden;
+  }
+  99% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+    width: 200px;
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    opacity: 1;
+    width: 200px;
+  }
+  100% {
+    opacity: 0;
+    width: 0;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    width: 0;
+    visibility: hidden;
+  }
+  99% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+    height: 250px;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 1;
+    height: 250px;
+  }
+  100% {
+    opacity: 0;
+    height: 0;
+  }
+}
