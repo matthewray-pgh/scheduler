@@ -21,7 +21,7 @@ const Shifts = () => {
       <SideNav />
       <section>
         <h1>Shifts</h1>
-        <section>
+        <section className="">
           <div className="shifts-grid-row" style={{}}>
             {intervals.map((d, i) => {
               return (
