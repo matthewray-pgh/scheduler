@@ -2,7 +2,7 @@ import React from "react";
 import "./styles/App.scss";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import { Layout } from "./components/Layout";
 import Home from "./pages/Home.js";
 import { DailySchedule } from "./pages/DailySchedule.js";
 import Schedule from "./pages/Schedule.js";
@@ -15,7 +15,7 @@ import Sections from "./pages/Sections.js";
 const App = () => {
   return (
     <Router>
-      <div className="app">
+      <Layout>
         <Switch>
           <Route path="/people">
             <People />
@@ -42,7 +42,7 @@ const App = () => {
             <Home />
           </Route>
         </Switch>
-      </div>
+      </Layout>
     </Router>
   );
 };

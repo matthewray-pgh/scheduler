@@ -1,8 +1,6 @@
 .dashboard {
-  &-main {
+  &__main {
     height: 100vh;
-    display: grid;
-    grid-template-columns: 200px auto;
   }
 }
 
@@ -12,21 +10,8 @@
 
 /* tablet */
 @media (min-width: 480px) and (max-width: 768px) {
-  .dashboard {
-    &-main {
-      height: 100vh;
-      display: grid;
-      grid-template-columns: 80px auto;
-    }
-  }
 }
 
 /* mobile */
 @media (max-width: 480px) {
-  .dashboard {
-    &-main {
-      height: 100%;
-      display: block;
-    }
-  }
 }

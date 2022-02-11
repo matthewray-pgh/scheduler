@@ -1,0 +1,38 @@
+.layout {
+  &__content {
+    margin: 10px;
+  }
+}
+
+/* desktops */
+@media (min-width: 768px) {
+  .layout {
+    &__main {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 200px auto;
+    }
+  }
+}
+
+/* tablet */
+@media (min-width: 480px) and (max-width: 768px) {
+  .layout {
+    &__main {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 80px auto;
+    }
+  }
+}
+
+/* mobile */
+@media (max-width: 480px) {
+  .layout {
+    &__main {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+  }
+}

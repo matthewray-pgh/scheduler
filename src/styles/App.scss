@@ -47,6 +47,22 @@
   background-color: #1c3b97;
 }
 
+.button-submit {
+  background: #15a83a;
+  color: #fff;
+  font-weight: bold;
+
+  min-width: 100px;
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.button-submit:hover {
+  background-color: #167a0d;
+}
+
 .text-field {
   border: solid 1px #dedede;
   padding: 5px;
