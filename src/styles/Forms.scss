@@ -8,11 +8,12 @@ input:focus {
   justify-items: start;
 
   height: 50px;
-  padding: 5px 10px;
-  margin: 20px auto;
+  padding: 2px 10px;
+  margin: 8px auto;
 
-  background-color: "#ccc";
-  border: solid 1px #dedede;
+  background-color: #ffffff;
+  border: solid 1px var(--light-gray);
+  border-radius: 5px;
 }
 
 .form-field > label {
@@ -28,7 +29,7 @@ input:focus {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;
   width: 100%;
-  padding: 5px;
+  padding: 2px;
 }
 
 .form-button {

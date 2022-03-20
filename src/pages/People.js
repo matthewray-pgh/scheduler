@@ -1,6 +1,15 @@
 import React, { useState } from "react";
-import Header from "../components/Header.js";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {
+  faUserCircle,
+  faPlusSquare,
+  faFilter,
+  faPen,
+  faTrash,
+  faSearch,
+} from "@fortawesome/free-solid-svg-icons";
 import "../styles/People.scss";
 
 import personData from "../assets/personDetails.json";
@@ -8,9 +17,13 @@ import positionData from "../assets/positionsAPI.json";
 
 import find from "lodash/find";
 
-import FormFieldText from "../components/FormFieldText.js";
+import {
+  FormFieldText,
+  FormFieldEmail,
+  FormFieldPhone,
+  FormFieldDate,
+} from "../components/FormFields.js";
 import FormFieldButton from "../components/FormFieldButton.js";
-import FormFieldCheckboxes from "../components/FormFieldCheckboxes.js";
 
 function People() {
   const [data, setData] = useState(personData);
@@ -21,14 +34,16 @@ function People() {
     hireDate: null,
   });
 
+  const [personDetails, setPersonDetails] = useState(false);
+
   const confirmColor = "#06a94d";
 
-  const getPositionFakeAPI = (id) => {
-    setTimeout(() => {
-      const positionObj = find(positionData, ["id", id]);
-      console.log("positionObj", positionObj);
-    }, 2000);
-  };
+  // const getPositionFakeAPI = (id) => {
+  //   setTimeout(() => {
+  //     const positionObj = find(positionData, ["id", id]);
+  //     console.log("positionObj", positionObj);
+  //   }, 2000);
+  // };
 
   const getPositionName = (id) => {
     const data = find(positionData, ["id", parseInt(id)]);
@@ -43,6 +58,9 @@ function People() {
       email: person.email,
       hireData: person.hireData,
     });
+    if (personDetails !== true) {
+      setPersonDetails(true);
+    }
   };
 
   const handleSubmit = () => {
@@ -56,56 +74,127 @@ function People() {
       email: null,
       hireDate: null,
     });
+    setPersonDetails(false);
+  };
+
+  const handleAddClick = () => {
+    setPersonDetails(true);
+  };
+
+  const handleFilterClick = () => {
+    console.log("handle filter click -- temporary");
   };
 
   return (
-    <main>
-      <Header />
-      <section className="page-header-bar">
-        <div className="page-header-title">People</div>
-        <div className="page-header-details"></div>
+    <main className="people__page">
+      <section className="people__header-bar">
+        <div className="people__header-title">People</div>
+        <div className="people__header-details"></div>
       </section>
 
-      <section className="people-main-content">
-        <section className="people-sub-content">
-          <div className="person-table">
-            <div className="person-table-row-header">
-              <span>name</span>
-              <span>email</span>
+      <section className="people__data-controls">
+        <div className="people__data-controls--search-bar">
+          <input
+            className="people__data-controls--search-input"
+            placeholder="Search People"
+            type="text"
+          ></input>
+          <button
+            className="people__data-controls--search-button"
+            type="button"
+          >
+            <FontAwesomeIcon
+              className="people__data-control--button-icon"
+              icon={faSearch}
+            />
+          </button>
+        </div>
+        <div className="people__data-controls--filters">
+          <span className="people__data-controls--results">
+            Showing {data.length} of {data.length} results
+          </span>
+          <button
+            className="people__header-control-button"
+            onClick={handleFilterClick}
+          >
+            <FontAwesomeIcon
+              className="people__header-control-button--icon"
+              icon={faFilter}
+            />
+            <span>FILTER LIST</span>
+          </button>
+
+          <button
+            className="people__header-control-button"
+            onClick={handleAddClick}
+          >
+            <FontAwesomeIcon
+              className="people__header-control-button--icon"
+              icon={faPlusSquare}
+            />
+            <span>ADD PERSON</span>
+          </button>
+        </div>
+      </section>
+
+      <section className="people__main-content">
+        <section className="people__list-content">
+          <div className="people__table">
+            <div className="people__table-row-header">
+              <span>person</span>
               <span>position(s)</span>
               <span>hire date</span>
               <span>active</span>
+              <span>actions</span>
             </div>
             {data.map((d, i) => {
               return (
                 <div
-                  className="person-table-row"
+                  className="people__table-row"
                   key={i}
                   onClick={() => handleRowClick(d)}
                 >
-                  <span>
-                    {d.firstName} {d.lastName}
-                  </span>
-                  <span>{d.email}</span>
+                  <div className="people__table__id-card">
+                    <FontAwesomeIcon
+                      className="people__table__id-card--icon"
+                      icon={faUserCircle}
+                    />
+                    <div>
+                      <div className="people__table__id-card--bold">
+                        {d.firstName} {d.lastName}
+                      </div>
+                      <div>{d.email}</div>
+                    </div>
+                  </div>
+
                   <span>
                     {getPositionName(d.position)}
                     {d.Position}
                   </span>
                   <span>{d.hireDate}</span>
                   <span>{d.active}</span>
+                  <span>
+                    <FontAwesomeIcon className="" icon={faPen} />
+                    <FontAwesomeIcon className="" icon={faTrash} />
+                  </span>
                 </div>
               );
             })}
           </div>
         </section>
 
-        <section className="people-sub-content">
-          <div>add/edit employee</div>
+        <section
+          className={
+            personDetails ? "people__details" : "people__details--hide"
+          }
+        >
+          <div className="">DETAILS</div>
           <FormFieldText label="first name" value={current.firstName} />
           <FormFieldText label="last name" value={current.lastName} />
-          <FormFieldText label="email" value={current.email} />
-          <FormFieldText label="hire date" value={current.hireDate} />
-          <FormFieldCheckboxes label="positions" options={positionData} />
+          <FormFieldEmail label="email" value={current.email} />
+          <FormFieldDate label="hire date" value={current.hireDate} />
+          <FormFieldDate label="term date" value={current.termDate} />
+          <FormFieldPhone label="phone" value={current.contact} />
           <FormFieldButton
             label="submit"
             color={confirmColor}

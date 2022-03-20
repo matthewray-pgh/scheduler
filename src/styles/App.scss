@@ -1,12 +1,14 @@
 :root {
+  --dark-gray: rgb(120, 120, 120);
   --gray: rgba(199, 199, 199, 1);
   --light-gray: rgba(199, 199, 199, 1);
   --green: rgba(36, 139, 8, 1);
   --green-opacity: rgba(36, 139, 8, 0.5);
   --orange: rgba(211, 131, 11, 1);
   --orange-opacity: rgba(211, 131, 11, 0.5);
-  --blue: rgba(12, 70, 158, 1);
-  --blue-opacity: rgba(32, 93, 184, 0.5);
+  --blue: rgba(65, 105, 255, 1);
+  --blue-opacity: rgba(65, 105, 255, 0.5);
+  --blue-dark: rgb(50, 85, 210);
   --dark: rgb(68, 68, 68);
   --dark-hover: rgb(58, 58, 58);
   --white: rgb(255, 255, 255);
