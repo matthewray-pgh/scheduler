@@ -1,6 +1,14 @@
 .layout {
+  &__header {
+    background-color: #ffffff;
+
+    &--title {
+      color: #000000;
+    }
+  }
+
   &__content {
-    margin: 10px;
+    background-color: #dedede;
   }
 }
 
