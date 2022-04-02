@@ -11,7 +11,7 @@ import personDetails from "../assets/personDetails";
 
 import ShiftSelectorCard from "../components/ShiftSelectorCard";
 
-const Schedule = () => {
+export const Schedule = () => {
   const [schedule, setSchedule] = useState(testData);
   const [mock, setMock] = useState(mockSchedule);
   const [people, setPeople] = useState(personDetails);
@@ -225,5 +225,3 @@ const Schedule = () => {
     </main>
   );
 };
-
-export default Schedule;

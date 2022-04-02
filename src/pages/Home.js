@@ -3,7 +3,7 @@ import React from "react";
 import Header from "../components/Header.js";
 import "../styles/Home.scss";
 
-const Home = () => {
+export const Home = () => {
   return (
     <main>
       <Header />
@@ -11,5 +11,3 @@ const Home = () => {
     </main>
   );
 };
-
-export default Home;

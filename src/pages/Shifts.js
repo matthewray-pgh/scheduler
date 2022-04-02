@@ -6,7 +6,7 @@ import max from "lodash/max";
 import "../styles/Shifts.scss";
 import { repeat } from "lodash";
 
-const Shifts = () => {
+export const Shifts = () => {
   const config = {
     intervals: 24,
     testData: [{ segment: 0, status: 0, start: 0, end: 24 }],
@@ -160,5 +160,3 @@ const Shifts = () => {
     </main>
   );
 };
-
-export default Shifts;

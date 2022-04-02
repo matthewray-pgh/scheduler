@@ -2,7 +2,7 @@ import React from "react";
 
 import "../styles/Dashboard.scss";
 
-const Dashboard = () => {
+export const Dashboard = () => {
   return (
     <main className="dashboard__main">
       <h1>Dashboard</h1>
@@ -10,5 +10,3 @@ const Dashboard = () => {
     </main>
   );
 };
-
-export default Dashboard;

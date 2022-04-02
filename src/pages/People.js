@@ -23,9 +23,9 @@ import {
   FormFieldPhone,
   FormFieldDate,
 } from "../components/FormFields.js";
-import FormFieldButton from "../components/FormFieldButton.js";
+import { FormFieldButton } from "../components/FormFieldButton.js";
 
-function People() {
+export const People = () => {
   const [data, setData] = useState(personData);
   const [current, setCurrent] = useState({
     lastName: null,
@@ -205,6 +205,4 @@ function People() {
       </section>
     </main>
   );
-}
-
-export default People;
+};

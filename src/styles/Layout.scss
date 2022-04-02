@@ -1,10 +1,7 @@
 .layout {
   &__header {
     background-color: #ffffff;
-
-    &--title {
-      color: #000000;
-    }
+    color: #000000;
   }
 
   &__content {
@@ -15,6 +12,21 @@
 /* desktops */
 @media (min-width: 768px) {
   .layout {
+    &__header {
+      display: grid;
+      grid-template-columns: auto auto 100px;
+
+      &--detail {
+        padding: 10px;
+        align-self: center;
+        justify-self: end;
+      }
+
+      &--logout-button {
+        padding: 10px 0;
+      }
+    }
+
     &__main {
       height: 100vh;
       display: grid;

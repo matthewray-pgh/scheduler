@@ -2,7 +2,7 @@ import React from "react";
 
 import "../styles/Sections.scss";
 
-const Sections = () => {
+export const Sections = () => {
   return (
     <main className="sections__main">
       <h1 className="sections__page-heading">Sections</h1>
@@ -23,5 +23,3 @@ const Sections = () => {
     </main>
   );
 };
-
-export default Sections;
