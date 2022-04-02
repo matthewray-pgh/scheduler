@@ -18,12 +18,6 @@ export const SideNav = () => {
     <aside className="aside">
       <ul className="aside__nav">
         <li>
-          <Link to="/">
-            <FontAwesomeIcon className="aside__nav--icon" icon={faHome} />
-            <span className="aside__nav--text">Home</span>
-          </Link>
-        </li>
-        <li>
           <Link to="/dashboard">
             <FontAwesomeIcon className="aside__nav--icon" icon={faChartBar} />
             <span className="aside__nav--text">Dashboard</span>

@@ -2,7 +2,7 @@ import React from "react";
 
 import "../styles/Forms.scss";
 
-const FormFieldButton = ({ label, color, onClickHandler }) => {
+export const FormFieldButton = ({ label, color, onClickHandler }) => {
   return (
     <button
       type="button"
@@ -14,5 +14,3 @@ const FormFieldButton = ({ label, color, onClickHandler }) => {
     </button>
   );
 };
-
-export default FormFieldButton;

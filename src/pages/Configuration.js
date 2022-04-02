@@ -3,7 +3,7 @@ import Header from "../components/Header.js";
 
 import "../styles/Configuration.scss";
 
-const Configuration = () => {
+export const Configuration = () => {
   return (
     <main>
       <Header />
@@ -16,5 +16,3 @@ const Configuration = () => {
     </main>
   );
 };
-
-export default Configuration;
