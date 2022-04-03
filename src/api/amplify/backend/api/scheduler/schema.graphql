@@ -1,0 +1,30 @@
+type Sections @model @auth(rules: [{allow: public}]) {
+  id: ID!
+}
+
+type Shifts @model @auth(rules: [{allow: public}]) {
+  id: ID!
+}
+
+type Schedule @model @auth(rules: [{allow: public}]) {
+  id: ID!
+}
+
+type Positions @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+}
+
+type Person @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone1: AWSPhone
+  phone2: AWSPhone
+  hireDate: AWSDate
+  termDate: AWSDate
+  position: [Int!]
+  active: Boolean
+  available: [Int]
+} 
