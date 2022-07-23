@@ -7,7 +7,7 @@ input:focus {
   display: grid;
   justify-items: start;
 
-  height: 50px;
+  height: 40px;
   padding: 2px 10px;
   margin: 10px auto;
 
@@ -45,4 +45,10 @@ input:focus {
   color: #fff;
   border: none;
   cursor: pointer;
+
+  transition: 200ms;
+
+  &:active {
+    background: #143391;
+  }
 }

@@ -3,7 +3,6 @@
     height: 100vh;
     margin: 0 auto;
     padding: 0 20px;
-    width: 500px;
     text-align: left;
   }
 
@@ -14,6 +13,40 @@
 
 /* desktops */
 @media (min-width: 960px) {
+  .sections {
+    &__toolbar {
+      margin: 10px;
+      padding: 10px;
+      min-height: 30px;
+      background-color: var(--white);
+    
+      display: grid;
+      grid-template-columns: repeat(4, 100px) auto;
+      grid-gap: 10px;
+    }
+
+    &__container {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+    }
+
+    &__floorplan{ 
+      margin: 10px;
+      padding: 10px;
+      min-height: 50px;
+      background-color: var(--white);
+      overflow-x: auto;
+    }
+
+    &__list{
+      margin: 10px;
+      padding: 10px;
+      min-height: 50px;
+      background-color: var(--white);
+
+      font-size: 12px;
+    }
+  }
 }
 
 /* tablet */

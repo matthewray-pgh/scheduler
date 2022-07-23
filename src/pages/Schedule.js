@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import Header from "../components/Header.js";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+
+import { ShiftCard } from "../components/ShiftCard.js";
+import { useWindow } from "../components/UseWindow";
 
 import "../styles/Schedule.scss";
 
@@ -9,22 +14,40 @@ import shiftDefaults from "../assets/scheduleTemplate.json";
 import mockSchedule from "../assets/mockSchedule.json";
 import personDetails from "../assets/personDetails";
 
-import ShiftSelectorCard from "../components/ShiftSelectorCard";
+const defaultActive = { person: 0, day: 1 };
+const mobileWidth = 600;
+const defaultRange = [
+  new Date("07-17-22"),
+  new Date("07-18-22"),
+  new Date("07-19-22"),
+  new Date("07-20-22"),
+  new Date("07-21-22"),
+  new Date("07-22-22"),
+  new Date("07-23-22"),
+];
 
 export const Schedule = () => {
   const [schedule, setSchedule] = useState(testData);
   const [mock, setMock] = useState(mockSchedule);
   const [people, setPeople] = useState(personDetails);
 
-  const [selectedPersonIndex, setSelectedPersonIndex] = useState(0);
-  const [shiftDayOfWeek, setShiftDayOfWeek] = useState(0);
+  const [scheduleRange, setScheduleRange] = useState(defaultRange);
+  const [dailyViewFilter, setDailyViewFilter] = useState(false);
+
+  //active state controls which cell in table
+  const [active, setActive] = useState(defaultActive);
+
+  const isMobile = useWindow(mobileWidth);
+  console.log("isMobile", isMobile);
+
+  console.log("schedule", schedule);
+
   const [shiftDetails, setShiftDetails] = useState({
     day: shiftDefaults.day,
     shift: shiftDefaults.shift,
     start: shiftDefaults.start,
     section: shiftDefaults.section,
   });
-  const [isVisible, setIsVisible] = useState(false);
 
   const loadShiftDefaults = () => {
     setShiftDetails({
@@ -50,35 +73,18 @@ export const Schedule = () => {
     }
 
     //set person and day state
-    setSelectedPersonIndex(personId);
-    setShiftDayOfWeek(shiftDetails.day);
-
-    if (!isVisible) {
-      setIsVisible(true);
-    }
   };
 
-  const closeShift = () => {
-    setIsVisible(false);
-  };
-
-  const handleClickPerson = (i) => {
-    setSelectedPersonIndex(i);
-  };
-
-  const handleToolboxShiftClick = () => {
-    setIsVisible(!isVisible);
-  };
+  const handleClickPerson = (i) => {};
 
   const getScheduleCell = (id, schedule) => {
     if (schedule.available.length >= 1) {
       return (
         <div
           className="schedule-cell"
-          style={{ borderLeftColor: "#dddddd" }}
           onClick={() => handleClickShift(id, schedule)}
         >
-          <label></label>
+          <ShiftCard />
         </div>
       );
     } else {
@@ -126,7 +132,6 @@ export const Schedule = () => {
 
   return (
     <main>
-      <Header />
       <section className="schedule-page-header-bar">
         <div className="page-header-title">Schedule</div>
         <div className="page-header-details">
@@ -142,86 +147,92 @@ export const Schedule = () => {
       </section>
 
       <section className="main-content">
-        <div className="table">
-          {/* future idea */}
-          {/* <div className="table-row">Daily Chart Row</div> */}
+        {/* future idea */}
+        {/* <div className="table-row">Daily Chart Row</div> */}
+        {dailyViewFilter && (
+          <DailyViewFilterControls scheduleRange={scheduleRange} />
+        )}
 
-          {/* table column headers */}
-          <div className="table-row">
-            <div className="table-header-cell">Employee</div>
-            <div className="table-header-cell">
-              <div>SUN 7/26</div>
-              <div> 0 / 0 </div>
-            </div>
-            <div className="table-header-cell">
-              <div>MON 7/27</div>
-              <div> 0 / 0 </div>
-            </div>
-            <div className="table-header-cell">
-              <div>TUE 7/28</div>
-              <div> 0 / 0 </div>
-            </div>
-            <div className="table-header-cell">
-              <div>WED 7/29</div>
-              <div> 0 / 0 </div>
-            </div>
-            <div className="table-header-cell">
-              <div>THU 7/30</div>
-              <div> 0 / 0 </div>
-            </div>
-            <div className="table-header-cell">
-              <div>FRI 7/31</div>
-              <div> 0 / 0 </div>
-            </div>
-            <div className="table-header-cell">
-              <div>SAT 8/1</div>
-              <div> 0 / 0 </div>
-            </div>
-          </div>
-
-          <div className="table-body">
+        <section className="table">
+          {/* people information */}
+          <div className="table__people">
+            <div className="table__header-cell"></div>
             {mock.map((m, i) => (
               <div
-                className={i % 2 === 0 ? "table-row-even" : "table-row-odd"}
-                key={i}
+                key={`${i}-employee`}
+                className="table__cell"
+                onClick={() => handleClickPerson(m.personId)}
               >
-                <div
-                  className="employee-cell"
-                  onClick={() => handleClickPerson(m.personId)}
-                >
-                  <span className="employee-cell-rotate">{m.personName}</span>
-                </div>
-                {m.schedule.map((s, i) => (
-                  <div key={i} className="table-cell">
-                    {getScheduleCell(m.persionID, s)}
-                  </div>
-                ))}
+                <EmployeeCard
+                  name={m.name}
+                  contact={"contact info"}
+                  image={null}
+                />
               </div>
             ))}
           </div>
-        </div>
 
-        <div className="toolbox">
-          <button className="icon-button">EMP</button>
-          <button className="icon-button">ANY</button>
-          <button
-            className="icon-button"
-            onClick={() => handleToolboxShiftClick()}
-          >
-            SFT
-          </button>
-        </div>
+          {/* shift information */}
+          <div className="table__shifts">
+            {scheduleRange.map((range, i) => (
+              <div className="table__header-cell" key={`${i}-${range}`}>
+                {range.toLocaleDateString("en-us", {
+                  weekday: "short",
+                  day: "numeric",
+                })}
+              </div>
+            ))}
 
-        <ShiftSelectorCard
-          isVisible={isVisible}
-          closeFunc={() => closeShift()}
-          saveFunc={() => setSchedule(schedule)}
-          personIndex={selectedPersonIndex}
-          dayIndex={shiftDayOfWeek}
-          details={shiftDetails}
-          schedule={mock}
-        />
+            {mock.map((m, i) =>
+              m.schedule.map((s, i) => (
+                <div key={i} className="table__cell">
+                  {getScheduleCell(m.persionID, s)}
+                </div>
+              ))
+            )}
+          </div>
+        </section>
       </section>
     </main>
+  );
+};
+
+const DailyViewFilterControls = ({ scheduleRange }) => {
+  return (
+    <section className="mobile__table-header">
+      {scheduleRange.map((range, i) => (
+        <div className="mobile__table-header-cell">
+          <div>
+            {range.toLocaleDateString("en-us", {
+              weekday: "short",
+            })}
+          </div>
+          <div>
+            {range.toLocaleDateString("en-us", {
+              month: "numeric",
+              day: "numeric",
+            })}
+          </div>
+        </div>
+      ))}
+    </section>
+  );
+};
+
+const EmployeeCard = ({ name, contact, image }) => {
+  return (
+    <section className="employee-card">
+      <div className="employee-card__icon">
+        {image ? (
+          <img alt="person" src="image" />
+        ) : (
+          <FontAwesomeIcon icon={faUser} />
+        )}
+      </div>
+      <div className="employee-card__details">
+        <div>{name}</div>
+        <div>{contact}</div>
+      </div>
+    </section>
   );
 };

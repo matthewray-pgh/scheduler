@@ -42,52 +42,53 @@ const App = () => {
             <Route
               path="/dashboard"
               element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
+                // <ProtectedRoute>
+                <Dashboard />
+                // </ProtectedRoute>
               }
             />
             <Route
               path="/people"
               element={
-                <ProtectedRoute>
-                  <People />
-                </ProtectedRoute>
+                // <ProtectedRoute>
+                <People />
+                // </ProtectedRoute>
               }
             />
             <Route
               path="/schedule"
               element={
-                <ProtectedRoute>
-                  <Schedule />
-                </ProtectedRoute>
+                // <ProtectedRoute>
+                <Schedule />
+                // </ProtectedRoute>
               }
             />
             <Route
               path="/shifts"
               element={
-                <ProtectedRoute>
-                  <Shifts />
-                </ProtectedRoute>
+                // <ProtectedRoute>
+                <Shifts />
+                // </ProtectedRoute>
               }
             />
             <Route
               path="/sections"
               element={
-                <ProtectedRoute>
-                  <Sections />
-                </ProtectedRoute>
+                // <ProtectedRoute>
+                <Sections />
+                // </ProtectedRoute>
               }
             />
             <Route
               path="/dailySchedule"
               element={
-                <ProtectedRoute>
-                  <DailySchedule />
-                </ProtectedRoute>
+                // <ProtectedRoute>
+                <DailySchedule />
+                // </ProtectedRoute>
               }
             />
           </Route>
+          <Route path="/" element={<Navigate replace to="/login" />} />
         </Routes>
         {/* <AppLayout /> */}
       </AuthProvider>
