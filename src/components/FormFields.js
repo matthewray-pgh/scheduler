@@ -2,11 +2,16 @@ import React from "react";
 
 import "../styles/Forms.scss";
 
-export const FormFieldText = ({ label, value }) => {
+export const FormFieldText = ({ label, value, onChange }) => {
   return (
     <div className="form-field">
       <label>{label}</label>
-      <input type="text" placeholder={label} defaultValue={value} />
+      <input
+        type="text"
+        placeholder={label}
+        defaultValue={value}
+        onChange={onChange}
+      />
     </div>
   );
 };

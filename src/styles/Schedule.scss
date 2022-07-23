@@ -4,50 +4,45 @@
   }
 
   .table {
-  }
-
-  .table-row {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: 1fr auto;
+
+    &__people {
+      min-width: 175px;
+    }
+
+    &__shifts {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(150px, 200px));
+      overflow-x: scroll;
+    }
+
+    &__cell {
+      margin: 0 1px;
+      padding: 2px;
+      height: 45px;
+      /* border: solid 1px #ddd; */
+      cursor: pointer;
+    }
+
+    &__header-cell {
+      margin: 0 1px;
+      padding: 2px;
+      height: 25px;
+      text-align: center;
+    }
   }
 
-  .table-row-even {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    min-height: 40px;
-    align-items: center;
-    background-color: #d3d2d2;
-  }
+  .mobile{
+    &__table-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
 
-  .table-row-odd {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    min-height: 40px;
-    align-items: center;
-    background-color: #f0f0f0;
-  }
-
-  .table-body {
-    height: 60vh;
-    overflow-y: auto;
-  }
-
-  .table-cell {
-    margin: 0 1px;
-    padding: 2px;
-    height: 75px;
-    /* border: solid 1px #ddd; */
-    cursor: pointer;
-    background-color: #f0f0f0;
-  }
-
-  .employee-cell {
-    margin: 0 1px;
-    padding: 2px;
-    background-color: #fff;
-  }
-
-  .employee-cell-rotate {
+    &__table-header-cell {
+      padding: 5px 10px;
+      text-align: center;
+    }
   }
 }
 
@@ -78,49 +73,58 @@
   }
 
   .main-content {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-
+    background-color: white;
     border: solid 1px #ddd;
     margin: 1em;
   }
 
   .table {
-    border: solid 1px #ddd;
-    margin: 10px;
-    font-size: 11px;
-  }
-
-  .table-body {
-    height: 70vh;
-    overflow-y: auto;
-  }
-
-  .table-row {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
-  }
+    grid-template-columns: 200px auto;
+  
+    &__people {
+    }
+  
+    &__shifts {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      overflow-x: scroll;
+    }
 
-  .table-row-even {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    min-height: 40px;
-    align-items: center;
-    background-color: #d3d2d2;
-  }
+    &__row {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(200px, 300px));
+      min-height: 40px;
+      align-items: center;
+      background-color: #f0f0f0;
 
-  .table-row-odd {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    min-height: 40px;
-    align-items: center;
-    background-color: #f0f0f0;
+      &:nth-child(even) {
+        background-color: #d3d2d2;
+      }
+    }
+
+    &__cell {
+      margin: 0 1px;
+      padding: 2px;
+      height: 45px;
+      text-align: center;
+      /* border: solid 1px #ddd; */
+      cursor: pointer;
+    }
+
+    &__header-cell {
+      margin: 0 1px;
+      padding: 2px;
+      height: 25px;
+      text-align: center;
+    }
   }
 
   .table-header-cell {
     padding: 5px;
     border: solid 1px #fff;
     background-color: #f0f0f0;
+    text-align: center;
   }
 
   .table-cell {
@@ -134,43 +138,38 @@
     cursor: pointer;
   }
 
-  .table-cell:hover {
-    color: royalblue;
-  }
-
-  .toolbox {
-    display: grid;
-    grid-template-rows: auto auto auto;
-    align-content: flex-start;
-
-    width: 50px;
-    min-height: 200px;
-  }
-
-  .icon-button {
-    height: 50px;
-    padding: 10px;
-  }
-
-  .icon-button:hover {
-    background-color: #1c3b97;
+  .mobile {
+    &__table-header {
+      display: none;
+    }
   }
 }
 
-.toolbox {
-  background-color: royalblue;
-  color: #f0f0f0;
+.table {
+  font-size: 0.75em;
 }
 
-.icon-button {
-  height: 50px;
-  border: none;
-  cursor: pointer;
+.employee-card {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  margin: 5px 0;
 
-  justify-items: center;
-  background-color: #4169e1;
-  color: #f0f0f0;
-  padding: 10px;
+  &__icon {
+    text-align: center;
+    font-size: 1.75em;
+    margin: 0 5px;
+    padding: 5px;
+    background-color: #8f8f8f;
+    color: #ffffff;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+  }
+
+  &__details {
+    align-self: center;
+    text-align: left;
+  }
 }
 
 .schedule-cell {
@@ -178,15 +177,28 @@
   padding: 8px 5px;
   margin: 1px 2px;
   min-height: 10px;
+
   border: solid 1px lightgray;
   border-left-width: 3px;
   border-left-style: solid;
   border-left-color: lightslategray;
+
+  font-weight: bold;
+  color: lightslategray;
   cursor: pointer;
+
+  &:hover {
+    background-color: lightgreen;
+    border-left-color: green;
+    color: green;
+  }
 }
 
 .shift-unavailable {
+  padding: 8px 5px;
+  margin: 1px 2px;
+  min-height: 10px;
+
   font-variant: small-caps;
-  font-size: 0.75em;
   color: #8a8a8a;
 }
