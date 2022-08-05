@@ -15,16 +15,6 @@
     &__header {
       display: grid;
       grid-template-columns: auto auto 100px;
-
-      &--detail {
-        padding: 10px;
-        align-self: center;
-        justify-self: end;
-      }
-
-      &--logout-button {
-        padding: 10px 0;
-      }
     }
 
     &__main {
@@ -53,6 +43,7 @@
       height: 100vh;
       display: grid;
       grid-template-columns: 1fr;
+      grid-template-rows: 50px auto;
     }
   }
 }
