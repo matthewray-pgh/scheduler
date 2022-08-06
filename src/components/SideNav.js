@@ -33,7 +33,6 @@ export const SideNav = () => {
   });
 
   const handleMobileMenuClick = () => {
-    console.log(`CLICKED- ${showMobileMenu}`);
     setShowMobileMenu(!showMobileMenu);
   };
 
@@ -64,24 +63,28 @@ export const SideNav = () => {
       <div
         className={showMobileMenu ? "mobile__nav--show" : "mobile__nav--hide"}
       >
-        <Menu token={token} handleUserLogout={handleUserLogout} />
+        <Menu
+          token={token}
+          handleUserLogout={handleUserLogout}
+          handleUserNavigate={handleOnNavClicked}
+        />
       </div>
     </>
   );
 };
 
-const Menu = ({ token, handleUserLogout, handleUserNaigate }) => {
+const Menu = ({ token, handleUserLogout, handleUserNavigate }) => {
   return (
     <>
       <ul>
         <li>
-          <Link to="/dashboard" onClick={handleUserNaigate}>
+          <Link to="/dashboard" onClick={handleUserNavigate}>
             <FontAwesomeIcon className="aside__nav--icon" icon={faChartBar} />
             <span className="aside__nav--text">Dashboard</span>
           </Link>
         </li>
         <li>
-          <Link to="/schedule" onClick={handleUserNaigate}>
+          <Link to="/schedule" onClick={handleUserNavigate}>
             <FontAwesomeIcon
               className="aside__nav--icon"
               icon={faCalendarAlt}
@@ -90,25 +93,25 @@ const Menu = ({ token, handleUserLogout, handleUserNaigate }) => {
           </Link>
         </li>
         <li>
-          <Link to="/Shifts" onClick={handleUserNaigate}>
+          <Link to="/Shifts" onClick={handleUserNavigate}>
             <FontAwesomeIcon className="aside__nav--icon" icon={faTasks} />
             <span className="aside__nav--text">Shifts</span>
           </Link>
         </li>
         <li>
-          <Link to="/sections" onClick={handleUserNaigate}>
+          <Link to="/sections" onClick={handleUserNavigate}>
             <FontAwesomeIcon className="aside__nav--icon" icon={faTasks} />
             <span className="aside__nav--text">Sections</span>
           </Link>
         </li>
         <li>
-          <Link to="/people" onClick={handleUserNaigate}>
+          <Link to="/people" onClick={handleUserNavigate}>
             <FontAwesomeIcon className="aside__nav--icon" icon={faUsers} />
             <span className="aside__nav--text">People</span>
           </Link>
         </li>
         <li>
-          <Link to="/configuration" onClick={handleUserNaigate}>
+          <Link to="/configuration" onClick={handleUserNavigate}>
             <FontAwesomeIcon className="aside__nav--icon" icon={faCogs} />
             <span className="aside__nav--text">Settings</span>
           </Link>
@@ -117,7 +120,7 @@ const Menu = ({ token, handleUserLogout, handleUserNaigate }) => {
       <div className="aside__nav--divider"></div>
       <ul>
         <li>
-          <Link to="/" onClick={handleUserNaigate}>
+          <Link to="/" onClick={handleUserNavigate}>
             <FontAwesomeIcon className="aside__nav--icon" icon={faUserAlt} />
             <span className="aside__nav--text">Account</span>
           </Link>
