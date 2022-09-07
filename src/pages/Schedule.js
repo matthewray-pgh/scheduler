@@ -1,21 +1,18 @@
-import React, { useState } from "react";
+import React, { Fragment, useState, useMemo } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faChartBar } from "@fortawesome/free-solid-svg-icons";
 
 import { ShiftCard } from "../components/ShiftCard.js";
-import { useWindow } from "../components/UseWindow";
 
 import "../styles/Schedule.scss";
 
-import testData from "../assets/dataFile.json";
 import config from "../assets/appConfig.json";
-import shiftDefaults from "../assets/scheduleTemplate.json";
 import mockSchedule from "../assets/mockSchedule.json";
 import personDetails from "../assets/personDetails";
+import { endsWith } from "lodash";
 
 const defaultActive = { person: 0, day: 1 };
-const mobileWidth = 600;
 const defaultRange = [
   new Date("07-17-22"),
   new Date("07-18-22"),
@@ -27,90 +24,50 @@ const defaultRange = [
 ];
 
 export const Schedule = () => {
-  const [schedule, setSchedule] = useState(testData);
-  const [mock, setMock] = useState(mockSchedule);
+  //data states
+  const [schedule, setSchedule] = useState(mockSchedule);
   const [people, setPeople] = useState(personDetails);
 
+  //page states
+  const [listView, setListView] = useState(true);
+  const [editView, setEditView] = useState(false);
+  const [viewView, setViewView] = useState(false);
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
+
+  const [dailyShifts, setDailyShifts] = useState([]);
   const [scheduleRange, setScheduleRange] = useState(defaultRange);
   const [dailyViewFilter, setDailyViewFilter] = useState(false);
 
   //active state controls which cell in table
   const [active, setActive] = useState(defaultActive);
 
-  const isMobile = useWindow(mobileWidth);
-  console.log("isMobile", isMobile);
-
-  console.log("schedule", schedule);
-
-  const [shiftDetails, setShiftDetails] = useState({
-    day: shiftDefaults.day,
-    shift: shiftDefaults.shift,
-    start: shiftDefaults.start,
-    section: shiftDefaults.section,
-  });
-
-  const loadShiftDefaults = () => {
-    setShiftDetails({
-      day: shiftDefaults.day,
-      shift: shiftDefaults.shift,
-      start: shiftDefaults.start,
-      section: shiftDefaults.section,
-    });
-  };
-
-  const handleClickShift = (personId, shiftDetails) => {
-    //check if schedule exists
-    if (shiftDetails.shift !== 0) {
-      setShiftDetails({
-        day: shiftDetails.day,
-        shift: shiftDetails.shift,
-        start: shiftDetails.start,
-        section: shiftDetails.section,
-      });
-    } else {
-      //reset to defaults
-      loadShiftDefaults();
-    }
-
-    //set person and day state
-  };
-
   const handleClickPerson = (i) => {};
-
-  const getScheduleCell = (id, schedule) => {
-    if (schedule.available.length >= 1) {
-      return (
-        <div
-          className="schedule-cell"
-          onClick={() => handleClickShift(id, schedule)}
-        >
-          <ShiftCard />
-        </div>
-      );
-    } else {
-      return <div className="shift-unavailable">UNAVAILABLE</div>;
-    }
-  };
 
   const generateNewSchedule = () => {
     //reset schedule
     let newSchedule = [];
-    setMock(newSchedule);
+    setSchedule(newSchedule);
+
+    //set controls
+    setEditView(true);
+    setListView(false);
+    setViewView(false);
 
     newSchedule = people.map((p) => ({
       personId: p.id,
-      personName: p.firstName + " " + p.lastName,
+      name: p.firstName + " " + p.lastName,
       schedule: getSchedule(p.available),
     }));
 
     //finished
-    setMock(newSchedule);
+    setSchedule(newSchedule);
+    // console.log('schedule', schedule)
   };
 
   const getSchedule = (availArr) => {
     let schedule = [];
-    let shift = {};
     availArr.map((a, i) => {
+      let shift = {};
       if (a === 0) {
         shift = {
           day: i,
@@ -124,11 +81,41 @@ export const Schedule = () => {
           shifts: [],
         };
       }
-      schedule.push(shift);
-      shift = {};
+      return schedule.push(shift);
     });
     return schedule;
   };
+
+  const calculateDailyShifts = () => {
+    
+    setDailyShifts([]);
+  };
+
+  const updateFullSchedule = (employeeId, employeeSchedule) => {
+    const index = schedule.map((object) => object.personId).indexOf(employeeId);
+    try{
+      schedule[index].schedule = employeeSchedule;
+      console.log("schedule", schedule);
+      setSchedule(schedule);
+
+
+
+      console.log("daily shifts", dailyShifts);
+      const mapped = schedule.map((d, i) => {
+        return d.schedule;
+      });
+      console.log("mapped", mapped);
+      const merged = [].concat.apply([], mapped);
+      console.log("merged", merged);
+      const final = merged.filter((m) => m.shifts.length > 0);
+      console.log('final', final);
+      const dShifts = [{},{},{},{},{},{},{}];
+
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
 
   return (
     <main>
@@ -139,69 +126,145 @@ export const Schedule = () => {
         </div>
         <div className="page-header-bar-controls">
           <button className="button" onClick={() => generateNewSchedule()}>
-            New
+            Generate
           </button>
           <button className="button">Save</button>
           <button className="button">Publish</button>
         </div>
       </section>
 
+      <section>
+        <button className="button">
+          <FontAwesomeIcon icon={faChartBar} />
+        </button>
+      </section>
+
       <section className="main-content">
-        {/* future idea */}
-        {/* <div className="table-row">Daily Chart Row</div> */}
-        {dailyViewFilter && (
-          <DailyViewFilterControls scheduleRange={scheduleRange} />
+        {/* list */}
+        {listView && (
+          <>
+            <div className="schedule-list">no current schedules</div>
+          </>
         )}
 
-        <section className="table">
-          {/* people information */}
-          <div className="table__people">
-            <div className="table__header-cell"></div>
-            {mock.map((m, i) => (
-              <div
-                key={`${i}-employee`}
-                className="table__cell"
-                onClick={() => handleClickPerson(m.personId)}
-              >
-                <EmployeeCard
-                  name={m.name}
-                  contact={"contact info"}
-                  image={null}
-                />
-              </div>
-            ))}
-          </div>
+        {/* view */}
 
-          {/* shift information */}
-          <div className="table__shifts">
-            {scheduleRange.map((range, i) => (
-              <div className="table__header-cell" key={`${i}-${range}`}>
-                {range.toLocaleDateString("en-us", {
-                  weekday: "short",
-                  day: "numeric",
-                })}
-              </div>
-            ))}
-
-            {mock.map((m, i) =>
-              m.schedule.map((s, i) => (
-                <div key={i} className="table__cell">
-                  {getScheduleCell(m.persionID, s)}
-                </div>
-              ))
+        {/* edit */}
+        {editView && (
+          <>
+            {/* future idea */}
+            {/* <div className="table-row">Daily Chart Row</div> */}
+            {dailyViewFilter && (
+              <DailyViewFilterControls scheduleRange={scheduleRange} />
             )}
-          </div>
-        </section>
+
+            <section className="table">
+              <TableHeader scheduleDates={scheduleRange} />
+              {schedule.map((m, i) => (
+                <Fragment key={`${i}-GUID-stuff`}>
+                  <div
+                    key={`${i}-employee`}
+                    className="table__cell"
+                    onClick={() => handleClickPerson(m.personId)}
+                  >
+                    <EmployeeCard
+                      name={m.name}
+                      contact={"contact info"}
+                      image={null}
+                    />
+                  </div>
+                  <EmployeeScheduleCells
+                    id={m.personId}
+                    schedule={m.schedule}
+                    updateSchedule={updateFullSchedule}
+                  />
+                </Fragment>
+              ))}
+            </section>
+          </>
+        )}
       </section>
     </main>
   );
 };
 
+const TableHeader = ({scheduleDates}) => {
+  const dayOfWeekAbbrev = (dayIndex) => {
+    return (
+      [
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+      ][dayIndex] || ""
+    );
+  }
+  return (
+    <>
+      <div className="table__header-cell">Person Details</div>
+      {scheduleDates.map((d, i) => 
+        {
+          let day = new Date(d);
+          return (
+            <div className="table__header-cell" key={`${i}-dates-${d}`}>
+              {`${dayOfWeekAbbrev(day.getDay())} ${day.getMonth()}/${day.getDate()}`}
+            </div>
+          );
+        }
+      )}
+    </>
+  );
+}
+
+const EmployeeScheduleCells = ({id, schedule, updateSchedule}) => {
+  
+  const updateEmpSchedule = (shift, section, day) => {
+    if (shift === "" && section === ""){
+      return
+    }
+    let newShift = {"shift": shift, "section": section};
+
+    const shiftExists = (s) => {
+      return s.shift === shift || s.section === section;
+    }
+    
+    let index = schedule[day].shifts.findIndex(shiftExists) > 0 ?
+      schedule[day].shifts.findIndex(shiftExists) :
+      0;
+    schedule[day].shifts[index] = newShift;
+    updateSchedule(id, schedule);
+  };
+
+  const getScheduleCell = (id, schedule, ) => {
+    if (schedule.available.length >= 1) {
+      //TO DO: currently only handles one shift per person per day
+      let shift = schedule.shifts.length > 0  ? schedule.shifts[0].shift : '';
+      let section = schedule.shifts.length > 0 ? schedule.shifts[0].section : '';
+      return (
+        <div className="add-shift-cell">
+          <ShiftCard update={updateEmpSchedule} shift={shift} section={section} day={schedule.day}/>
+        </div>
+      );
+    } else {
+      return <div className="shift-unavailable">UNAVAILABLE</div>;
+    }
+  };
+
+  return schedule.map((s, i) => (
+    <div key={`${id}-${i}`} className="table__cell">
+      {getScheduleCell(id, s)}
+    </div>
+  ));
+}
+
 const DailyViewFilterControls = ({ scheduleRange }) => {
   return (
     <section className="mobile__table-header">
       {scheduleRange.map((range, i) => (
-        <div className="mobile__table-header-cell">
+        <div className="mobile__table-header-cell" key={`${i}-${range}`}>
           <div>
             {range.toLocaleDateString("en-us", {
               weekday: "short",

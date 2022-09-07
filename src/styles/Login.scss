@@ -1,5 +1,32 @@
 /* mobile */
 @media (max-width: 600px) {
+  .login {
+    &__page {
+      display: grid;
+      grid-template-rows: 2fr 3fr;
+    }
+
+    &__banner {
+      background-color: var(--light-gray);
+      text-align: center;
+      
+      &--content {
+        padding-top: 100px;
+      }
+    }
+
+    &__form {
+      margin: 20px;
+    }
+
+    &__form-container {
+      &--forgot {
+        font-size: 12px;
+        padding: 10px;
+        text-align: right;
+      }
+    }
+  }
 }
 
 /* full screen */

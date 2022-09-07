@@ -66,7 +66,48 @@
       },
       {
         "day": 4,
+        "available": [],
+        "shifts": []
+      },
+      {
+        "day": 5,
         "available": [1],
+        "shifts": []
+      },
+      {
+        "day": 6,
+        "available": [],
+        "shifts": []
+      }
+    ]
+  },
+  {
+    "personId": 2,
+    "name": "testName, Testperson",
+    "schedule": [
+      {
+        "day": 0,
+        "available": [],
+        "shifts": []
+      },
+      {
+        "day": 1,
+        "available": [1],
+        "shifts": []
+      },
+      {
+        "day": 2,
+        "available": [0],
+        "shifts": []
+      },
+      {
+        "day": 3,
+        "available": [1],
+        "shifts": []
+      },
+      {
+        "day": 4,
+        "available": [0],
         "shifts": []
       },
       {
@@ -76,7 +117,7 @@
       },
       {
         "day": 6,
-        "available": [],
+        "available": [1],
         "shifts": []
       }
     ]
