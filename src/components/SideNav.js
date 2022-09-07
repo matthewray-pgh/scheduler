@@ -29,7 +29,7 @@ export const SideNav = () => {
   };
 
   useEffect(() => {
-    console.log(`showMobileMenu - ${showMobileMenu}`);
+    // console.log(`showMobileMenu - ${showMobileMenu}`);
   });
 
   const handleMobileMenuClick = () => {
