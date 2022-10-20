@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./styles/App.scss";
 
 import {
@@ -17,6 +17,7 @@ import {
   ForgotPassword,
   People,
   Schedule,
+  ScheduleMobile,
   Sections,
   Shifts,
 } from "./pages";
@@ -24,7 +25,6 @@ import {
 const ProtectedRoute = ({ children }) => {
   const { token } = useAuth();
   const location = useLocation();
-
   if (!token) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
@@ -32,6 +32,18 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const App = () => {
+  const [mQuery, setMQuery] = useState({
+    matches: window.innerWidth > 768 ? true : false,
+  });
+
+  useEffect(() => {
+    let mediaQuery = window.matchMedia("(min-width: 768px)");
+    mediaQuery.addEventListener("change", (e) => {
+      setMQuery(e.target);
+    });
+    return () => mediaQuery.removeEventListener("change", setMQuery);
+  }, [mQuery]);
+
   return (
     <BrowserRouter>
       <AuthProvider>
@@ -59,7 +71,7 @@ const App = () => {
               path="/schedule"
               element={
                 // <ProtectedRoute>
-                <Schedule />
+                mQuery.matches ? <Schedule /> : <ScheduleMobile />
                 // </ProtectedRoute>
               }
             />
