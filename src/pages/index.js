@@ -6,5 +6,6 @@ export { Home } from "./Home";
 export { Login } from "./Login";
 export { People } from "./People";
 export { Schedule } from "./Schedule";
+export { ScheduleMobile } from "./ScheduleMobile";
 export { Sections } from "./Sections";
 export { Shifts } from "./Shifts";

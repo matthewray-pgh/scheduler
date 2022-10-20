@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useMemo } from "react";
+import React, { Fragment, useState, useMemo, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faChartBar } from "@fortawesome/free-solid-svg-icons";
@@ -10,7 +10,9 @@ import "../styles/Schedule.scss";
 import config from "../assets/appConfig.json";
 import mockSchedule from "../assets/mockSchedule.json";
 import personDetails from "../assets/personDetails";
-import { endsWith } from "lodash";
+
+
+import groupBy from "lodash/groupBy";
 
 const defaultActive = { person: 0, day: 1 };
 const defaultRange = [
@@ -61,7 +63,6 @@ export const Schedule = () => {
 
     //finished
     setSchedule(newSchedule);
-    // console.log('schedule', schedule)
   };
 
   const getSchedule = (availArr) => {
@@ -87,35 +88,31 @@ export const Schedule = () => {
   };
 
   const calculateDailyShifts = () => {
-    
-    setDailyShifts([]);
+    const removeEmployeeData = schedule.map((d, i) => {
+      return d.schedule;
+    });
+    const mergedSchedules = [].concat.apply([], removeEmployeeData);
+    const shifts = mergedSchedules.filter((m) => m.shifts.length > 0);
+    const dailyShiftTotals = groupBy(shifts, "day");
+    //const dailyShiftsOnly = dailyShiftTotals.map((d) => { return dailyShifts.shifts});
+    return dailyShiftTotals;
   };
 
   const updateFullSchedule = (employeeId, employeeSchedule) => {
     const index = schedule.map((object) => object.personId).indexOf(employeeId);
     try{
       schedule[index].schedule = employeeSchedule;
-      console.log("schedule", schedule);
-      setSchedule(schedule);
-
-
-
-      console.log("daily shifts", dailyShifts);
-      const mapped = schedule.map((d, i) => {
-        return d.schedule;
-      });
-      console.log("mapped", mapped);
-      const merged = [].concat.apply([], mapped);
-      console.log("merged", merged);
-      const final = merged.filter((m) => m.shifts.length > 0);
-      console.log('final', final);
-      const dShifts = [{},{},{},{},{},{},{}];
-
+      setSchedule(schedule);  
+      setDailyShifts(calculateDailyShifts);
     }
     catch(err){
       console.error(err);
     }
   }
+
+  useEffect(() => {
+    console.log("dailyShifts", dailyShifts);
+  }, [dailyShifts])
 
   return (
     <main>
@@ -159,7 +156,7 @@ export const Schedule = () => {
             )}
 
             <section className="table">
-              <TableHeader scheduleDates={scheduleRange} />
+              <TableHeader scheduleDates={scheduleRange} dailyShifts={dailyShifts}/>
               {schedule.map((m, i) => (
                 <Fragment key={`${i}-GUID-stuff`}>
                   <div
@@ -188,7 +185,7 @@ export const Schedule = () => {
   );
 };
 
-const TableHeader = ({scheduleDates}) => {
+const TableHeader = ({scheduleDates, dailyShifts}) => {
   const dayOfWeekAbbrev = (dayIndex) => {
     return (
       [
@@ -210,7 +207,8 @@ const TableHeader = ({scheduleDates}) => {
           let day = new Date(d);
           return (
             <div className="table__header-cell" key={`${i}-dates-${d}`}>
-              {`${dayOfWeekAbbrev(day.getDay())} ${day.getMonth()}/${day.getDate()}`}
+              <div>{`${dayOfWeekAbbrev(day.getDay())} ${day.getMonth()}/${day.getDate()}`}</div>
+              <RenderDailyShiftTotals dailyShifts={dailyShifts} index={i} />
             </div>
           );
         }
@@ -299,3 +297,10 @@ const EmployeeCard = ({ name, contact, image }) => {
     </section>
   );
 };
+
+const RenderDailyShiftTotals = ({dailyShifts, index}) => {
+
+  const dailyShiftObj = dailyShifts[index] && dailyShifts[index].length > 0 ? dailyShifts[index].length : 'N/A';
+
+  return <div>{dailyShiftObj}</div>;
+}
