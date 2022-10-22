@@ -1,0 +1,11 @@
+type Schedules @model {
+  id: ID!
+  name: String!
+  description: String
+  startdate: String
+  enddate: String
+  active: Boolean
+  published: Boolean
+  complete: Boolean
+  group: String
+}
