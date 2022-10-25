@@ -10,6 +10,14 @@
             "StackName": "amplify-scheduler-dev-172945",
             "StackId": "arn:aws:cloudformation:us-east-1:881606831959:stack/amplify-scheduler-dev-172945/7c2f8fc0-5187-11ed-87cb-0a5d1c5db2e9",
             "AmplifyAppId": "d1mlrvciterqvj"
+        },
+        "categories": {
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d1mlrvciterqvj",
+                    "type": "manual"
+                }
+            }
         }
     }
 }
