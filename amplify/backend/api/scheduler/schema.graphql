@@ -9,3 +9,15 @@ type Schedules @model {
   complete: Boolean
   group: String
 }
+
+type Person @model {
+  id: ID!
+  lastname: String!
+  firstname: String!
+  email: String
+  phone: String
+  hiredate: String
+  termdate: String
+  position: String
+  active: Boolean
+}

@@ -9,7 +9,7 @@ input:focus {
 
   height: 40px;
   padding: 2px 10px;
-  margin: 10px auto;
+  margin: 5px 10px;
 
   background-color: #ffffff;
   border: solid 1px var(--light-gray);
@@ -37,8 +37,7 @@ input:focus {
   font-variant: small-caps;
   font-weight: bold;
 
-  width: 100%;
-  margin: 10px auto;
+  margin: 10px;
   padding: 10px;
 
   background: #4169e1;
@@ -50,5 +49,26 @@ input:focus {
 
   &:active {
     background: #143391;
+  }
+}
+
+.form-button--confirm {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.95em;
+  font-variant: small-caps;
+  font-weight: bold;
+
+  margin: 10px;
+  padding: 10px;
+
+  background: #06a94d;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+
+  transition: 200ms;
+
+  &:active {
+    background: #0e7a3d;
   }
 }

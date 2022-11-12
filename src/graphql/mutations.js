@@ -55,3 +55,57 @@ export const deleteSchedules = /* GraphQL */ `
     }
   }
 `;
+export const createPerson = /* GraphQL */ `
+  mutation CreatePerson(
+    $input: CreatePersonInput!
+    $condition: ModelPersonConditionInput
+  ) {
+    createPerson(input: $input, condition: $condition) {
+      id
+      lastname
+      firstname
+      email
+      phone
+      hiredate
+      termdate
+      position
+      active
+    }
+  }
+`;
+export const updatePerson = /* GraphQL */ `
+  mutation UpdatePerson(
+    $input: UpdatePersonInput!
+    $condition: ModelPersonConditionInput
+  ) {
+    updatePerson(input: $input, condition: $condition) {
+      id
+      lastname
+      firstname
+      email
+      phone
+      hiredate
+      termdate
+      position
+      active
+    }
+  }
+`;
+export const deletePerson = /* GraphQL */ `
+  mutation DeletePerson(
+    $input: DeletePersonInput!
+    $condition: ModelPersonConditionInput
+  ) {
+    deletePerson(input: $input, condition: $condition) {
+      id
+      lastname
+      firstname
+      email
+      phone
+      hiredate
+      termdate
+      position
+      active
+    }
+  }
+`;
