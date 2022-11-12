@@ -38,3 +38,40 @@ export const listScheduless = /* GraphQL */ `
     }
   }
 `;
+export const getPerson = /* GraphQL */ `
+  query GetPerson($id: ID!) {
+    getPerson(id: $id) {
+      id
+      lastname
+      firstname
+      email
+      phone
+      hiredate
+      termdate
+      position
+      active
+    }
+  }
+`;
+export const listPersons = /* GraphQL */ `
+  query ListPersons(
+    $filter: ModelPersonFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPersons(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        lastname
+        firstname
+        email
+        phone
+        hiredate
+        termdate
+        position
+        active
+      }
+      nextToken
+    }
+  }
+`;

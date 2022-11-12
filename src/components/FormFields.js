@@ -16,29 +16,44 @@ export const FormFieldText = ({ label, value, onChange }) => {
   );
 };
 
-export const FormFieldEmail = ({ label, value }) => {
+export const FormFieldEmail = ({ label, value, onChange }) => {
   return (
     <div className="form-field">
       <label>{label}</label>
-      <input type="email" placeholder={label} defaultValue={value} />
+      <input
+        type="email"
+        placeholder={label}
+        defaultValue={value}
+        onChange={onChange}
+      />
     </div>
   );
 };
 
-export const FormFieldPhone = ({ label, value }) => {
+export const FormFieldPhone = ({ label, value, onChange }) => {
   return (
     <div className="form-field">
       <label>{label}</label>
-      <input type="tel" placeholder={label} defaultValue={value} />
+      <input
+        type="tel"
+        placeholder={label}
+        defaultValue={value}
+        onChange={onChange}
+      />
     </div>
   );
 };
 
-export const FormFieldDate = ({ label, value }) => {
+export const FormFieldDate = ({ label, value, onChange }) => {
   return (
     <div className="form-field">
       <label>{label}</label>
-      <input type="date" placeholder={label} defaultValue={value} />
+      <input
+        type="date"
+        placeholder={label}
+        defaultValue={value}
+        onChange={onChange}
+      />
     </div>
   );
 };

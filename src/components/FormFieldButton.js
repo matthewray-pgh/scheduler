@@ -14,3 +14,16 @@ export const FormFieldButton = ({ label, color, onClickHandler }) => {
     </button>
   );
 };
+
+export const FormFieldButtonConfirm = ({ label, color, onClickHandler }) => {
+  return (
+    <button
+      type="button"
+      className="form-button--confirm"
+      onClick={onClickHandler}
+      style={{ backgroundColor: color }}
+    >
+      {label}
+    </button>
+  );
+};

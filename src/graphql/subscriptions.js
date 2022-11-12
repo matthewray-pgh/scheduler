@@ -46,3 +46,48 @@ export const onDeleteSchedules = /* GraphQL */ `
     }
   }
 `;
+export const onCreatePerson = /* GraphQL */ `
+  subscription OnCreatePerson {
+    onCreatePerson {
+      id
+      lastname
+      firstname
+      email
+      phone
+      hiredate
+      termdate
+      position
+      active
+    }
+  }
+`;
+export const onUpdatePerson = /* GraphQL */ `
+  subscription OnUpdatePerson {
+    onUpdatePerson {
+      id
+      lastname
+      firstname
+      email
+      phone
+      hiredate
+      termdate
+      position
+      active
+    }
+  }
+`;
+export const onDeletePerson = /* GraphQL */ `
+  subscription OnDeletePerson {
+    onDeletePerson {
+      id
+      lastname
+      firstname
+      email
+      phone
+      hiredate
+      termdate
+      position
+      active
+    }
+  }
+`;

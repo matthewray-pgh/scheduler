@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
+
+import { API, graphqlOperation } from "aws-amplify";
+import { listPersons } from "../graphql/queries";
+import { createPerson, updatePerson, deletePerson } from "../graphql/mutations";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   faUserCircle,
-  faPlusSquare,
   faFilter,
-  faPen,
   faTrash,
   faSearch,
+  faSort
 } from "@fortawesome/free-solid-svg-icons";
 import "../styles/People.scss";
 
-import personData from "../assets/personDetails.json";
 import positionData from "../assets/positionsAPI.json";
 
 import find from "lodash/find";
@@ -23,27 +25,52 @@ import {
   FormFieldPhone,
   FormFieldDate,
 } from "../components/FormFields.js";
-import { FormFieldButton } from "../components/FormFieldButton.js";
+import {
+  FormFieldButton,
+  FormFieldButtonConfirm,
+} from "../components/FormFieldButton.js";
+
+const initialForm = {
+  id: null,
+  lastname: null,
+  firstname: null,
+  email: null,
+  phone: null,
+  hiredate: null,
+  termdate: null,
+  position: null,
+  active: false
+};
 
 export const People = () => {
-  const [data, setData] = useState(personData);
-  const [current, setCurrent] = useState({
-    lastName: null,
-    firstName: null,
-    email: null,
-    hireDate: null,
-  });
+  const [data, setData] = useState([]);
+  const [form, setForm] = useState(initialForm);
 
-  const [personDetails, setPersonDetails] = useState(false);
+  useEffect(() => {
+    fetchPerson();
+  }, []);
 
-  const confirmColor = "#06a94d";
+  const deletePersonAPI = async (id) => {
+    try {
+      if(!id) return;
+      await API.graphql(graphqlOperation(deletePerson, {input: { id: id, }}));
+      await fetchPerson();
+    } 
+    catch (err){
+      console.log('ERROR: ', err);
+    }
+  }
 
-  // const getPositionFakeAPI = (id) => {
-  //   setTimeout(() => {
-  //     const positionObj = find(positionData, ["id", id]);
-  //     console.log("positionObj", positionObj);
-  //   }, 2000);
-  // };
+  const fetchPerson = async () => {
+    try {
+      const personData = await API.graphql(graphqlOperation(listPersons));
+      const persons = personData.data.listPersons.items;
+      setData(persons);
+    }
+    catch(err){
+      console.log('ERROR fetching persons:', err);
+    }
+  }
 
   const getPositionName = (id) => {
     const data = find(positionData, ["id", parseInt(id)]);
@@ -51,34 +78,7 @@ export const People = () => {
   };
 
   const handleRowClick = (person) => {
-    console.log("person", person);
-    setCurrent({
-      lastName: person.lastName,
-      firstName: person.firstName,
-      email: person.email,
-      hireData: person.hireData,
-    });
-    if (personDetails !== true) {
-      setPersonDetails(true);
-    }
-  };
-
-  const handleSubmit = () => {
-    console.log("submit button was clicked!");
-  };
-
-  const handleCancel = () => {
-    setCurrent({
-      lastName: null,
-      firstName: null,
-      email: null,
-      hireDate: null,
-    });
-    setPersonDetails(false);
-  };
-
-  const handleAddClick = () => {
-    setPersonDetails(true);
+    setForm(person);
   };
 
   const handleFilterClick = () => {
@@ -87,122 +87,205 @@ export const People = () => {
 
   return (
     <main className="people__page">
-      <section className="people__header-bar">
-        <div className="people__header-title">People</div>
-        <div className="people__header-details"></div>
-      </section>
-
-      <section className="people__data-controls">
-        <div className="people__data-controls--search-bar">
+      <section className="people__header">
+        <div className="people__header--search-bar">
           <input
-            className="people__data-controls--search-input"
+            className="people__header--search-input"
             placeholder="Search People"
             type="text"
           ></input>
-          <button
-            className="people__data-controls--search-button"
-            type="button"
-          >
+          <button className="people__header--icon-button" type="button">
             <FontAwesomeIcon
-              className="people__data-control--button-icon"
+              className="people__header--button-icon"
               icon={faSearch}
             />
           </button>
         </div>
-        <div className="people__data-controls--filters">
-          <span className="people__data-controls--results">
-            Showing {data.length} of {data.length} results
-          </span>
+
+        <div className="people__header--filters">
           <button
-            className="people__header-control-button"
+            className="people__header--icon-button"
             onClick={handleFilterClick}
           >
             <FontAwesomeIcon
-              className="people__header-control-button--icon"
+              className="people__header--button--icon"
               icon={faFilter}
             />
-            <span>FILTER LIST</span>
           </button>
 
           <button
-            className="people__header-control-button"
-            onClick={handleAddClick}
+            className="people__header--icon-button"
+            onClick={() => {
+              console.log("clicked");
+            }}
           >
             <FontAwesomeIcon
-              className="people__header-control-button--icon"
-              icon={faPlusSquare}
+              className="people__header--button--icon"
+              icon={faSort}
             />
-            <span>ADD PERSON</span>
           </button>
         </div>
+      </section>
+
+      <section className="people__data-controls">
+        <span className="people__data-controls--results">
+          Showing {data.length} of {data.length} results
+        </span>
       </section>
 
       <section className="people__main-content">
         <section className="people__list-content">
           <div className="people__table">
-            <div className="people__table-row-header">
-              <span>person</span>
-              <span>position(s)</span>
-              <span>hire date</span>
-              <span>active</span>
-              <span>actions</span>
-            </div>
             {data.map((d, i) => {
               return (
-                <div
-                  className="people__table-row"
-                  key={i}
-                  onClick={() => handleRowClick(d)}
-                >
-                  <div className="people__table__id-card">
+                <Fragment key={i}>
+                  <div
+                    className="people__table--id-card"
+                    onClick={() => handleRowClick(d)}
+                  >
                     <FontAwesomeIcon
-                      className="people__table__id-card--icon"
+                      className="people__table--id-card--icon"
                       icon={faUserCircle}
                     />
                     <div>
-                      <div className="people__table__id-card--bold">
-                        {d.firstName} {d.lastName}
+                      <div className="people__table--id-card--bold">
+                        {d.firstname} {d.lastname}
                       </div>
                       <div>{d.email}</div>
                     </div>
                   </div>
 
-                  <span>
+                  <span
+                    className="people__table--cell"
+                    onClick={() => handleRowClick(d)}
+                  >
                     {getPositionName(d.position)}
-                    {d.Position}
+                    {d.position}
                   </span>
-                  <span>{d.hireDate}</span>
-                  <span>{d.active}</span>
-                  <span>
-                    <FontAwesomeIcon className="" icon={faPen} />
-                    <FontAwesomeIcon className="" icon={faTrash} />
+                  <span
+                    className="people__table--cell"
+                    onClick={() => handleRowClick(d)}
+                  >
+                    {d.hiredate}
                   </span>
-                </div>
+                  <span
+                    className="people__table--cell"
+                    onClick={() => handleRowClick(d)}
+                  >
+                    {d.active}
+                  </span>
+                  <span
+                    className="people__table--cell"
+                    onClick={() => deletePersonAPI(d.id)}
+                  >
+                    <span className="people__table--button-icon">
+                      <FontAwesomeIcon icon={faTrash} />
+                    </span>
+                  </span>
+                </Fragment>
               );
             })}
           </div>
-        </section>
 
-        <section
-          className={
-            personDetails ? "people__details" : "people__details--hide"
-          }
-        >
-          <div className="">DETAILS</div>
-          <FormFieldText label="first name" value={current.firstName} />
-          <FormFieldText label="last name" value={current.lastName} />
-          <FormFieldEmail label="email" value={current.email} />
-          <FormFieldDate label="hire date" value={current.hireDate} />
-          <FormFieldDate label="term date" value={current.termDate} />
-          <FormFieldPhone label="phone" value={current.contact} />
-          <FormFieldButton
-            label="submit"
-            color={confirmColor}
-            onClickHandler={handleSubmit}
-          />
-          <FormFieldButton label="cancel" onClickHandler={handleCancel} />
+          {data && data.length === 0 && (
+            <div className="people__table--row-empty">
+              <span>no results</span>
+              <div></div>
+            </div>
+          )}
         </section>
+        <PeopleForm fetch={fetchPerson} formData={form} />
       </section>
     </main>
+  );
+};
+
+export const PeopleForm = ({fetch, formData}) => {
+  const [form, setForm] = useState(initialForm);
+
+  useEffect(() => {
+    setForm(formData);
+  }, [formData])
+
+  const setInput = (key, value) => {
+    setForm({ ...form, [key]: value });
+  };
+
+  const addPersonAPI = async () => {
+    try {
+      if (!form.lastname || !form.firstname || !form.email) return;
+      const newPerson = { ...form, active: true };
+      await API.graphql(graphqlOperation(createPerson, { input: newPerson }));
+    } catch (err) {
+      console.log("error creating person", err);
+    }
+  };
+
+  const updatePersonAPI = async () => {
+    try {
+      if (!form.id) return;
+      const updPerson = { ...form };
+      await API.graphql(graphqlOperation(updatePerson, { input: updPerson }));
+    } catch (err) {
+      console.log("ERROR:", err);
+    }
+  };
+
+  const handleAddClick = async () => {
+    await addPersonAPI();
+    await fetch();
+    setForm(initialForm);
+  }
+
+  const handleUpdateClick = async () => {
+    await updatePersonAPI();
+    await fetch();
+    setForm(initialForm);
+  }
+
+  const handleCancel = () => {
+    setForm(initialForm);
+  };
+
+  return (
+    <section className="people__details">
+      <FormFieldText
+        label="first name"
+        value={form.firstname}
+        onChange={(event) => setInput("firstname", event.target.value)}
+      />
+      <FormFieldText
+        label="last name"
+        value={form.lastname}
+        onChange={(event) => setInput("lastname", event.target.value)}
+      />
+      <FormFieldEmail
+        label="email"
+        value={form.email}
+        onChange={(event) => setInput("email", event.target.value)}
+      />
+      <FormFieldPhone
+        label="phone"
+        value={form.phone}
+        onChange={(event) => setInput("phone", event.target.value)}
+      />
+      <FormFieldDate
+        label="hire date"
+        value={form.hiredate}
+        onChange={(event) => setInput("hiredate", event.target.value)}
+      />
+      <FormFieldDate
+        label="term date"
+        value={form.termdate}
+        onChange={(event) => setInput("termdate", event.target.value)}
+      />
+      {form.id ? (
+        <FormFieldButtonConfirm label="update" onClickHandler={handleUpdateClick} />
+      ) : (
+        <FormFieldButtonConfirm label="add" onClickHandler={handleAddClick} />
+      )}
+
+      <FormFieldButton label="cancel" onClickHandler={handleCancel} />
+    </section>
   );
 };

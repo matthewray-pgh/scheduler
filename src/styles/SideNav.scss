@@ -4,10 +4,12 @@
 
   &__heading {
     padding: 5px;
+    display: grid;
     text-align: center;
+    font-size: 1em;
 
-    background-color: var(--white);
-    color: var(--dark);
+    background-color: #282828;
+    color: var(--white);
   }
 
   &__nav {
