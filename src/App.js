@@ -11,15 +11,13 @@ import {
 import { Layout } from "./components/Layout";
 import { AuthProvider, useAuth } from "./components/Auth";
 import {
-  DailySchedule,
   Dashboard,
   Login,
   ForgotPassword,
   People,
-  Schedule,
+  ScheduleList,
   ScheduleMobile,
   Sections,
-  Shifts,
 } from "./pages";
 
 const ProtectedRoute = ({ children }) => {
@@ -71,15 +69,7 @@ const App = () => {
               path="/schedule"
               element={
                 // <ProtectedRoute>
-                mQuery.matches ? <Schedule /> : <ScheduleMobile />
-                // </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/shifts"
-              element={
-                // <ProtectedRoute>
-                <Shifts />
+                mQuery.matches ? <ScheduleList /> : <ScheduleMobile />
                 // </ProtectedRoute>
               }
             />
@@ -88,14 +78,6 @@ const App = () => {
               element={
                 // <ProtectedRoute>
                 <Sections />
-                // </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/dailySchedule"
-              element={
-                // <ProtectedRoute>
-                <DailySchedule />
                 // </ProtectedRoute>
               }
             />

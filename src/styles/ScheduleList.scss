@@ -1,0 +1,85 @@
+.schedules {
+  &__heading {
+    padding: 5px;
+    display: grid;
+    text-align: left;
+    font-size: 1em;
+  
+    background-color: #139584;
+    color: var(--white);
+  }
+
+  &__control-panel {
+    // display: grid;
+    // grid-template-columns: 1fr 1fr;
+
+    &--button {
+      border: solid 2px #139584;
+      color: #139584;
+      background-color: var(--white);
+      padding: 10px;
+      margin: 10px;
+
+      font-size: 1em;
+      font-weight: bold;
+      text-align: center;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &--button-icon {
+      padding: 0 5px;
+      font-size: 1em;
+    }
+
+    &--button-focus {
+      border: solid 2px #139584;
+      color: var(--white);
+      background-color: #139584;
+      padding: 10px;
+      margin: 10px;
+
+      font-size: 1em;
+      font-weight: bold;
+      text-align: center;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 50px 50px;
+
+    margin: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8em;
+    color: var(--dark);
+
+    &--cell {
+      margin-bottom: 5px;
+      padding: 10px;
+
+      background-color: var(--white);
+    }
+
+    &--bold-text {
+      font-size: 1em;
+      font-weight: bold;
+    }
+
+    &--button-icon {
+      font-size: 1.25em;
+      color: var(--dark-blue);
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+}
