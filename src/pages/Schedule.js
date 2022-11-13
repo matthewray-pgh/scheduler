@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useMemo, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faChartBar } from "@fortawesome/free-solid-svg-icons";
@@ -7,7 +7,6 @@ import { ShiftCard } from "../components/ShiftCard.js";
 
 import "../styles/Schedule.scss";
 
-import config from "../assets/appConfig.json";
 import mockSchedule from "../assets/mockSchedule.json";
 import personDetails from "../assets/personDetails";
 

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { useWindow } from "../components/UseWindow";
 import { useAuth } from "./Auth";
 
 import "../styles/SideNav.scss";
@@ -10,8 +9,7 @@ import {
   faCalendarAlt,
   faChartBar,
   faCogs,
-  faHome,
-  faTasks,
+  // faTasks,
   faUsers,
   faSignOutAlt,
   faUserAlt,
@@ -21,6 +19,7 @@ import {
 
 export const SideNav = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [activePage, setActivePage] = useState(null);
   const { token, onLogout } = useAuth();
 
   const handleUserLogout = () => {
@@ -28,9 +27,11 @@ export const SideNav = () => {
     onLogout();
   };
 
+  const location = useLocation();
+
   useEffect(() => {
-    // console.log(`showMobileMenu - ${showMobileMenu}`);
-  });
+    setActivePage(location.pathname);
+  }, []);
 
   const handleMobileMenuClick = () => {
     setShowMobileMenu(!showMobileMenu);
@@ -56,7 +57,7 @@ export const SideNav = () => {
           <h1>Scheduler</h1>
         </div>
         <div className="aside__nav">
-          <Menu token={token} handleUserLogout={handleUserLogout} />
+          <Menu token={token} handleUserLogout={handleUserLogout} activePage={activePage}/>
         </div>
       </aside>
 
@@ -73,14 +74,14 @@ export const SideNav = () => {
   );
 };
 
-const Menu = ({ token, handleUserLogout, handleUserNavigate }) => {
+const Menu = ({ token, handleUserLogout, handleUserNavigate, activePage }) => {
   return (
     <>
       <ul>
         <li>
           <Link to="/dashboard" onClick={handleUserNavigate}>
             <FontAwesomeIcon className="aside__nav--icon" icon={faChartBar} />
-            <span className="aside__nav--text">Dashboard</span>
+            <span>Dashboard</span>
           </Link>
         </li>
         <li>
@@ -89,31 +90,25 @@ const Menu = ({ token, handleUserLogout, handleUserNavigate }) => {
               className="aside__nav--icon"
               icon={faCalendarAlt}
             />
-            <span className="aside__nav--text">Schedule</span>
+            <span>Schedule</span>
           </Link>
         </li>
-        <li>
-          <Link to="/Shifts" onClick={handleUserNavigate}>
-            <FontAwesomeIcon className="aside__nav--icon" icon={faTasks} />
-            <span className="aside__nav--text">Shifts</span>
-          </Link>
-        </li>
-        <li>
+        {/* <li>
           <Link to="/sections" onClick={handleUserNavigate}>
             <FontAwesomeIcon className="aside__nav--icon" icon={faTasks} />
             <span className="aside__nav--text">Sections</span>
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/people" onClick={handleUserNavigate}>
             <FontAwesomeIcon className="aside__nav--icon" icon={faUsers} />
-            <span className="aside__nav--text">People</span>
+            <span>People </span>
           </Link>
         </li>
         <li>
           <Link to="/configuration" onClick={handleUserNavigate}>
             <FontAwesomeIcon className="aside__nav--icon" icon={faCogs} />
-            <span className="aside__nav--text">Settings</span>
+            <span>Settings</span>
           </Link>
         </li>
       </ul>

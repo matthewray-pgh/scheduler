@@ -2,23 +2,7 @@ import React, { useState, useCallback } from "react";
 
 import "../styles/ShiftCard.scss";
 
-const sectionOptions = [
-  { id: 0, value: "inside" },
-  { id: 1, value: "patio" },
-  { id: 2, value: "bar" },
-  { id: 3, value: "side-bar" },
-  { id: 4, value: "back room" },
-  { id: 5, value: "patio-bar" },
-];
-
-const timeOptions = [
-  { id: 0, value: " -- " },
-  { id: 1, value: " AM " },
-  { id: 2, value: " PM " },
-];
-
 export const ShiftCard = ({update, shift, section, day }) => {
-  const [focus, setFocus] = useState(false);
   const [shiftValue, setShiftValue] = useState(shift);
   const [sectionValue, setSectionValue] = useState(section);
 
