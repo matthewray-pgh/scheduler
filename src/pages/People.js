@@ -11,8 +11,10 @@ import {
   faFilter,
   faTrash,
   faSearch,
-  faSort
+  faSortAmountDown,
+  faSortAmountUp,
 } from "@fortawesome/free-solid-svg-icons";
+
 import "../styles/People.scss";
 
 import positionData from "../assets/positionsAPI.json";
@@ -28,6 +30,8 @@ import {
 import {
   FormFieldButton,
   FormFieldButtonConfirm,
+  IconButton,
+  ListButton,
 } from "../components/FormFieldButton.js";
 
 const initialForm = {
@@ -87,6 +91,9 @@ export const People = () => {
 
   return (
     <main className="people__page">
+      <div className="people__title">
+        <h1>People</h1>
+      </div>
       <section className="people__header">
         <div className="people__header--search-bar">
           <input
@@ -103,34 +110,10 @@ export const People = () => {
         </div>
 
         <div className="people__header--filters">
-          <button
-            className="people__header--icon-button"
-            onClick={handleFilterClick}
-          >
-            <FontAwesomeIcon
-              className="people__header--button--icon"
-              icon={faFilter}
-            />
-          </button>
-
-          <button
-            className="people__header--icon-button"
-            onClick={() => {
-              console.log("clicked");
-            }}
-          >
-            <FontAwesomeIcon
-              className="people__header--button--icon"
-              icon={faSort}
-            />
-          </button>
+          <IconButton onClickHandler={handleFilterClick} icon={faFilter} />
+          <IconButton onClickHandler={() => {}} icon={faSortAmountDown} />
+          <IconButton onClickHandler={() => {}} icon={faSortAmountUp} />
         </div>
-      </section>
-
-      <section className="people__data-controls">
-        <span className="people__data-controls--results">
-          Showing {data.length} of {data.length} results
-        </span>
       </section>
 
       <section className="people__main-content">
@@ -174,13 +157,11 @@ export const People = () => {
                   >
                     {d.active}
                   </span>
-                  <span
-                    className="people__table--cell"
-                    onClick={() => deletePersonAPI(d.id)}
-                  >
-                    <span className="people__table--button-icon">
-                      <FontAwesomeIcon icon={faTrash} />
-                    </span>
+                  <span className="people__table--cell">
+                    <ListButton
+                      onClickHandler={() => deletePersonAPI(d.id)}
+                      icon={faTrash}
+                    />
                   </span>
                 </Fragment>
               );

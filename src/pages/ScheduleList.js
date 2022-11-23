@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPen, faFilter, faCalendarPlus, faSortAmountDown, faSortAmountUp } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPen, faFilter, faSortAmountDown, faSortAmountUp } from "@fortawesome/free-solid-svg-icons";
 
 import {
   FormFieldText,
@@ -10,6 +9,8 @@ import {
 import {
   FormFieldButton,
   FormFieldButtonConfirm,
+  IconButton,
+  ListButton,
 } from "../components/FormFieldButton.js";
 
 import useSchedules from '../hooks/UseSchedules';
@@ -32,6 +33,8 @@ export const ScheduleList = () => {
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const formRef = useRef();
+
   const { fetchSchedulesApi, deleteScheduleApi } = useSchedules();
 
   const fetchData = () => {
@@ -49,73 +52,58 @@ export const ScheduleList = () => {
 
   const handleCreateSchedule = () => {
     setShowForm(true);
-  }
+    console.log("create schedule");
+  };
 
   const handleEditClick = (d) => {
     setSelectedSchedule(d);
     setShowForm(true);
-  }
+  };
 
   const handleDeleteClick = async (id) => {
-    console.log('add delete confirmation popup, before delete');
     //setLoading(true);
     await deleteScheduleApi(id);
     await fetchData();
     //setLoading(false);
-  }
+  };
 
   const handleFormCancel = () => {
     setShowForm(false);
-  }
+  };
 
   return (
     <main className="schedules">
-      <section className="schedules__heading">
-        <h1>Schedules</h1>
-      </section>
-
       <section
         className="schedules__control-panel"
         data-testid="schedules-control-panel"
       >
-        <button
-          className="schedules__control-panel--button-focus"
-          onClick={handleCreateSchedule}
-        >
-          <FontAwesomeIcon
-            className="schedules__control-panel--button-icon"
-            icon={faCalendarPlus}
+        <div className="schedules__control-panel--title-pane">
+          <h1>Schedules List</h1>
+        </div>
+        <div className="schedules__control-panel--filter-pane">
+          <FormFieldButton
+            label="create schedule"
+            onClickHandler={handleCreateSchedule}
           />
-          Create Schedule
-        </button>
-        <button className="schedules__control-panel--button">
-          <FontAwesomeIcon
-            className="schedules__control-panel--button-icon"
-            icon={faFilter}
-          />
-        </button>
-        <button className="schedules__control-panel--button">
-          <FontAwesomeIcon
-            className="schedules__control-panel--button-icon"
-            icon={faSortAmountDown}
-          />
-        </button>
-        <button className="schedules__control-panel--button">
-          <FontAwesomeIcon
-            className="schedules__control-panel--button-icon"
-            icon={faSortAmountUp}
-          />
-        </button>
+          <IconButton icon={faFilter} />
+          <IconButton icon={faSortAmountDown} />
+          <IconButton icon={faSortAmountUp} />
+        </div>
       </section>
 
       <section data-testid="schedule-form-container">
-        {showForm && (
-          <PeopleForm
+        {/* {showForm && ( */}
+        <div
+          ref={formRef}
+          className={showForm ? "schedules__form-show" : "schedules__form-hide"}
+        >
+          <ScheduleForm
             formData={selectedSchedule}
             refreshListFetch={fetchData}
             handleCancel={handleFormCancel}
           />
-        )}
+        </div>
+        {/* )} */}
       </section>
 
       <section data-testid="schedule-list-container">
@@ -128,25 +116,27 @@ export const ScheduleList = () => {
                   <div className="schedules__list--bold-text">{d.name}</div>
                   <div>{d.description}</div>
                 </span>
-                <span className="schedules__list--cell">{d.startdate ?? '--/--/----'} to {d.enddate ?? '--/--/----'}</span>
+
+                <span className="schedules__list--cell">
+                  {d.startdate ?? "--/--/----"} to {d.enddate ?? "--/--/----"}
+                </span>
+
                 <span className="schedules__list--cell">
                   [placeholder position tags]
                 </span>
-                <span
-                  className="schedules__list--cell"
-                  onClick={() => handleEditClick(d)}
-                >
-                  <span className="people__table--button-icon">
-                    <FontAwesomeIcon icon={faPen} />
-                  </span>
+
+                <span className="schedules__list--cell">
+                  <ListButton
+                    icon={faPen}
+                    onClickHandler={() => handleEditClick(d)}
+                  />
                 </span>
-                <span
-                  className="schedules__list--cell"
-                  onClick={() => handleDeleteClick(d.id)}
-                >
-                  <span className="people__table--button-icon">
-                    <FontAwesomeIcon icon={faTrash} />
-                  </span>
+
+                <span className="schedules__list--cell">
+                  <ListButton
+                    icon={faTrash}
+                    onClickHandler={() => handleDeleteClick(d)}
+                  />
                 </span>
               </React.Fragment>
             );
@@ -158,11 +148,10 @@ export const ScheduleList = () => {
   );
 }
 
-export const PeopleForm = ({ formData, refreshListFetch, handleCancel }) => {
+export const ScheduleForm = ({ formData, refreshListFetch, handleCancel }) => {
   const [form, setForm] = useState(initialForm);
 
-  const { createScheduleApi, updateSchedulesApi } =
-    useSchedules();
+  const { createScheduleApi, updateSchedulesApi } = useSchedules();
 
   useEffect(() => {
     setForm(formData);
@@ -174,7 +163,7 @@ export const PeopleForm = ({ formData, refreshListFetch, handleCancel }) => {
 
   const confirmNameField = () => {
     return form.name ? form.name : `${form.startdate}-${form.enddate}`;
-  }
+  };
 
   const handleAddClick = async () => {
     form.name = confirmNameField();
@@ -191,7 +180,7 @@ export const PeopleForm = ({ formData, refreshListFetch, handleCancel }) => {
   };
 
   return (
-    <section className="schedule__details">
+    <section className="schedules__details">
       <FormFieldText
         label="name"
         value={form.name}
@@ -217,13 +206,19 @@ export const PeopleForm = ({ formData, refreshListFetch, handleCancel }) => {
         value={form.group}
         onChange={(event) => setInput("group", event.target.value)}
       />
-      {form.id ? (
-        <FormFieldButtonConfirm label="update" onClickHandler={handleUpdateClick} />
-      ) : (
-        <FormFieldButtonConfirm label="add" onClickHandler={handleAddClick} />
-      )}
-
-      <FormFieldButton label="cancel" onClickHandler={handleCancel} />
+      <div data-testid="form-submit-container" style={{ display: "grid" }}>
+        {form.id ? (
+          <FormFieldButtonConfirm
+            label="update"
+            onClickHandler={handleUpdateClick}
+          />
+        ) : (
+          <FormFieldButtonConfirm label="add" onClickHandler={handleAddClick} />
+        )}
+      </div>
+      <div data-testid="form-cancel-container" style={{ display: "grid" }}>
+        <FormFieldButton label="cancel" onClickHandler={handleCancel} />
+      </div>
     </section>
   );
 };

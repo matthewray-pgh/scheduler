@@ -40,13 +40,23 @@
 
 // all resolutions
 .people {
+  &__title {
+    h1 {
+      font-size: 1.5em;
+      font-weight: bold;
+  
+      color: var(--blue);
+      padding: 20px;
+      margin: 0;
+    }
+  }
+
   &__header {
     display: grid;
     grid-template-columns: 1fr 200px;
     align-items: center;
 
     padding: 9px;
-    background-color: var(--white);
   
     &--search-bar {
       margin: 0 10px;
@@ -84,7 +94,7 @@
       padding: 5px 0;
 
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
     }
   }
 

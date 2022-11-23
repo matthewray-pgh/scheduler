@@ -1,3 +1,11 @@
+$button-standard: #4169e1;
+$button-standard-active: #143391;
+
+$button-confirm: #06a94d;
+$button-confirm-active: #0e7a3d;
+
+$button-white: #ffffff;
+
 textarea:focus,
 input:focus {
   outline: none;
@@ -33,42 +41,88 @@ input:focus {
 
 .form-button {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.95em;
-  font-variant: small-caps;
+  font-size: 1em;
   font-weight: bold;
 
   margin: 10px;
   padding: 10px;
+  min-height: 40px;
 
-  background: #4169e1;
-  color: #fff;
+  background: $button-standard;
+  color: $button-white;
   border: none;
   cursor: pointer;
 
   transition: 200ms;
 
   &:active {
-    background: #143391;
+    background: $button-standard-active;
   }
 }
 
 .form-button--confirm {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.95em;
-  font-variant: small-caps;
+  font-size: 1em;
   font-weight: bold;
 
   margin: 10px;
   padding: 10px;
+  min-height: 40px;
 
-  background: #06a94d;
-  color: #fff;
+  background: $button-confirm;
+  color: $button-white;
   border: none;
   cursor: pointer;
 
   transition: 200ms;
 
   &:active {
-    background: #0e7a3d;
+    background: $button-confirm-active;
+  }
+}
+
+.icon-button {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+
+  margin: 10px;
+  padding: 10px;
+
+  background: $button-white;
+  color: $button-standard;
+  border: solid 2px $button-standard;
+  cursor: pointer;
+
+  transition: 200ms;
+
+  &:active {
+    color: $button-white;
+    background: $button-standard;
+    border: solid 2px $button-standard-active;
+  }
+}
+
+.list-button {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.25em;
+  font-weight: bold;
+
+  padding: 5px;
+  align-self: center;
+
+  background: $button-white;
+  border: none;
+  color: var(--dark);
+  cursor: pointer;
+
+  transition: 200ms;
+
+  &:hover {
+    color: $button-standard;
+  }
+
+  &:active {
+    color: $button-standard-active;
   }
 }
