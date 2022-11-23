@@ -7,6 +7,7 @@ import "../styles/Login.scss";
 
 import { FormFieldText } from "../components/FormFields.js";
 import { FormFieldButton } from "../components/FormFieldButton.js";
+import { Grid } from "@aws-amplify/ui-react";
 
 export const Login = () => {
   const [loginData, setLoginData] = useState({ user: "", password: "" });
@@ -41,7 +42,9 @@ export const Login = () => {
                 forgot password
               </Link>
             </div>
-            <FormFieldButton label="login" onClickHandler={handleSubmit} />
+            <div style={{display: 'grid'}}>
+              <FormFieldButton label="login" onClickHandler={handleSubmit} />
+            </div>
           </div>
         </section>
       </main>
