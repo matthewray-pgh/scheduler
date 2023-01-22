@@ -109,3 +109,45 @@ export const deletePerson = /* GraphQL */ `
     }
   }
 `;
+export const createShifts = /* GraphQL */ `
+  mutation CreateShifts(
+    $input: CreateShiftsInput!
+    $condition: ModelShiftsConditionInput
+  ) {
+    createShifts(input: $input, condition: $condition) {
+      id
+      personid
+      scheduleid
+      shift
+      section
+    }
+  }
+`;
+export const updateShifts = /* GraphQL */ `
+  mutation UpdateShifts(
+    $input: UpdateShiftsInput!
+    $condition: ModelShiftsConditionInput
+  ) {
+    updateShifts(input: $input, condition: $condition) {
+      id
+      personid
+      scheduleid
+      shift
+      section
+    }
+  }
+`;
+export const deleteShifts = /* GraphQL */ `
+  mutation DeleteShifts(
+    $input: DeleteShiftsInput!
+    $condition: ModelShiftsConditionInput
+  ) {
+    deleteShifts(input: $input, condition: $condition) {
+      id
+      personid
+      scheduleid
+      shift
+      section
+    }
+  }
+`;

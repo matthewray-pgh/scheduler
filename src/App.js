@@ -6,28 +6,32 @@ import {
   Routes,
   Route,
   Navigate,
-  useLocation,
+  // useLocation,
 } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import { AuthProvider, useAuth } from "./components/Auth";
+import { 
+  AuthProvider, 
+  // useAuth 
+} from "./components/Auth";
 import {
   Dashboard,
   Login,
   ForgotPassword,
   People,
+  Schedule,
   ScheduleList,
   ScheduleMobile,
   Sections,
 } from "./pages";
 
-const ProtectedRoute = ({ children }) => {
-  const { token } = useAuth();
-  const location = useLocation();
-  if (!token) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
-  }
-  return children;
-};
+// const ProtectedRoute = ({ children }) => {
+//   const { token } = useAuth();
+//   const location = useLocation();
+//   if (!token) {
+//     return <Navigate to="/login" replace state={{ from: location }} />;
+//   }
+//   return children;
+// };
 
 const App = () => {
   const [mQuery, setMQuery] = useState({
@@ -70,6 +74,14 @@ const App = () => {
               element={
                 // <ProtectedRoute>
                 mQuery.matches ? <ScheduleList /> : <ScheduleMobile />
+                // </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/schedule/:id"
+              element={
+                // <ProtectedRoute>
+                <Schedule />
                 // </ProtectedRoute>
               }
             />

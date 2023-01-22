@@ -1,25 +1,22 @@
 import React, { Fragment, useState, useEffect } from "react";
 
-import { API, graphqlOperation } from "aws-amplify";
-import { listPersons } from "../graphql/queries";
-import { createPerson, updatePerson, deletePerson } from "../graphql/mutations";
+import usePersonAPI from "../hooks/UsePersonApi";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   faUserCircle,
-  faFilter,
-  faTrash,
-  faSearch,
-  faSortAmountDown,
-  faSortAmountUp,
+  faTrashAlt,
+  faPencilAlt,
+  faThList,
+  faTh
 } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/People.scss";
 
-import positionData from "../assets/positionsAPI.json";
-
-import find from "lodash/find";
+// TODO: POSITION TAGS hook
+// import positionData from "../assets/positionsAPI.json";
+// import find from "lodash/find";
 
 import {
   FormFieldText,
@@ -50,43 +47,54 @@ export const People = () => {
   const [data, setData] = useState([]);
   const [form, setForm] = useState(initialForm);
 
+  const { 
+    fetchPersonList, 
+    deleteCurrentPerson 
+  } = usePersonAPI();
+
   useEffect(() => {
-    fetchPerson();
+    getPersons();
+    // eslint-disable-next-line
   }, []);
 
-  const deletePersonAPI = async (id) => {
-    try {
-      if(!id) return;
-      await API.graphql(graphqlOperation(deletePerson, {input: { id: id, }}));
-      await fetchPerson();
-    } 
-    catch (err){
-      console.log('ERROR: ', err);
-    }
+  const getPersons = () => {
+    fetchPersonList().then((persons) => setData(persons));
   }
 
-  const fetchPerson = async () => {
-    try {
-      const personData = await API.graphql(graphqlOperation(listPersons));
-      const persons = personData.data.listPersons.items;
-      setData(persons);
-    }
-    catch(err){
-      console.log('ERROR fetching persons:', err);
-    }
-  }
+  const handleDeletePerson = async (id) => {
+    if (!id) return;
+    deleteCurrentPerson(id)
+      .then((result) => {
+        if(result.id){
+          getPersons();
+        }
+        else{
+          console.error("TODO: Display error on screen");
+        }
+      });
+  };
 
   const getPositionName = (id) => {
-    const data = find(positionData, ["id", parseInt(id)]);
-    return data ? data.name : "unassigned";
+    // const data = find(positionData, ["id", parseInt(id)]);
+    return (
+      <>
+        {/* <span className="people__position people__position--server">
+          server
+        </span>
+        <span className="people__position people__position--bartender">
+          bartender
+        </span>
+        <span className="people__position people__position--hostess">
+          hostess
+        </span> */}
+        <span className="people__position">unassigned</span>
+      </>
+    );
+    // return data ? data.name : "unassigned";
   };
 
-  const handleRowClick = (person) => {
+  const handleEditClick = (person) => {
     setForm(person);
-  };
-
-  const handleFilterClick = () => {
-    console.log("handle filter click -- temporary");
   };
 
   return (
@@ -95,37 +103,24 @@ export const People = () => {
         <h1>People</h1>
       </div>
       <section className="people__header">
-        <div className="people__header--search-bar">
-          <input
-            className="people__header--search-input"
-            placeholder="Search People"
-            type="text"
-          ></input>
-          <button className="people__header--icon-button" type="button">
-            <FontAwesomeIcon
-              className="people__header--button-icon"
-              icon={faSearch}
-            />
-          </button>
-        </div>
-
-        <div className="people__header--filters">
-          <IconButton onClickHandler={handleFilterClick} icon={faFilter} />
-          <IconButton onClickHandler={() => {}} icon={faSortAmountDown} />
-          <IconButton onClickHandler={() => {}} icon={faSortAmountUp} />
-        </div>
+        <IconButton icon={faThList} label="list" />
+        <IconButton icon={faTh} label="grid" />
       </section>
 
       <section className="people__main-content">
         <section className="people__list-content">
+          <div className="people__table people__table--header">
+            <div>Person</div>
+            <div>Position(s)</div>
+            <div>Date(s)</div>
+            <div className="people__table--header--span">Actions</div>
+          </div>
+
           <div className="people__table">
             {data.map((d, i) => {
               return (
                 <Fragment key={i}>
-                  <div
-                    className="people__table--id-card"
-                    onClick={() => handleRowClick(d)}
-                  >
+                  <div className="people__table--id-card">
                     <FontAwesomeIcon
                       className="people__table--id-card--icon"
                       icon={faUserCircle}
@@ -138,34 +133,42 @@ export const People = () => {
                     </div>
                   </div>
 
-                  <span
-                    className="people__table--cell"
-                    onClick={() => handleRowClick(d)}
-                  >
+                  <span className="people__table--positions">
                     {getPositionName(d.position)}
-                    {d.position}
                   </span>
-                  <span
-                    className="people__table--cell"
-                    onClick={() => handleRowClick(d)}
-                  >
-                    {d.hiredate}
-                  </span>
-                  <span
-                    className="people__table--cell"
-                    onClick={() => handleRowClick(d)}
-                  >
-                    {d.active}
+                  <span className="people__table--cell">{d.hiredate}</span>
+                  <span className="people__table--cell">
+                    <ListButton
+                      onClickHandler={() => handleEditClick(d)}
+                      icon={faPencilAlt}
+                    />
                   </span>
                   <span className="people__table--cell">
                     <ListButton
-                      onClickHandler={() => deletePersonAPI(d.id)}
-                      icon={faTrash}
+                      onClickHandler={() => handleDeletePerson(d.id)}
+                      icon={faTrashAlt}
                     />
                   </span>
+
+                  {d.id === form.id && (
+                    <div className="people__table--edit-form">
+                      <PeopleForm
+                        fetch={getPersons}
+                        formData={form}
+                        resetForm={setForm}
+                      />
+                    </div>
+                  )}
                 </Fragment>
               );
             })}
+          </div>
+
+          <div style={{display: "grid"}}>
+            <FormFieldButton 
+              label="add person" 
+              onClickHandler={() => console.log("show add person form")} 
+            />
           </div>
 
           {data && data.length === 0 && (
@@ -175,57 +178,65 @@ export const People = () => {
             </div>
           )}
         </section>
-        <PeopleForm fetch={fetchPerson} formData={form} />
       </section>
     </main>
   );
 };
 
-export const PeopleForm = ({fetch, formData}) => {
+export const PeopleForm = ({fetch, formData, resetForm}) => {
   const [form, setForm] = useState(initialForm);
+  const {
+    createNewPerson,
+    updateCurrentPerson
+  } = usePersonAPI();
 
   useEffect(() => {
     setForm(formData);
-  }, [formData])
+  }, [formData]);
 
   const setInput = (key, value) => {
     setForm({ ...form, [key]: value });
   };
 
   const addPersonAPI = async () => {
-    try {
-      if (!form.lastname || !form.firstname || !form.email) return;
-      const newPerson = { ...form, active: true };
-      await API.graphql(graphqlOperation(createPerson, { input: newPerson }));
-    } catch (err) {
-      console.log("error creating person", err);
-    }
+    if (!form.lastname || !form.firstname || !form.email) return;
+    let newPerson = { ...form, active: true };
+    createNewPerson(newPerson).then((result) => {
+      if (result.id) {
+        fetch();
+      } else {
+        console.error("TODO: Display error on screen");
+      }
+    });
   };
 
   const updatePersonAPI = async () => {
-    try {
-      if (!form.id) return;
-      const updPerson = { ...form };
-      await API.graphql(graphqlOperation(updatePerson, { input: updPerson }));
-    } catch (err) {
-      console.log("ERROR:", err);
-    }
+    if (!form.id) return;
+    let updatePerson = {...form}
+    updateCurrentPerson(updatePerson).then((result) => {
+      if (result.id) {
+        fetch();
+        setForm(initialForm);
+        resetForm(initialForm);
+      } else {
+        console.error("TODO: Display error on screen");
+      }
+    });
   };
 
   const handleAddClick = async () => {
     await addPersonAPI();
-    await fetch();
     setForm(initialForm);
   }
 
   const handleUpdateClick = async () => {
     await updatePersonAPI();
-    await fetch();
     setForm(initialForm);
   }
 
   const handleCancel = () => {
     setForm(initialForm);
+    resetForm(initialForm);
   };
 
   return (

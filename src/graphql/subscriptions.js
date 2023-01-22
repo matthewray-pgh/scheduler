@@ -91,3 +91,36 @@ export const onDeletePerson = /* GraphQL */ `
     }
   }
 `;
+export const onCreateShifts = /* GraphQL */ `
+  subscription OnCreateShifts {
+    onCreateShifts {
+      id
+      personid
+      scheduleid
+      shift
+      section
+    }
+  }
+`;
+export const onUpdateShifts = /* GraphQL */ `
+  subscription OnUpdateShifts {
+    onUpdateShifts {
+      id
+      personid
+      scheduleid
+      shift
+      section
+    }
+  }
+`;
+export const onDeleteShifts = /* GraphQL */ `
+  subscription OnDeleteShifts {
+    onDeleteShifts {
+      id
+      personid
+      scheduleid
+      shift
+      section
+    }
+  }
+`;

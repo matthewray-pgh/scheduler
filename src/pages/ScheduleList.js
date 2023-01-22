@@ -1,6 +1,11 @@
 import React, {useState, useEffect, useRef} from "react";
+import { Link } from "react-router-dom";
 
-import { faTrash, faPen, faFilter, faSortAmountDown, faSortAmountUp } from "@fortawesome/free-solid-svg-icons";
+import { 
+  faTrashAlt, 
+  faPencilAlt,
+  faCalendarAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 import {
   FormFieldText,
@@ -9,11 +14,10 @@ import {
 import {
   FormFieldButton,
   FormFieldButtonConfirm,
-  IconButton,
   ListButton,
 } from "../components/FormFieldButton.js";
 
-import useSchedules from '../hooks/UseSchedules';
+import useSchedulesApi from '../hooks/UseSchedulesApi';
 
 import '../styles/ScheduleList.scss';
 
@@ -35,10 +39,10 @@ export const ScheduleList = () => {
 
   const formRef = useRef();
 
-  const { fetchSchedulesApi, deleteScheduleApi } = useSchedules();
+  const { fetchScheduleList, deleteSchedule } = useSchedulesApi();
 
   const fetchData = () => {
-    const schedulePromise = fetchSchedulesApi();
+    const schedulePromise = fetchScheduleList();
     schedulePromise.then((result) => {
       setSchedules(result)
       setLoading(false);
@@ -48,6 +52,7 @@ export const ScheduleList = () => {
   useEffect(() => {
     setLoading(true);
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   const handleCreateSchedule = () => {
@@ -61,10 +66,18 @@ export const ScheduleList = () => {
   };
 
   const handleDeleteClick = async (id) => {
-    //setLoading(true);
-    await deleteScheduleApi(id);
-    await fetchData();
-    //setLoading(false);
+    setLoading(true);
+    await deleteSchedule(id)
+      .then(result => {
+        if (result.id) {
+          fetchData();
+        } else {
+          console.error("TODO: Display error on screen");
+          setLoading(false);
+        }
+      })
+      .then(() => setLoading(false));
+    
   };
 
   const handleFormCancel = () => {
@@ -78,17 +91,9 @@ export const ScheduleList = () => {
         data-testid="schedules-control-panel"
       >
         <div className="schedules__control-panel--title-pane">
-          <h1>Schedules List</h1>
+          <h1>Schedules</h1>
         </div>
-        <div className="schedules__control-panel--filter-pane">
-          <FormFieldButton
-            label="create schedule"
-            onClickHandler={handleCreateSchedule}
-          />
-          <IconButton icon={faFilter} />
-          <IconButton icon={faSortAmountDown} />
-          <IconButton icon={faSortAmountUp} />
-        </div>
+        <div className="schedules__control-panel--filter-pane"></div>
       </section>
 
       <section data-testid="schedule-form-container">
@@ -126,22 +131,38 @@ export const ScheduleList = () => {
                 </span>
 
                 <span className="schedules__list--cell">
+                  <Link to={`/schedule/${d.id}`}>
+                    <ListButton
+                      icon={faCalendarAlt}
+                      onClickHandler={() => {}}
+                    />
+                  </Link>
+                </span>
+
+                <span className="schedules__list--cell">
                   <ListButton
-                    icon={faPen}
+                    icon={faPencilAlt}
                     onClickHandler={() => handleEditClick(d)}
                   />
                 </span>
 
                 <span className="schedules__list--cell">
                   <ListButton
-                    icon={faTrash}
-                    onClickHandler={() => handleDeleteClick(d)}
+                    icon={faTrashAlt}
+                    onClickHandler={() => handleDeleteClick(d.id)}
                   />
                 </span>
               </React.Fragment>
             );
           })}
           {schedules && schedules.length === 0 && <p>No schedules found</p>}
+        </div>
+
+        <div style={{width: "100%", display: "grid"}}>
+          <FormFieldButton
+            label="create schedule"
+            onClickHandler={handleCreateSchedule}
+          />
         </div>
       </section>
     </main>
@@ -151,7 +172,7 @@ export const ScheduleList = () => {
 export const ScheduleForm = ({ formData, refreshListFetch, handleCancel }) => {
   const [form, setForm] = useState(initialForm);
 
-  const { createScheduleApi, updateSchedulesApi } = useSchedules();
+  const { createSchedule, updateSchedules } = useSchedulesApi();
 
   useEffect(() => {
     setForm(formData);
@@ -167,14 +188,14 @@ export const ScheduleForm = ({ formData, refreshListFetch, handleCancel }) => {
 
   const handleAddClick = async () => {
     form.name = confirmNameField();
-    await createScheduleApi(form);
+    await createSchedule(form);
     await refreshListFetch();
     await setForm(initialForm);
   };
 
   const handleUpdateClick = async () => {
     form.name = confirmNameField();
-    await updateSchedulesApi(form);
+    await updateSchedules(form);
     await refreshListFetch();
     await setForm(initialForm);
   };
@@ -213,7 +234,7 @@ export const ScheduleForm = ({ formData, refreshListFetch, handleCancel }) => {
             onClickHandler={handleUpdateClick}
           />
         ) : (
-          <FormFieldButtonConfirm label="add" onClickHandler={handleAddClick} />
+          <FormFieldButtonConfirm label="create" onClickHandler={handleAddClick} />
         )}
       </div>
       <div data-testid="form-cancel-container" style={{ display: "grid" }}>
