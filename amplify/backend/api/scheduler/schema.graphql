@@ -21,3 +21,11 @@ type Person @model {
   position: String
   active: Boolean
 }
+
+type Shifts @model {
+  id: ID!
+  personid: ID!
+  scheduleid: ID!
+  shift: String!
+  section: String
+}

@@ -75,3 +75,32 @@ export const listPersons = /* GraphQL */ `
     }
   }
 `;
+export const getShifts = /* GraphQL */ `
+  query GetShifts($id: ID!) {
+    getShifts(id: $id) {
+      id
+      personid
+      scheduleid
+      shift
+      section
+    }
+  }
+`;
+export const listShiftss = /* GraphQL */ `
+  query ListShiftss(
+    $filter: ModelShiftsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listShiftss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        personid
+        scheduleid
+        shift
+        section
+      }
+      nextToken
+    }
+  }
+`;

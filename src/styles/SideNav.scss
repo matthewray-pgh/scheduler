@@ -3,8 +3,9 @@
   color: var(--light-gray);
 
   &__heading {
-    padding: 5px;
+    height: 75px;
     display: grid;
+    align-items: center;
     text-align: center;
     font-size: 1em;
 

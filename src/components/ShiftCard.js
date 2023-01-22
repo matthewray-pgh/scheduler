@@ -14,9 +14,11 @@ export const ShiftCard = ({update, shift, section, day }) => {
     setSectionValue(e.target.value);
   },[]);
 
-  const updateSchedule = useCallback(() => {
-    return update(shiftValue, sectionValue, day);
-  }, [update, shiftValue, sectionValue, day]);
+  const updateShift = useCallback(() => {
+    console.log('updateShift');
+  },[]);
+    // return update(shiftValue, sectionValue, day);
+  // }, [update, shiftValue, sectionValue, day]);
 
   return (
     <div className="shift-card">
@@ -30,7 +32,7 @@ export const ShiftCard = ({update, shift, section, day }) => {
           value={shiftValue}
           className="shift-card__input"
           onChange={handleShiftChange}
-          onBlur={updateSchedule}
+          onBlur={updateShift}
         />
       </div>
 
@@ -44,7 +46,7 @@ export const ShiftCard = ({update, shift, section, day }) => {
           value={sectionValue}
           className="shift-card__input"
           onChange={handleSectionChange}
-          onBlur={updateSchedule}
+          onBlur={updateShift}
         />
       </div>
 

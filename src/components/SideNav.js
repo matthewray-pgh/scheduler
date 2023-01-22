@@ -9,7 +9,6 @@ import {
   faCalendarAlt,
   faChartBar,
   faCogs,
-  // faTasks,
   faUsers,
   faSignOutAlt,
   faUserAlt,
@@ -31,6 +30,8 @@ export const SideNav = () => {
 
   useEffect(() => {
     setActivePage(location.pathname);
+
+    // eslint-disable-next-line
   }, []);
 
   const handleMobileMenuClick = () => {

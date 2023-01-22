@@ -19,7 +19,7 @@ export const FormFieldButtonConfirm = ({ label, onClickHandler }) => {
   return (
     <button
       type="button"
-      className="form-button--confirm"
+      className="form-button form-button--confirm"
       onClick={onClickHandler}
     >
       {label}
@@ -40,5 +40,25 @@ export const ListButton = ({ icon, label, onClickHandler }) => {
     <button type="button" className="list-button" onClick={onClickHandler}>
       <FontAwesomeIcon icon={icon} /> <span>{label}</span>
     </button>
+  );
+};
+
+export const IconButtonBar = ({ buttonData }) => {
+  return (
+    <div className="icon-bar">
+      {buttonData.map((button, i) => {
+        return (
+          <button
+            type="button"
+            className="icon-bar__button"
+            onClick={button.onClickHandler}
+            key={`${button.label}-${i}`}
+          >
+            <FontAwesomeIcon icon={button.icon} /><span> {button.label}</span>
+          </button>
+        );
+      })}
+    </div>
+    
   );
 };
