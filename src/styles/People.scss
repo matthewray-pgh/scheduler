@@ -19,11 +19,6 @@
       max-height: 100vh;
       overflow-y: auto;
     }
-
-    &__details {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-    }
   }
 }
 
@@ -34,7 +29,7 @@
       display: block;
     }
 
-    &__details {
+    &__form {
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
@@ -44,6 +39,9 @@
 // all resolutions
 .people {
   &__title {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
     h1 {
       font-size: 1.5em;
       font-weight: bold;
@@ -51,6 +49,12 @@
       color: var(--blue);
       padding: 20px;
       margin: 0;
+    }
+
+    &--button-container {
+      justify-self: right;
+      align-self: center;
+      padding: 0 10px;
     }
   }
 
@@ -143,28 +147,6 @@
         cursor: pointer;
       }
     }
-
-    &--edit-form {
-      grid-column: 1 / 6;
-      border-top: solid 1px #dedede;
-
-      height: auto;
-      transition: all .4s ease-in-out;
-    }
-
-    &--edit-form--hide {
-      grid-column: 1 / 6;
-
-      height: 0;
-      transition: all .4s ease-in-out;
-    }
-  }
-
-  &__details {
-    display: grid;
-    padding: 10px;
-
-    background-color: var(--white);
   }
 
   &__position {

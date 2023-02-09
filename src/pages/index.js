@@ -4,6 +4,7 @@ export { ForgotPassword } from "./ForgotPassword";
 export { Home } from "./Home";
 export { Login } from "./Login";
 export { People } from "./People";
+export { PeopleForm } from "./PeopleForm";
 export { Schedule } from "./Schedule";
 export { ScheduleList } from "./ScheduleList";
 export { ScheduleMobile } from "./ScheduleMobile";
