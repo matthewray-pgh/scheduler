@@ -18,6 +18,7 @@ import {
   Login,
   ForgotPassword,
   People,
+  PeopleForm,
   Schedule,
   ScheduleList,
   ScheduleMobile,
@@ -66,6 +67,14 @@ const App = () => {
               element={
                 // <ProtectedRoute>
                 <People />
+                // </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/people/:id"
+              element={
+                // <ProtectedRoute>
+                <PeopleForm />
                 // </ProtectedRoute>
               }
             />

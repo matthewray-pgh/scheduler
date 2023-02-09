@@ -9,7 +9,7 @@ export const FormFieldText = ({ label, value, onChange }) => {
       <input
         type="text"
         placeholder={label}
-        defaultValue={value}
+        value={value}
         onChange={onChange}
       />
     </div>
@@ -23,7 +23,7 @@ export const FormFieldEmail = ({ label, value, onChange }) => {
       <input
         type="email"
         placeholder={label}
-        defaultValue={value}
+        value={value}
         onChange={onChange}
       />
     </div>
@@ -37,7 +37,7 @@ export const FormFieldPhone = ({ label, value, onChange }) => {
       <input
         type="tel"
         placeholder={label}
-        defaultValue={value}
+        value={value}
         onChange={onChange}
       />
     </div>
@@ -51,7 +51,7 @@ export const FormFieldDate = ({ label, value, onChange }) => {
       <input
         type="date"
         placeholder={label}
-        defaultValue={value}
+        value={value}
         onChange={onChange}
       />
     </div>

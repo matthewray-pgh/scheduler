@@ -1,20 +1,20 @@
 {
-    "dev": {
+    "master": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-scheduler-dev-172945-authRole",
-            "UnauthRoleArn": "arn:aws:iam::881606831959:role/amplify-scheduler-dev-172945-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::881606831959:role/amplify-scheduler-dev-172945-authRole",
+            "AuthRoleName": "amplify-scheduler-master-203739-authRole",
+            "UnauthRoleArn": "arn:aws:iam::881606831959:role/amplify-scheduler-master-203739-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::881606831959:role/amplify-scheduler-master-203739-authRole",
             "Region": "us-east-1",
-            "DeploymentBucketName": "amplify-scheduler-dev-172945-deployment",
-            "UnauthRoleName": "amplify-scheduler-dev-172945-unauthRole",
-            "StackName": "amplify-scheduler-dev-172945",
-            "StackId": "arn:aws:cloudformation:us-east-1:881606831959:stack/amplify-scheduler-dev-172945/7c2f8fc0-5187-11ed-87cb-0a5d1c5db2e9",
-            "AmplifyAppId": "d1mlrvciterqvj"
+            "DeploymentBucketName": "amplify-scheduler-master-203739-deployment",
+            "UnauthRoleName": "amplify-scheduler-master-203739-unauthRole",
+            "StackName": "amplify-scheduler-master-203739",
+            "StackId": "arn:aws:cloudformation:us-east-1:881606831959:stack/amplify-scheduler-master-203739/572b6070-a81a-11ed-855c-1276026e9765",
+            "AmplifyAppId": "d1n0kx4szp8qva"
         },
         "categories": {
             "hosting": {
                 "amplifyhosting": {
-                    "appId": "d1mlrvciterqvj",
+                    "appId": "d1n0kx4szp8qva",
                     "type": "manual"
                 }
             }

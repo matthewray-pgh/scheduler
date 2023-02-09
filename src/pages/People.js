@@ -1,4 +1,5 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react"; 
+import { Link } from "react-router-dom";
 
 import usePersonAPI from "../hooks/UsePersonApi";
 
@@ -6,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   faUserCircle,
+  faPlus,
   faTrashAlt,
   faPencilAlt,
   faThList,
@@ -19,33 +21,12 @@ import "../styles/People.scss";
 // import find from "lodash/find";
 
 import {
-  FormFieldText,
-  FormFieldEmail,
-  FormFieldPhone,
-  FormFieldDate,
-} from "../components/FormFields.js";
-import {
-  FormFieldButton,
-  FormFieldButtonConfirm,
   IconButton,
   ListButton,
 } from "../components/FormFieldButton.js";
 
-const initialForm = {
-  id: null,
-  lastname: null,
-  firstname: null,
-  email: null,
-  phone: null,
-  hiredate: null,
-  termdate: null,
-  position: null,
-  active: false
-};
-
 export const People = () => {
   const [data, setData] = useState([]);
-  const [form, setForm] = useState(initialForm);
 
   const { 
     fetchPersonList, 
@@ -94,14 +75,20 @@ export const People = () => {
   };
 
   const handleEditClick = (person) => {
-    setForm(person);
+    // setForm(person);
   };
 
   return (
     <main className="people__page">
       <div className="people__title">
         <h1>People</h1>
+        <div className="people__title--button-container">
+          <Link to={`/people/new`}>
+            <IconButton icon={faPlus} label="add person" />
+          </Link>
+        </div>
       </div>
+
       <section className="people__header">
         <IconButton icon={faThList} label="list" />
         <IconButton icon={faTh} label="grid" />
@@ -138,10 +125,12 @@ export const People = () => {
                   </span>
                   <span className="people__table--cell">{d.hiredate}</span>
                   <span className="people__table--cell">
-                    <ListButton
-                      onClickHandler={() => handleEditClick(d)}
-                      icon={faPencilAlt}
-                    />
+                    <Link to={`/people/${d.id}`}>
+                      <ListButton
+                        onClickHandler={() => handleEditClick(d)}
+                        icon={faPencilAlt}
+                      />
+                    </Link>
                   </span>
                   <span className="people__table--cell">
                     <ListButton
@@ -149,26 +138,9 @@ export const People = () => {
                       icon={faTrashAlt}
                     />
                   </span>
-
-                  {d.id === form.id && (
-                    <div className="people__table--edit-form">
-                      <PeopleForm
-                        fetch={getPersons}
-                        formData={form}
-                        resetForm={setForm}
-                      />
-                    </div>
-                  )}
                 </Fragment>
               );
             })}
-          </div>
-
-          <div style={{display: "grid"}}>
-            <FormFieldButton 
-              label="add person" 
-              onClickHandler={() => console.log("show add person form")} 
-            />
           </div>
 
           {data && data.length === 0 && (
@@ -180,104 +152,5 @@ export const People = () => {
         </section>
       </section>
     </main>
-  );
-};
-
-export const PeopleForm = ({fetch, formData, resetForm}) => {
-  const [form, setForm] = useState(initialForm);
-  const {
-    createNewPerson,
-    updateCurrentPerson
-  } = usePersonAPI();
-
-  useEffect(() => {
-    setForm(formData);
-  }, [formData]);
-
-  const setInput = (key, value) => {
-    setForm({ ...form, [key]: value });
-  };
-
-  const addPersonAPI = async () => {
-    if (!form.lastname || !form.firstname || !form.email) return;
-    let newPerson = { ...form, active: true };
-    createNewPerson(newPerson).then((result) => {
-      if (result.id) {
-        fetch();
-      } else {
-        console.error("TODO: Display error on screen");
-      }
-    });
-  };
-
-  const updatePersonAPI = async () => {
-    if (!form.id) return;
-    let updatePerson = {...form}
-    updateCurrentPerson(updatePerson).then((result) => {
-      if (result.id) {
-        fetch();
-        setForm(initialForm);
-        resetForm(initialForm);
-      } else {
-        console.error("TODO: Display error on screen");
-      }
-    });
-  };
-
-  const handleAddClick = async () => {
-    await addPersonAPI();
-    setForm(initialForm);
-  }
-
-  const handleUpdateClick = async () => {
-    await updatePersonAPI();
-    setForm(initialForm);
-  }
-
-  const handleCancel = () => {
-    setForm(initialForm);
-    resetForm(initialForm);
-  };
-
-  return (
-    <section className="people__details">
-      <FormFieldText
-        label="first name"
-        value={form.firstname}
-        onChange={(event) => setInput("firstname", event.target.value)}
-      />
-      <FormFieldText
-        label="last name"
-        value={form.lastname}
-        onChange={(event) => setInput("lastname", event.target.value)}
-      />
-      <FormFieldEmail
-        label="email"
-        value={form.email}
-        onChange={(event) => setInput("email", event.target.value)}
-      />
-      <FormFieldPhone
-        label="phone"
-        value={form.phone}
-        onChange={(event) => setInput("phone", event.target.value)}
-      />
-      <FormFieldDate
-        label="hire date"
-        value={form.hiredate}
-        onChange={(event) => setInput("hiredate", event.target.value)}
-      />
-      <FormFieldDate
-        label="term date"
-        value={form.termdate}
-        onChange={(event) => setInput("termdate", event.target.value)}
-      />
-      {form.id ? (
-        <FormFieldButtonConfirm label="update" onClickHandler={handleUpdateClick} />
-      ) : (
-        <FormFieldButtonConfirm label="add" onClickHandler={handleAddClick} />
-      )}
-
-      <FormFieldButton label="cancel" onClickHandler={handleCancel} />
-    </section>
   );
 };

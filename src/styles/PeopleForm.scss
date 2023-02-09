@@ -1,0 +1,161 @@
+.people {
+  &__title {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    h1 {
+      font-size: 1.5em;
+      font-weight: bold;
+
+      color: var(--blue);
+      padding: 20px;
+      margin: 0;
+    }
+
+    &--button-container {
+      justify-self: right;
+      align-self: center;
+      padding: 0 10px;
+    }
+  }
+
+  &__form {
+    margin: 0 auto;
+    max-width: 500px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+      "heading heading"
+      "toast toast"
+      "firstname lastname"
+      "email email"
+      "phone phone"
+      "job job"
+      "hiredate termdate"
+      "confirmbutton confirmbutton"
+      "cancelbutton cancelbutton";
+
+    &--header {
+      grid-area: heading;
+      font-size: 1.25em;
+      font-weight: bold;
+    
+      color: var(--blue);
+      padding: 10px;
+      margin: 0;
+    }
+
+    &--last-name {
+      grid-area: lastname;
+    }
+
+    &--first-name {
+      grid-area: firstname
+    }
+
+    &--email {
+      grid-area: email;
+    }
+
+    &--phone {
+      grid-area: phone;
+    }
+
+    &--job {
+      grid-area: job;
+    }
+
+    &--hire-date {
+      grid-area: hiredate;
+    }
+
+    &--term-date {
+      grid-area: termdate;
+    }
+
+    &--confirm-button {
+      display: grid;
+      grid-area: confirmbutton;
+    }
+
+    &--cancel-button {
+      display: grid;
+      grid-area: cancelbutton;
+    }
+
+    &--toast {
+      grid-area: toast;
+    }
+  }
+}
+
+.toast {
+  height: 50px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--white);
+
+  animation: fade-in 1s ease-in;
+
+  &__icon {
+    font-size: 20px;
+    padding: 15px;
+  }
+
+  &__confirm {
+    background-color: rgba(6, 150, 42, 0.75);
+    border-left: solid 3px rgb(66, 150, 42);
+    margin: 10px;
+  }
+
+  &__error {
+    background-color: rgba(182, 10, 10, 0.75);
+    border-left: solid 3px rgb(182, 10, 10);
+    margin: 10px;
+  }
+
+  &__warn {
+    background-color: rgba(232, 185, 29, 0.75);
+    border-left: solid 3px rgb(232, 185, 29);
+    margin: 10px;
+  }
+
+  &__info {
+    background-color: rgba(65, 105, 255, 0.75);
+    border-left: solid 3px var(--blue);
+    margin: 10px;
+  }
+
+  &__close-button {
+    padding: 10px;
+    align-self: flex-start;
+    cursor: pointer;
+  }
+}
+
+@keyframes fade-in {
+  0% { 
+    opacity: 0; 
+    max-height: 0; 
+  }
+  100% { 
+    opacity: 1; 
+    max-height: 100px; 
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    max-height: 100px;
+  }
+
+  100% {
+    opacity: 0;
+    max-height: 0;
+  }
+}
