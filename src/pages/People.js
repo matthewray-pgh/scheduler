@@ -27,6 +27,8 @@ import {
 
 export const People = () => {
   const [data, setData] = useState([]);
+  const [listView, setListView] = useState(true);
+  const [gridView, setGridView] = useState(false);
 
   const { 
     fetchPersonList, 
@@ -74,8 +76,14 @@ export const People = () => {
     // return data ? data.name : "unassigned";
   };
 
-  const handleEditClick = (person) => {
-    // setForm(person);
+  const handleListViewClick = () => {
+    setListView(true);
+    setGridView(false);
+  };
+
+  const handleGridViewClick = () => {
+    setListView(false);
+    setGridView(true);
   };
 
   return (
@@ -90,67 +98,169 @@ export const People = () => {
       </div>
 
       <section className="people__header">
-        <IconButton icon={faThList} label="list" />
-        <IconButton icon={faTh} label="grid" />
+        <IconButton
+          icon={faThList}
+          label="list"
+          onClickHandler={handleListViewClick}
+          className={listView ? "icon-button-active" : "icon-button"}
+        />
+        <IconButton
+          icon={faTh}
+          label="grid"
+          onClickHandler={handleGridViewClick}
+          className={gridView ? "icon-button-active" : "icon-button"}
+        />
       </section>
 
       <section className="people__main-content">
-        <section className="people__list-content">
-          <div className="people__table people__table--header">
-            <div>Person</div>
-            <div>Position(s)</div>
-            <div>Date(s)</div>
-            <div className="people__table--header--span">Actions</div>
+        <ListView
+          data={data}
+          showList={listView}
+          getPositionName={getPositionName}
+          handleDeletePerson={handleDeletePerson}
+        />
+
+        <GridView
+          data={data}
+          showGrid={gridView}
+          getPositionName={getPositionName}
+          handleDeletePerson={handleDeletePerson}
+        />
+
+        {data && data.length === 0 && (
+          <div className="people__table--row-empty">
+            <span>no results</span>
+            <div></div>
           </div>
-
-          <div className="people__table">
-            {data.map((d, i) => {
-              return (
-                <Fragment key={i}>
-                  <div className="people__table--id-card">
-                    <FontAwesomeIcon
-                      className="people__table--id-card--icon"
-                      icon={faUserCircle}
-                    />
-                    <div>
-                      <div className="people__table--id-card--bold">
-                        {d.firstname} {d.lastname}
-                      </div>
-                      <div>{d.email}</div>
-                    </div>
-                  </div>
-
-                  <span className="people__table--positions">
-                    {getPositionName(d.position)}
-                  </span>
-                  <span className="people__table--cell">{d.hiredate}</span>
-                  <span className="people__table--cell">
-                    <Link to={`/people/${d.id}`}>
-                      <ListButton
-                        onClickHandler={() => handleEditClick(d)}
-                        icon={faPencilAlt}
-                      />
-                    </Link>
-                  </span>
-                  <span className="people__table--cell">
-                    <ListButton
-                      onClickHandler={() => handleDeletePerson(d.id)}
-                      icon={faTrashAlt}
-                    />
-                  </span>
-                </Fragment>
-              );
-            })}
-          </div>
-
-          {data && data.length === 0 && (
-            <div className="people__table--row-empty">
-              <span>no results</span>
-              <div></div>
-            </div>
-          )}
-        </section>
+        )}
       </section>
     </main>
+  );
+};
+
+const ListView = ({
+  data,
+  showList,
+  getPositionName,
+  handleDeletePerson,
+}) => {
+  return (
+    showList && 
+    <section className="people__list-content">
+      <div className="people__table people__table--header">
+        <div>Person</div>
+        <div>Position(s)</div>
+        <div>Date(s)</div>
+        <div className="people__table--header--span">Actions</div>
+      </div>
+
+      <div className="people__table">
+        {data.map((d, i) => {
+          return (
+            <Fragment key={i}>
+              <div className="people__table--id-card">
+                <PersonInitialsIcon
+                  lastname={d.lastname}
+                  firstname={d.firstname}
+                  className="people__table--id-card--initials"
+                />
+                <div>
+                  <div className="people__table--id-card--bold">
+                    {d.firstname} {d.lastname}
+                  </div>
+                  <div>{d.email}</div>
+                </div>
+              </div>
+
+              <span className="people__table--positions">
+                {getPositionName(d.position)}
+              </span>
+              <span className="people__table--cell">{d.hiredate}</span>
+              <span className="people__table--cell">
+                <Link to={`/people/${d.id}`}>
+                  <ListButton icon={faPencilAlt} />
+                </Link>
+              </span>
+              <span className="people__table--cell">
+                <ListButton
+                  onClickHandler={() => handleDeletePerson(d.id)}
+                  icon={faTrashAlt}
+                />
+              </span>
+            </Fragment>
+          );
+        })}
+      </div>
+    </section>
+  );
+};
+
+const GridView = ({
+  data, 
+  showGrid, 
+  getPositionName, 
+  handleDeletePerson}) => {
+
+  return (
+    showGrid && (
+      <section className="people__grid-content">
+        <div className="people__grid">
+          {data.map((d, i) => {
+            return (
+              <div className="people__grid--card" key={i}>
+                <PersonInitialsIcon
+                  lastname={d.lastname}
+                  firstname={d.firstname}
+                  className="people__grid--initials"
+                />
+                <div className="people__grid--line-item">
+                  {d.firstname} {d.lastname}
+                </div>
+                <div className="people__grid--line-item">{d.email}</div>
+                <span className="">{getPositionName(d.position)}</span>
+                <div className="people__grid--line-item">{d.hiredate}</div>
+                <div className="people__grid--line-item">{d.termdate}</div>
+                <div>
+                  <Link to={`/people/${d.id}`}>
+                    <IconButton icon={faPencilAlt} label="edit" />
+                  </Link>
+                  <IconButton
+                    icon={faTrashAlt}
+                    label="delete"
+                    onClickHandler={() => handleDeletePerson(d.id)}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    )
+  );
+};
+
+const PersonInitialsIcon = ({
+  lastname,
+  firstname,
+  className = "people__grid--initials",
+}) => {
+  const getRandomColor = () => {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
+  const initials = () => {
+    const name = `${firstname.charAt(0)}${lastname.charAt(0)}`;
+    return name.toUpperCase();
+  };
+
+  return (
+    <div className={className} style={{ backgroundColor: getRandomColor() }}>
+      {initials()}
+    </div>
   );
 };
