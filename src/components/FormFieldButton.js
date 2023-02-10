@@ -27,9 +27,9 @@ export const FormFieldButtonConfirm = ({ label, onClickHandler }) => {
   );
 };
 
-export const IconButton = ({icon, label, onClickHandler}) => {
+export const IconButton = ({icon, label, className="icon-button", onClickHandler}) => {
   return (
-    <button type="button" className="icon-button" onClick={onClickHandler}>
+    <button type="button" className={className} onClick={onClickHandler}>
       <FontAwesomeIcon icon={icon} /> <span>{label}</span>
     </button>
   );
