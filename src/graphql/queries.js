@@ -13,6 +13,8 @@ export const getSchedules = /* GraphQL */ `
       published
       complete
       group
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -33,6 +35,8 @@ export const listScheduless = /* GraphQL */ `
         published
         complete
         group
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -50,6 +54,8 @@ export const getPerson = /* GraphQL */ `
       termdate
       position
       active
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -70,6 +76,8 @@ export const listPersons = /* GraphQL */ `
         termdate
         position
         active
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -83,6 +91,8 @@ export const getShifts = /* GraphQL */ `
       scheduleid
       shift
       section
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -99,6 +109,8 @@ export const listShiftss = /* GraphQL */ `
         scheduleid
         shift
         section
+        createdAt
+        updatedAt
       }
       nextToken
     }

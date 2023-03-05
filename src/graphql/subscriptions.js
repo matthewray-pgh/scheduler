@@ -13,6 +13,8 @@ export const onCreateSchedules = /* GraphQL */ `
       published
       complete
       group
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -28,6 +30,8 @@ export const onUpdateSchedules = /* GraphQL */ `
       published
       complete
       group
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -43,6 +47,8 @@ export const onDeleteSchedules = /* GraphQL */ `
       published
       complete
       group
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -58,6 +64,8 @@ export const onCreatePerson = /* GraphQL */ `
       termdate
       position
       active
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -73,6 +81,8 @@ export const onUpdatePerson = /* GraphQL */ `
       termdate
       position
       active
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -88,6 +98,8 @@ export const onDeletePerson = /* GraphQL */ `
       termdate
       position
       active
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -99,6 +111,8 @@ export const onCreateShifts = /* GraphQL */ `
       scheduleid
       shift
       section
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -110,6 +124,8 @@ export const onUpdateShifts = /* GraphQL */ `
       scheduleid
       shift
       section
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -121,6 +137,8 @@ export const onDeleteShifts = /* GraphQL */ `
       scheduleid
       shift
       section
+      createdAt
+      updatedAt
     }
   }
 `;

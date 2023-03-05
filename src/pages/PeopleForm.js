@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import usePersonAPI from "../hooks/UsePersonApi";
@@ -14,21 +14,19 @@ import {
   FormFieldButtonConfirm,
 } from "../components/FormFieldButton.js";
 
+import { toastType, Toast } from "../components/Toast";
+
 import '../styles/PeopleForm.scss';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faCheckCircle, faExclamationCircle, faExclamationTriangle, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-
-export const toastType = Object.freeze({
-  INFO: 'info',
-  WARN: 'warn',
-  ERROR: 'error',
-  CONFIRM: 'confirm',
-});
+export const GenerateUUID = () => {
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+    (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
+  );
+}
 
 export const PeopleForm = () => {
   const initialForm = {
-    id: '',
+    id: null,
     lastname: '',
     firstname: '',
     email: '',
@@ -39,14 +37,9 @@ export const PeopleForm = () => {
     active: false,
   };
 
-  const initialToast = {
-    type: toastType.INFO,
-    message: "this is a test toast message",
-  };
-
   const [form, setForm] = useState(initialForm);
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState(initialToast);
+  const [toasts, setToasts] = useState([]);
   
   const { 
     createNewPerson, 
@@ -60,7 +53,6 @@ export const PeopleForm = () => {
     setLoading(true);
     fetchPerson(id)
       .then((result) => {
-        console.log('result', result);
         setForm({
           id: result.id,
           lastname: result.lastname,
@@ -86,21 +78,25 @@ export const PeopleForm = () => {
     setForm({ ...form, [key]: value });
   };
 
+  const createToast = (type, message) => {
+    return {
+      id: GenerateUUID(),
+      type: type,
+      message: message
+    };
+  }
+
   const addPersonAPI = async () => {
     if (!form.lastname || !form.firstname || !form.email) return;
     let newPerson = { ...form, active: true };
     createNewPerson(newPerson).then((result) => {
+      let newToast = {};
       if (result.id) {
-        setToast({
-          type: toastType.CONFIRM,
-          message: `Successfully added ${form.firstname} ${form.lastname}!`,
-        });
+        newToast = createToast(toastType.CONFIRM, `Successfully added ${form.firstname} ${form.lastname}!`,);
       } else {
-        setToast({
-          type: toastType.ERROR,
-          message: `Error adding ${form.firstname} ${form.lastname}!`,
-        });
+        newToast = createToast(toastType.ERROR, `Error adding ${form.firstname} ${form.lastname}!`);
       }
+      setToasts([...toasts, newToast]);
     });
   };
 
@@ -108,20 +104,20 @@ export const PeopleForm = () => {
     if (!form.id) return;
     let updatePerson = { ...form };
     updateCurrentPerson(updatePerson).then((result) => {
+      let newToast = {};
       if (result.id) {
-        setToast({
-          type: 'confirm', 
-          message: `Successfully updated ${form.firstname} ${form.lastname}!`
-        });
+        newToast = createToast(toastType.confirm, `Successfully updated ${form.firstname} ${form.lastname}!`);
         setForm(initialForm);
       } else {
-        setToast({
-          type: "error",
-          message: `Error adding ${form.firstname} ${form.lastname}!`,
-        });
+        newToast = createToast(toastType.error, `Error adding ${form.firstname} ${form.lastname}!`);
       }
+      setToasts([...toasts, newToast]);
     });
   };
+
+  useEffect(() => {
+    console.log('toasts', toasts);
+  }, [toasts]);
 
   const handleAddClick = async () => {
     await addPersonAPI();
@@ -156,42 +152,6 @@ export const PeopleForm = () => {
     );
   }
 
-  const Toast = ({ type='info', message='' }) => {
-    const toastIcon = useMemo(() => {
-      if (type === toastType.CONFIRM) return faCheckCircle;
-      else if (type === toastType.INFO) return faInfoCircle;
-      else if (type === toastType.WARN) return faExclamationTriangle;
-      else if (type === toastType.ERROR) return faExclamationCircle;
-      else return faCheckCircle;
-    }, [type]);
-
-    const handleToastClose = () => {
-      setToast({
-        type: '', message: ''
-      });
-    }
-
-    useEffect(() => {
-      const timeUntilDelete = 500;
-      const interval = setInterval(() => {
-        console.log("interval message");
-      }, timeUntilDelete);
-      return clearInterval(interval);
-    }, []);
-
-    return (
-      <div className={`toast toast__${type}`}>
-        <FontAwesomeIcon icon={toastIcon} className="toast__icon" />
-        <div>{message}</div>
-        <FontAwesomeIcon
-          icon={faTimes}
-          className="toast__close-button"
-          onClick={handleToastClose}
-        />
-      </div>
-    );
-  }
-
   return (
     <main>
       <section className="people">
@@ -206,7 +166,7 @@ export const PeopleForm = () => {
         </h2>
 
         <div className="people__form--toast">
-          {toast.message && <Toast type={toast.type} message={toast.message} />}
+          {toasts && <Toast lists={toasts} setToastList={setToasts} />}
         </div>
 
         <div className="people__form--first-name">
