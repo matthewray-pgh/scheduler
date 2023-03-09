@@ -1,9 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react"; 
 import { Link } from "react-router-dom";
-
+import { ModalConfirm } from "../components/ModalConfirm";
 import usePersonAPI from "../hooks/UsePersonApi";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   faUserCircle,
@@ -30,6 +28,11 @@ export const People = () => {
   const [listView, setListView] = useState(true);
   const [gridView, setGridView] = useState(false);
 
+  const baseConfirmMessage = "Are you sure you want to delete, --?";
+  const [confirmMessage, setConfirmMessage] = useState(baseConfirmMessage);
+  const [showDeletConfirm, setShowDeleteConfirm] = useState(false);
+  const [currentPersonId, setCurrentPersonId] = useState(null);
+
   const { 
     fetchPersonList, 
     deleteCurrentPerson 
@@ -44,7 +47,16 @@ export const People = () => {
     fetchPersonList().then((persons) => setData(persons));
   }
 
-  const handleDeletePerson = async (id) => {
+  const handleDeleteClick = (id, firstName, lastName) => {
+    setCurrentPersonId(id);
+    setConfirmMessage(
+      baseConfirmMessage.replace("--", `${firstName} ${lastName}`)
+    );
+    setShowDeleteConfirm(true);
+  };
+
+  const handleDeletePerson = async () => {
+    const id = currentPersonId;
     if (!id) return;
     deleteCurrentPerson(id)
       .then((result) => {
@@ -54,6 +66,9 @@ export const People = () => {
         else{
           console.error("TODO: Display error on screen");
         }
+      })
+      .then(() => {
+        setShowDeleteConfirm(false);
       });
   };
 
@@ -117,14 +132,14 @@ export const People = () => {
           data={data}
           showList={listView}
           getPositionName={getPositionName}
-          handleDeletePerson={handleDeletePerson}
+          handleDeletePerson={handleDeleteClick}
         />
 
         <GridView
           data={data}
           showGrid={gridView}
           getPositionName={getPositionName}
-          handleDeletePerson={handleDeletePerson}
+          handleDeletePerson={handleDeleteClick}
         />
 
         {data && data.length === 0 && (
@@ -134,6 +149,13 @@ export const People = () => {
           </div>
         )}
       </section>
+
+      <ModalConfirm
+        message={confirmMessage}
+        actionFunc={handleDeletePerson}
+        show={showDeletConfirm}
+        closeFunc={() => setShowDeleteConfirm(false)}
+      />
     </main>
   );
 };
@@ -183,7 +205,7 @@ const ListView = ({
               </span>
               <span className="people__table--cell">
                 <ListButton
-                  onClickHandler={() => handleDeletePerson(d.id)}
+                  onClickHandler={() => handleDeletePerson(d.id, d.firstname, d.lastname)}
                   icon={faTrashAlt}
                 />
               </span>
@@ -227,7 +249,7 @@ const GridView = ({
                   <IconButton
                     icon={faTrashAlt}
                     label="delete"
-                    onClickHandler={() => handleDeletePerson(d.id)}
+                    onClickHandler={() => handleDeletePerson(d.id, d.firstname, d.lastname)}
                   />
                 </div>
               </div>
