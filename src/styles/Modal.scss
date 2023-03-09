@@ -1,0 +1,38 @@
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: 2;
+
+  display: grid;
+  justify-content: center;
+  align-content: center;
+
+  &__container {
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    
+    font-size: 18px;
+    font-weight: bold;
+
+    justify-content: center;
+    align-content: center;
+  }
+
+  &__message {
+    padding-top: 10px;
+    padding-bottom: 20px;
+  }
+
+  &__button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+  }
+}
