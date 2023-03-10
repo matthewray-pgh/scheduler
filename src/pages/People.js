@@ -167,53 +167,57 @@ const ListView = ({
   handleDeletePerson,
 }) => {
   return (
-    showList && 
-    <section className="people__list-content">
-      <div className="people__table people__table--header">
-        <div>Person</div>
-        <div>Position(s)</div>
-        <div>Date(s)</div>
-        <div className="people__table--header--span">Actions</div>
-      </div>
+    showList && (
+      <section className="people__list-content">
+        <div className="people__list-content--heading">person list</div>
+        <div className="people__table people__table--header">
+          <div>Person</div>
+          <div>Position(s)</div>
+          <div>Date(s)</div>
+          <div className="people__table--header--span">Actions</div>
+        </div>
 
-      <div className="people__table">
-        {data.map((d, i) => {
-          return (
-            <Fragment key={i}>
-              <div className="people__table--id-card">
-                <PersonInitialsIcon
-                  lastname={d.lastname}
-                  firstname={d.firstname}
-                  className="people__table--id-card--initials"
-                />
-                <div>
-                  <div className="people__table--id-card--bold">
-                    {d.firstname} {d.lastname}
+        <div className="people__table">
+          {data.map((d, i) => {
+            return (
+              <Fragment key={i}>
+                <div className="people__table--id-card">
+                  <PersonInitialsIcon
+                    lastname={d.lastname}
+                    firstname={d.firstname}
+                    className="people__table--id-card--initials"
+                  />
+                  <div>
+                    <div className="people__table--id-card--bold">
+                      {d.firstname} {d.lastname}
+                    </div>
+                    <div>{d.email}</div>
                   </div>
-                  <div>{d.email}</div>
                 </div>
-              </div>
 
-              <span className="people__table--positions">
-                {getPositionName(d.position)}
-              </span>
-              <span className="people__table--cell">{d.hiredate}</span>
-              <span className="people__table--cell">
-                <Link to={`/people/${d.id}`}>
-                  <ListButton icon={faPencilAlt} />
-                </Link>
-              </span>
-              <span className="people__table--cell">
-                <ListButton
-                  onClickHandler={() => handleDeletePerson(d.id, d.firstname, d.lastname)}
-                  icon={faTrashAlt}
-                />
-              </span>
-            </Fragment>
-          );
-        })}
-      </div>
-    </section>
+                <span className="people__table--positions">
+                  {getPositionName(d.position)}
+                </span>
+                <span className="people__table--cell">{d.hiredate}</span>
+                <span className="people__table--cell">
+                  <Link to={`/people/${d.id}`}>
+                    <ListButton icon={faPencilAlt} />
+                  </Link>
+                </span>
+                <span className="people__table--cell">
+                  <ListButton
+                    onClickHandler={() =>
+                      handleDeletePerson(d.id, d.firstname, d.lastname)
+                    }
+                    icon={faTrashAlt}
+                  />
+                </span>
+              </Fragment>
+            );
+          })}
+        </div>
+      </section>
+    )
   );
 };
 
@@ -266,14 +270,6 @@ const PersonInitialsIcon = ({
   firstname,
   className = "people__grid--initials",
 }) => {
-  const getRandomColor = () => {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
 
   const initials = () => {
     const name = `${firstname.charAt(0)}${lastname.charAt(0)}`;
@@ -281,8 +277,17 @@ const PersonInitialsIcon = ({
   };
 
   return (
-    <div className={className} style={{ backgroundColor: getRandomColor() }}>
+    <div className={className}>
       {initials()}
     </div>
   );
+};
+
+const getRandomColor = () => {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 };

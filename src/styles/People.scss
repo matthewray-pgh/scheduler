@@ -46,7 +46,7 @@
       font-size: 1.5em;
       font-weight: bold;
   
-      color: var(--blue);
+      color: #000;
       padding: 20px;
       margin: 0;
     }
@@ -70,7 +70,6 @@
     display: grid;
     grid-template-columns: 4fr 3fr 2fr 50px 50px;
 
-    margin: 10px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 0.8em;
     color: var(--dark);
@@ -80,7 +79,7 @@
         display: flex;
         justify-content: center;
         
-        padding: 5px;
+        padding: 0 5px;
         font-weight: bold;
       }
 
@@ -93,9 +92,9 @@
       display: grid;
       grid-template-columns: auto 1fr;
 
-      margin-top: 5px;
       padding: 10px;
       background-color: var(--white);
+      border-bottom: solid 1px #9c9c9c;
 
       &--icon {
         min-height: 20px;
@@ -132,6 +131,7 @@
       padding: 20px;
 
       background-color: var(--white);
+      border-bottom: solid 1px #9c9c9c;
 
       font-family: Arial, Helvetica, sans-serif;
       font-size: 0.8em;
@@ -144,18 +144,18 @@
       align-content: center;
       justify-content: center;
 
-      margin-top: 5px;
       padding: 10px;
       background-color: var(--white);
+      border-bottom: solid 1px #9c9c9c;
     }
 
     &--positions {
       display: flex;
       flex-wrap: wrap;
 
-      margin-top: 5px;
       padding: 10px;
       background-color: var(--white);
+      border-bottom: solid 1px #9c9c9c;
     }
 
     &--button-icon {
@@ -168,13 +168,27 @@
     }
   }
 
+  &__list-content {
+    margin: 10px;
+    background-color: #ffffff;
+
+    &--heading {
+      font-size: 1.25em;
+      font-weight: bold;
+    
+      color: var(--blue);
+      padding: 0 10px 10px 10px;
+      margin: 0;
+    }
+  }
+
   &__grid-content {
     padding: 10px;
   }
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
   
     margin: 10px;
