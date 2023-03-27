@@ -1,28 +1,57 @@
-.schedules {
-  &__control-panel {
+/* mobile */
+@media (max-width: 600px) {}
+
+/* full screen */
+@media (min-width: 1024px) {}
+
+/* small screen */
+@media (min-width: 768px) and (max-width: 1024px) {}
+
+.schedules-list {
+  display: grid;
+  grid-template-columns: 1fr min-content;
+
+  &__header-bar {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-content: center;
-
-    &--title-pane {
-      justify-self: left;
-
-      h1 {
-        font-size: 1.5em;
-        font-weight: bold;
-
-        color: var(--blue);
-        padding: 20px;
-        margin: 0;
-
-      }
-    }
-
-    &--filter-pane {
-      justify-self: right;
-    }
+    grid-template-columns: 1fr auto;
   }
 
+  h1 {
+    font-size: 1.5em;
+    font-weight: bold;
+
+    color: #000;
+    padding: 20px;
+    margin: 0;
+  }
+
+  &__button-container {
+    justify-self: right;
+    align-self: center;
+  }
+
+  &__list-container {
+  }
+
+  &__form-container {
+    height: 100vh;
+    background-color: var(--white);
+    // border-left: 3px solid var(--blue);
+  }
+
+  &__form-show {
+    width: 400px;
+    transition: 500ms;
+  }
+
+  &__form-hide {
+    width: 0;
+    transition: 500ms;
+  }
+}
+
+
+.schedules {
   &__list {
     display: grid;
     grid-template-columns: 3fr 1fr 1fr auto auto auto;
@@ -55,19 +84,14 @@
     }
   }
 
-  &__form-show {
-    display: block;
-    transition: 500ms;
-  }
-
-  &__form-hide {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
-  }
-
   &__details {
     display: grid;
   }
+}
 
+.schedules-form {
+  &__title {
+    color: var(--blue);
+    padding: 0 10px;
+  }
 }
