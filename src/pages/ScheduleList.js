@@ -52,7 +52,7 @@ export const ScheduleList = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchData();
+    // fetchData();
     // eslint-disable-next-line
   }, []);
 
