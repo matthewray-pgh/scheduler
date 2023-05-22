@@ -39,7 +39,7 @@ export const People = () => {
   } = usePersonAPI();
 
   useEffect(() => {
-    getPersons();
+    //getPersons();
     // eslint-disable-next-line
   }, []);
 
