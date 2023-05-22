@@ -35,6 +35,7 @@ function usePersonAPI(){
 
   const updateCurrentPerson = async (personData) => {
     try {
+      console.log("personData", personData);
       const response = await API.graphql(graphqlOperation(updatePerson, { input: personData }));
       const result = response.data.updatePerson;
       return result;

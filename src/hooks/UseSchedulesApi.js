@@ -22,13 +22,11 @@ function useSchedulesApi() {
 
   const fetchSchedule = async (id) => {
     try {
-      const scheduleData = await API.graphql(
-        graphqlOperation(getSchedules, { id: id })
-      );
+      const scheduleData = await API.graphql(graphqlOperation(getSchedules, { id: id }));
       const schedules = scheduleData.data.getSchedules;
       return schedules;
     } catch (err) {
-      console.log("ERROR fetching schedules:", err);
+      console.log("error fetching schedules:", err);
     }
   };
 
@@ -36,9 +34,7 @@ function useSchedulesApi() {
     try {
       if (!form.name || !form.startdate || !form.enddate) return;
       const newSchedule = { ...form, active: true };
-      const response = await API.graphql(
-        graphqlOperation(createSchedules, { input: newSchedule })
-      );
+      const response = await API.graphql(graphqlOperation(createSchedules, { input: newSchedule }));
       const result = response.data.createSchedule;
       return result;
     } catch (err) {
@@ -50,6 +46,10 @@ function useSchedulesApi() {
     try {
       if (!form.id) return;
       const updSchedule = { ...form };
+      delete updSchedule.createdAt;
+      delete updSchedule.updatedAt;
+      delete updSchedule.complete;
+      delete updSchedule.published;
       const response = await API.graphql(
         graphqlOperation(updateSchedules, { input: updSchedule })
       );
@@ -63,9 +63,7 @@ function useSchedulesApi() {
   const deleteSchedule = async (id) => {
     try {
       if (!id) return;
-      const response = await API.graphql(
-        graphqlOperation(deleteSchedules, { input: { id: id } })
-      );
+      const response = await API.graphql(graphqlOperation(deleteSchedules, { input: { id: id } }));
       const result = response.data.deleteSchedules;
       return result;
     } catch (err) {
