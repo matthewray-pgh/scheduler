@@ -44,7 +44,11 @@ export const People = () => {
   }, []);
 
   const getPersons = () => {
-    fetchPersonList().then((persons) => setData(persons));
+    fetchPersonList().then((persons) => {
+      if(persons !== undefined && persons.length > 0){ 
+        setData(persons)
+      } 
+    });
   }
 
   const handleDeleteClick = (id, firstName, lastName) => {

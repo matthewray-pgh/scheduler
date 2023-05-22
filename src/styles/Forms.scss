@@ -8,6 +8,7 @@ $button-delete: #c10000;
 $button-delete-active: #f90202;
 
 $button-white: #ffffff;
+$button-light-gray: #f2f2f2;
 
 textarea:focus,
 input:focus {
@@ -179,6 +180,7 @@ input:focus {
 
   &:hover {
     color: $button-standard;
+    background: $button-light-gray;
   }
 
   &:active {

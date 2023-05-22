@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 
 import { 
@@ -23,48 +23,49 @@ import { IconButton } from "../components/FormFieldButton.js";
 import useSchedulesApi from '../hooks/UseSchedulesApi';
 
 import '../styles/ScheduleList.scss';
+import { ListLayout } from "../layouts/ListLayout.js";
 
 const initialForm = {
   id: null,
-  name: null,
-  description: null,
-  group: null,
-  startdate: null,
-  enddate: null,
+  name: '',
+  description: '',
+  group: '',
+  startdate: '',
+  enddate: '',
   active: false,
 };
 
 export const ScheduleList = () => {
-  const [schedules, setSchedules] = useState([]);
-  const [selectedSchedule, setSelectedSchedule] = useState(initialForm);
+  const [form, setForm] = useState(initialForm);
   const [showForm, setShowForm] = useState(false);
+  const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const { fetchScheduleList, deleteSchedule } = useSchedulesApi();
+  const { fetchScheduleList } = useSchedulesApi();
 
   const fetchData = () => {
     const schedulePromise = fetchScheduleList();
     schedulePromise.then((result) => {
-      setSchedules(result)
+      setSchedules(result);
       setLoading(false);
-    })
+    });
   };
 
   useEffect(() => {
     setLoading(true);
     fetchData();
-    // eslint-disable-next-line
   }, []);
 
-  const handleEditClick = (d) => {
-    setSelectedSchedule(d);
-    setShowForm(true);
-  };
+  const { deleteSchedule } = useSchedulesApi();
 
-  const handleDeleteClick = async (id) => {
+  const handleShowForm = () => {
+    setShowForm(true);
+  }
+
+  const handleDelete = async (id) => {
     setLoading(true);
     await deleteSchedule(id)
-      .then(result => {
+      .then((result) => {
         if (result.id) {
           fetchData();
         } else {
@@ -73,112 +74,42 @@ export const ScheduleList = () => {
         }
       })
       .then(() => setLoading(false));
-    
   };
 
-  const handleFormCancel = () => {
-    setShowForm(false);
-  };
-
-  const handleShowForm = () => {
+  const handleEdit = (d) => {
+    setForm(d);
     setShowForm(true);
-  }
+  };
 
   return (
-    <main className="schedules-list">
-      <section className="schedules-list__main-content">
-        <section className="schedules-list__header-bar">
-          <h1>Schedules</h1>
-          <div className="schedules-list__button-container">
-            <IconButton
-              icon={faPlus}
-              label="add schedule"
-              onClickHandler={handleShowForm}
-            />
-          </div>
-        </section>
-
-        <section
-          data-testid="schedule-list-container"
-          className="schedules-list__list-container"
-        >
-          {loading && <h1>Retrieving Schedules ...</h1>}
-          <div className="schedules__list">
-            {schedules.map((d, i) => {
-              return (
-                <React.Fragment key={`${d.id}-${d.name}`}>
-                  <span className="schedules__list--cell">
-                    <div className="schedules__list--bold-text">{d.name}</div>
-                    <div>{d.description}</div>
-                  </span>
-
-                  <span className="schedules__list--cell">
-                    {d.startdate ?? "--/--/----"} to {d.enddate ?? "--/--/----"}
-                  </span>
-
-                  <span className="schedules__list--cell">
-                    [placeholder position tags]
-                  </span>
-
-                  <span className="schedules__list--cell">
-                    <Link to={`/schedule/${d.id}`}>
-                      <ListButton
-                        icon={faCalendarAlt}
-                        onClickHandler={() => {}}
-                      />
-                    </Link>
-                  </span>
-
-                  <span className="schedules__list--cell">
-                    <ListButton
-                      icon={faPencilAlt}
-                      onClickHandler={() => handleEditClick(d)}
-                    />
-                  </span>
-
-                  <span className="schedules__list--cell">
-                    <ListButton
-                      icon={faTrashAlt}
-                      onClickHandler={() => handleDeleteClick(d.id)}
-                    />
-                  </span>
-                </React.Fragment>
-              );
-            })}
-            {schedules && schedules.length === 0 && <p>No schedules found</p>}
-          </div>
-        </section>
-      </section>
-
-      <section
-        data-testid="schedule-form-container"
-        className="schedules-list__form-container"
-      >
-        <div className={ showForm ?
-         "schedules-list__form-show" : 
-         "schedules-list__form-hide" }
-        >
-          <ScheduleForm
-            formData={selectedSchedule}
-            refreshListFetch={fetchData}
-            handleCancel={handleFormCancel}
+    <ListLayout 
+      listComponent={() => {
+        return <ListView
+            schedules={schedules}
+            loading={loading}
+            handleShowForm={handleShowForm}
+            handleDeleteClick={handleDelete}
+            handleEditClick={handleEdit}
           />
-        </div>
-      </section>
-    </main>
+      }}
+      formComponent={() => {
+        return <FormView
+            form={form}
+            setForm={setForm}
+            refreshListFetch={fetchData}
+            setShowForm={setShowForm}
+          />
+      }} 
+      showForm={showForm}
+    />
   );
-}
+};
 
-export const ScheduleForm = ({ formData, refreshListFetch, handleCancel }) => {
-  const [form, setForm] = useState(initialForm);
-
-  const { createSchedule, updateSchedules } = useSchedulesApi();
-
-  useEffect(() => {
-    setForm(formData);
-  }, [formData]);
+export const FormView = ({ form, setForm, refreshListFetch, setShowForm }) => {
+  const { createSchedule, updateSchedule } = useSchedulesApi();
 
   const setInput = (key, value) => {
+    console.log("setInput", key, value);
     setForm({ ...form, [key]: value });
   };
 
@@ -195,14 +126,20 @@ export const ScheduleForm = ({ formData, refreshListFetch, handleCancel }) => {
 
   const handleUpdateClick = async () => {
     form.name = confirmNameField();
-    await updateSchedules(form);
+    await updateSchedule(form);
     await refreshListFetch();
+  };
+
+  const handleFormCancel = async () => {
     await setForm(initialForm);
+    await setShowForm(false);
   };
 
   return (
-    <section className="schedules__details">
-      <h2 className="schedules-form__title">add schedule</h2>
+    <section className="schedules-form">
+      <h2 className="schedules-form__title">
+        {form.id ? "edit schedule" : "add schedule"}
+      </h2>
       <FormFieldText
         label="name"
         value={form.name}
@@ -235,12 +172,94 @@ export const ScheduleForm = ({ formData, refreshListFetch, handleCancel }) => {
             onClickHandler={handleUpdateClick}
           />
         ) : (
-          <FormFieldButtonConfirm label="create" onClickHandler={handleAddClick} />
+          <FormFieldButtonConfirm
+            label="create"
+            onClickHandler={handleAddClick}
+          />
         )}
       </div>
       <div data-testid="form-cancel-container" style={{ display: "grid" }}>
-        <FormFieldButton label="cancel" onClickHandler={handleCancel} />
+        <FormFieldButton label="cancel" onClickHandler={handleFormCancel} />
       </div>
     </section>
+  );
+};
+
+export const ListView = ({
+  loading,
+  schedules,
+  handleShowForm,
+  handleEditClick,
+  handleDeleteClick,
+}) => {
+
+  return (
+    <main className="schedules-list">
+      <section className="schedules-list__main-content">
+        <section className="schedules-list__header-bar">
+          <h1>Schedules</h1>
+          <div className="schedules-list__button-container">
+            <IconButton
+              icon={faPlus}
+              label="add schedule"
+              onClickHandler={handleShowForm}
+            />
+          </div>
+        </section>
+
+        <section
+          data-testid="schedule-list-container"
+          className="schedules-list__list-container"
+        >
+          {loading && <h1>Retrieving Schedules ...</h1>}
+          <div className="schedules-list__grid">
+            {schedules.map((d, i) => {
+              return (
+                <React.Fragment key={`${d.id}-${d.name}`}>
+                  <span className="schedules-list__grid--cell">
+                    <div className="schedules-list__grid--bold-text">
+                      {d.name}
+                    </div>
+                    <div>{d.description}</div>
+                  </span>
+
+                  <span className="schedules-list__grid--cell">
+                    {d.startdate ?? "--/--/----"} to {d.enddate ?? "--/--/----"}
+                  </span>
+
+                  <span className="schedules-list__grid--cell">
+                    [placeholder position tags]
+                  </span>
+
+                  <span className="schedules-list__grid--cell">
+                    <Link to={`/schedule/${d.id}`}>
+                      <ListButton
+                        icon={faCalendarAlt}
+                        onClickHandler={() => {}}
+                      />
+                    </Link>
+                  </span>
+
+                  <span className="schedules-list__grid--cell">
+                    <ListButton
+                      icon={faPencilAlt}
+                      onClickHandler={() => handleEditClick(d)}
+                    />
+                  </span>
+
+                  <span className="schedules-list__grid--cell">
+                    <ListButton
+                      icon={faTrashAlt}
+                      onClickHandler={() => handleDeleteClick(d.id)}
+                    />
+                  </span>
+                </React.Fragment>
+              );
+            })}
+            {schedules && schedules.length === 0 && <p>No schedules found</p>}
+          </div>
+        </section>
+      </section>
+    </main>
   );
 };
