@@ -8,8 +8,6 @@
 @media (min-width: 768px) and (max-width: 1024px) {}
 
 .schedules-list {
-  display: grid;
-  grid-template-columns: 1fr min-content;
 
   &__header-bar {
     display: grid;
@@ -30,29 +28,7 @@
     align-self: center;
   }
 
-  &__list-container {
-  }
-
-  &__form-container {
-    height: 100vh;
-    background-color: var(--white);
-    // border-left: 3px solid var(--blue);
-  }
-
-  &__form-show {
-    width: 400px;
-    transition: 500ms;
-  }
-
-  &__form-hide {
-    width: 0;
-    transition: 500ms;
-  }
-}
-
-
-.schedules {
-  &__list {
+  &__grid {
     display: grid;
     grid-template-columns: 3fr 1fr 1fr auto auto auto;
 
@@ -83,13 +59,11 @@
       }
     }
   }
-
-  &__details {
-    display: grid;
-  }
 }
 
 .schedules-form {
+  display: grid;
+
   &__title {
     color: var(--blue);
     padding: 0 10px;
