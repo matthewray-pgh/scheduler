@@ -1,0 +1,87 @@
+.toggle-switch {
+  width: 94%;
+  padding: 5px 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  &__text {
+    line-height: 36px;
+    font-size: 1.15em;
+    padding-left: 10px;
+  }
+
+  &__control {
+    justify-self: end;
+    position: relative;
+    width: 55px;
+  }
+
+  &__checkbox {
+    display: none;
+  }
+
+  &__label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 0 solid var(--light-gray);
+    border-radius: 20px;
+  }
+
+  &__inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+  }
+}
+
+.toggle-switch__inner:before,
+.toggle-switch__inner:after {
+  float: left;
+  width: 50%;
+  height: 36px;
+  padding: 0;
+  line-height: 36px;
+  color: var(--white);
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+.toggle-switch__inner:before {
+  content: "";
+  padding-left: 10px;
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.toggle-switch__inner:after {
+  content: "";
+  padding-right: 10px;
+  background-color: var(--light-gray);
+  color: var(--white);
+  text-align: right;
+}
+
+.toggle-switch__switch {
+  display: block;
+  width: 24px;
+  margin: 5px;
+  background: var(--white);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 20px;
+  border: 0 solid var(--light-gray);
+  border-radius: 20px;
+  transition: all 0.3s ease-in 0s;
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch__checkbox:checked+.toggle-switch__label .toggle-switch__inner {
+  margin-left: 0;
+}
+
+.toggle-switch__checkbox:checked+.toggle-switch__label .toggle-switch__switch {
+  right: 0px;
+}

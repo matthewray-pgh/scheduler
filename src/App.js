@@ -14,6 +14,7 @@ import {
   // useAuth 
 } from "./components/Auth";
 import {
+  Configuration,
   Dashboard,
   Login,
   ForgotPassword,
@@ -99,6 +100,14 @@ const App = () => {
               element={
                 // <ProtectedRoute>
                 <Sections />
+                // </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/configuration"
+              element={
+                // <ProtectedRoute>
+                <Configuration />
                 // </ProtectedRoute>
               }
             />

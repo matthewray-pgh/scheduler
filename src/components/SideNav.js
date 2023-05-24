@@ -46,6 +46,7 @@ export const SideNav = () => {
     <>
       <aside className="aside">
         <div className="aside__heading">
+          <h1>Scheduler</h1>
           <button
             className="aside__mobile-button"
             onClick={handleMobileMenuClick}
@@ -55,10 +56,13 @@ export const SideNav = () => {
               icon={showMobileMenu ? faTimes : faBars}
             />
           </button>
-          <h1>Scheduler</h1>
         </div>
         <div className="aside__nav">
-          <Menu token={token} handleUserLogout={handleUserLogout} activePage={activePage}/>
+          <Menu
+            token={token}
+            handleUserLogout={handleUserLogout}
+            activePage={activePage}
+          />
         </div>
       </aside>
 
