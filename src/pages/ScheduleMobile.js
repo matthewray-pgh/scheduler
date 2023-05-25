@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 
-import { API, graphqlOperation } from "aws-amplify";
+// import { API, graphqlOperation } from "aws-amplify";
 import { listScheduless } from "../graphql/queries";
 import { createSchedules, deleteSchedules } from "../graphql/mutations";
 
@@ -30,9 +30,9 @@ export const ScheduleMobile = () => {
       const newSchedule = { ...form };
       setSchedules([...schedules, newSchedule]);
       setForm(initialForm);
-      await API.graphql(
-        graphqlOperation(createSchedules, { input: newSchedule })
-      );
+      // await API.graphql(
+      //   graphqlOperation(createSchedules, { input: newSchedule })
+      // );
       setShowForm(false);
     } catch (err) {
       console.log("error creating schedule:", err);
@@ -41,7 +41,7 @@ export const ScheduleMobile = () => {
 
   async function fetchSchedules() {
     try {
-      const schedulesData = await API.graphql(graphqlOperation(listScheduless));
+      const schedulesData = []; //await API.graphql(graphqlOperation(listScheduless));
       const schedules = schedulesData.data.listScheduless.items;
       setSchedules(schedules);
     } 
@@ -54,9 +54,9 @@ export const ScheduleMobile = () => {
     try {
       if (!selected.id) return;
       setSelected({id: null, name: null})
-      await API.graphql(
-        graphqlOperation(deleteSchedules, { input: {id: selected.id} })
-      );
+      // await API.graphql(
+      //   graphqlOperation(deleteSchedules, { input: {id: selected.id} })
+      // );
       setShowForm(false);
     } catch (err) {
       console.log("error creating schedule:", err);

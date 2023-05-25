@@ -1,4 +1,4 @@
-import { API, graphqlOperation } from "aws-amplify";
+//import { API, graphqlOperation } from "aws-amplify";
 import { 
   getShifts, 
   listShiftss 
@@ -12,7 +12,7 @@ import {
 function useShiftsApi() {
   const fetchShiftsList = async () => {
     try {
-      const response = await API.graphql(graphqlOperation(listShiftss));
+      const response = []; //await API.graphql(graphqlOperation(listShiftss));
       const results = response.data.listShiftss.items;
       return results;
     } catch (err) {
@@ -22,9 +22,7 @@ function useShiftsApi() {
 
   const fetchShift = async (id) => {
     try {
-      const response = await API.graphql(
-        graphqlOperation(getShifts, { id: id })
-      );
+      const response = []; //await API.graphql(graphqlOperation(getShifts, { id: id }));
       const result = response.data.getShifts;
       return result;
     } catch (err) {
@@ -36,9 +34,7 @@ function useShiftsApi() {
     try {
       if (!form.shift) return;
       const newShift = { ...form };
-      const response = await API.graphql(
-        graphqlOperation(createShifts, { input: newShift })
-      );
+      const response = []; //await API.graphql(graphqlOperation(createShifts, { input: newShift }));
       const result = response.data.createShift;
       return result;
     } catch (err) {
@@ -50,9 +46,7 @@ function useShiftsApi() {
     try {
       if (!form.id) return;
       const updShift = { ...form };
-      const response = await API.graphql(
-        graphqlOperation(updateShifts, { input: updShift })
-      );
+      const response = []; //await API.graphql(graphqlOperation(updateShifts, { input: updShift }));
       const result = response.data.updateShifts;
       return result;
     } catch (err) {
@@ -63,9 +57,7 @@ function useShiftsApi() {
   const deleteShift = async (id) => {
     try {
       if (!id) return;
-      const response = await API.graphql(
-        graphqlOperation(deleteShifts, { input: { id: id } })
-      );
+      const response = []; //await API.graphql(graphqlOperation(deleteShifts, { input: { id: id } }));
       const result = response.data.deleteShifts;
       return result;
     } catch (err) {

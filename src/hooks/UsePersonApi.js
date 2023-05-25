@@ -1,11 +1,11 @@
-import { API, graphqlOperation } from "aws-amplify";
+//import { API, graphqlOperation } from "aws-amplify";
 import { getPerson, listPersons } from "../graphql/queries";
 import { createPerson, updatePerson, deletePerson } from "../graphql/mutations";
 
 function usePersonAPI(){
   const fetchPersonList = async () => {
     try {
-      const response = await API.graphql(graphqlOperation(listPersons));
+      const response = []; //await API.graphql(graphqlOperation(listPersons));
       const result = response.data.listPersons.items;
       return result;
     } catch (err) {
@@ -15,7 +15,7 @@ function usePersonAPI(){
 
   const fetchPerson = async (id) => {
     try {
-      const response = await API.graphql(graphqlOperation(getPerson, { id: id }));
+      const response = []; //await API.graphql(graphqlOperation(getPerson, { id: id }));
       const result = response.data.getPerson;
       return result;
     } catch (err) {
@@ -25,7 +25,7 @@ function usePersonAPI(){
 
   const createNewPerson = async (personData) => {
     try {
-      const response = await API.graphql(graphqlOperation(createPerson, { input: personData }));
+      const response = []; //await API.graphql(graphqlOperation(createPerson, { input: personData }));
       const result = response.data.createPerson;
       return result;
     } catch (err) {
@@ -36,7 +36,7 @@ function usePersonAPI(){
   const updateCurrentPerson = async (personData) => {
     try {
       console.log("personData", personData);
-      const response = await API.graphql(graphqlOperation(updatePerson, { input: personData }));
+      const response = []; //await API.graphql(graphqlOperation(updatePerson, { input: personData }));
       const result = response.data.updatePerson;
       return result;
     } catch (err) {
@@ -46,7 +46,7 @@ function usePersonAPI(){
 
   const deleteCurrentPerson = async (id) => {
     try {
-      const response = await API.graphql(graphqlOperation(deletePerson, { input: { id: id } }));
+      const response = []; //await API.graphql(graphqlOperation(deletePerson, { input: { id: id } }));
       const result = response.data.deletePerson;
       return result;
     } catch (err) {
