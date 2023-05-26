@@ -2,11 +2,14 @@
 import { getPerson, listPersons } from "../graphql/queries";
 import { createPerson, updatePerson, deletePerson } from "../graphql/mutations";
 
+import peopleList from "../assets/mockFetchPersonList.json";
+
 function usePersonAPI(){
   const fetchPersonList = async () => {
     try {
-      const response = []; //await API.graphql(graphqlOperation(listPersons));
-      const result = response.data.listPersons.items;
+      // const response = await API.graphql(graphqlOperation(listPersons));
+      // const result = response.data.listPersons.items;
+      const result = peopleList;
       return result;
     } catch (err) {
       console.error("ERROR fetching person list!", err)

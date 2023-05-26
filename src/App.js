@@ -21,8 +21,7 @@ import {
   People,
   PeopleForm,
   Schedule,
-  ScheduleList,
-  ScheduleMobile,
+  ScheduleForm,
   Sections,
 } from "./pages";
 
@@ -83,7 +82,7 @@ const App = () => {
               path="/schedule"
               element={
                 // <ProtectedRoute>
-                mQuery.matches ? <ScheduleList /> : <ScheduleMobile />
+                <Schedule />
                 // </ProtectedRoute>
               }
             />
@@ -91,7 +90,7 @@ const App = () => {
               path="/schedule/:id"
               element={
                 // <ProtectedRoute>
-                <Schedule />
+                <ScheduleForm />
                 // </ProtectedRoute>
               }
             />

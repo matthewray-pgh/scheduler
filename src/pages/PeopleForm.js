@@ -24,20 +24,18 @@ export const GenerateUUID = () => {
   );
 }
 
-export const PeopleForm = () => {
-  const initialForm = {
-    id: null,
-    lastname: '',
-    firstname: '',
-    email: '',
-    phone: '',
-    hiredate: '',
-    termdate: '',
-    position: '',
-    active: false,
-  };
+const initialForm = {
+  id: null,
+  lastname: "",
+  firstname: "",
+  email: "",
+  phone: "",
+  hiredate: "",
+  termdate: "",
+  position: "",
+};
 
-  const [form, setForm] = useState(initialForm);
+export const PeopleForm = ({form, setForm, refreshListFetch, setShowForm}) => {
   const [loading, setLoading] = useState(false);
   const [toasts, setToasts] = useState([]);
   
@@ -46,33 +44,33 @@ export const PeopleForm = () => {
     updateCurrentPerson, 
     fetchPerson } = usePersonAPI();
 
-  const urlParams = useParams();
-  const editMode = urlParams.id.toString() !== "new";
+  // const urlParams = useParams();
+  // const editMode = urlParams.id.toString() !== "new";
 
-  const fetchPersonData = (id) => {
-    setLoading(true);
-    fetchPerson(id)
-      .then((result) => {
-        setForm({
-          id: result.id,
-          lastname: result.lastname,
-          firstname: result.firstname,
-          email: result.email,
-          phone: result.phone,
-          hiredate: result.hiredate,
-          termdate: result.termdate,
-          position: result.position,
-        });
-        setLoading(false);
-      })
-  }
+  // const fetchPersonData = (id) => {
+  //   setLoading(true);
+  //   fetchPerson(id)
+  //     .then((result) => {
+  //       setForm({
+  //         id: result.id,
+  //         lastname: result.lastname,
+  //         firstname: result.firstname,
+  //         email: result.email,
+  //         phone: result.phone,
+  //         hiredate: result.hiredate,
+  //         termdate: result.termdate,
+  //         position: result.position,
+  //       });
+  //       setLoading(false);
+  //     })
+  // }
 
-  useEffect(() => {
-    if(editMode) {
-      fetchPersonData(urlParams.id.toString());
-    }
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   if(editMode) {
+  //     fetchPersonData(urlParams.id.toString());
+  //   }
+  //   // eslint-disable-next-line
+  // }, []);
 
   const setInput = (key, value) => {
     setForm({ ...form, [key]: value });
@@ -121,21 +119,19 @@ export const PeopleForm = () => {
 
   const handleAddClick = async () => {
     await addPersonAPI();
+    await refreshListFetch();
     await setForm(initialForm); 
   };
 
   const handleUpdateClick = async () => {
     await updatePersonAPI();
+    await refreshListFetch();
     await setForm(initialForm);
   };
 
-  const handleCancel = () => {
-    if(editMode){
-      fetchPersonData(form.id);
-    }
-    else{
-      setForm(initialForm);
-    }
+  const handleCancel = async () => {
+    await setForm(initialForm);
+    await setShowForm(false);
   };
 
   const confirmButton = () => {
@@ -162,7 +158,8 @@ export const PeopleForm = () => {
 
       <section className="people__form">
         <h2 className="people__form--header">
-          {editMode ? "edit" : "add"} person
+          {/* {editMode ? "edit" : "add"} person */}
+          person
         </h2>
 
         <div className="people__form--toast">
