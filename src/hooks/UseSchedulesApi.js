@@ -9,11 +9,14 @@ import {
   deleteSchedules,
 } from "../graphql/mutations";
 
+import mockScheduleData from "../assets/mockFetchScheduleList.json";
+
 function useSchedulesApi() {
   const fetchScheduleList = async () => {
     try {
-      const schedulesData = []; //await API.graphql(graphqlOperation(listScheduless));
-      const schedules = schedulesData.data.listScheduless.items;
+      // const schedulesData = await API.graphql(graphqlOperation(listScheduless));
+      // const schedules = schedulesData.data.listScheduless.items;
+      const schedules = mockScheduleData;
       return schedules;
     } catch (err) {
       console.log("ERROR fetching schedules:", err);

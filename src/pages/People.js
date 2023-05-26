@@ -1,5 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react"; 
 import { Link } from "react-router-dom";
+
+import { PeopleForm } from "./PeopleForm.js";
 import { ModalConfirm } from "../components/ModalConfirm";
 import usePersonAPI from "../hooks/UsePersonApi";
 
@@ -13,6 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/People.scss";
+import { ListLayout } from "../layouts/ListLayout.js";
 
 // TODO: POSITION TAGS hook
 // import positionData from "../assets/positionsAPI.json";
@@ -23,7 +26,20 @@ import {
   ListButton,
 } from "../components/FormFieldButton.js";
 
+const intialForm = {
+  id: null,
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  position: "",
+  active: false,
+};
+
 export const People = () => {
+  const [form, setForm] = useState(intialForm);
+  const [showForm, setShowForm] = useState(false);
+
   const [data, setData] = useState([]);
   const [listView, setListView] = useState(true);
   const [gridView, setGridView] = useState(false);
@@ -39,7 +55,7 @@ export const People = () => {
   } = usePersonAPI();
 
   useEffect(() => {
-    //getPersons();
+    getPersons();
     // eslint-disable-next-line
   }, []);
 
@@ -105,62 +121,82 @@ export const People = () => {
     setGridView(true);
   };
 
+  const handleEditClick = (person) => {
+    setForm(person);
+    setShowForm(true);
+  };
+
   return (
-    <main className="people__page">
-      <div className="people__title">
-        <h1>People</h1>
-        <div className="people__title--button-container">
-          <Link to={`/people/new`}>
-            <IconButton icon={faPlus} label="add person" />
-          </Link>
-        </div>
-      </div>
-
-      <section className="people__header">
-        <IconButton
-          icon={faThList}
-          label="list"
-          onClickHandler={handleListViewClick}
-          className={listView ? "icon-button-active" : "icon-button"}
-        />
-        <IconButton
-          icon={faTh}
-          label="grid"
-          onClickHandler={handleGridViewClick}
-          className={gridView ? "icon-button-active" : "icon-button"}
-        />
-      </section>
-
-      <section className="people__main-content">
-        <ListView
+    <ListLayout
+      listComponent={() => {
+        return <ListView
           data={data}
           showList={listView}
           getPositionName={getPositionName}
+          handleEditClick={handleEditClick}
           handleDeletePerson={handleDeleteClick}
         />
-
-        <GridView
-          data={data}
-          showGrid={gridView}
-          getPositionName={getPositionName}
-          handleDeletePerson={handleDeleteClick}
+      }}
+      formComponent={() => {
+        return <PeopleForm 
+          form={form}
+          setForm={setForm}
+          refreshListFetch={getPersons}
+          setShowForm={setShowForm}
         />
+      }}
+      showForm={showForm}
+    />
+    // <main className="people__page">
+    //   <div className="people__title">
+    //     <h1>People</h1>
+    //     <div className="people__title--button-container">
+    //       <Link to={`/people/new`}>
+    //         <IconButton icon={faPlus} label="add person" />
+    //       </Link>
+    //     </div>
+    //   </div>
 
-        {data && data.length === 0 && (
-          <div className="people__table--row-empty">
-            <span>no results</span>
-            <div></div>
-          </div>
-        )}
-      </section>
+    //   <section className="people__header">
+    //     <IconButton
+    //       icon={faThList}
+    //       label="list"
+    //       onClickHandler={handleListViewClick}
+    //       className={listView ? "icon-button-active" : "icon-button"}
+    //     />
+    //     <IconButton
+    //       icon={faTh}
+    //       label="grid"
+    //       onClickHandler={handleGridViewClick}
+    //       className={gridView ? "icon-button-active" : "icon-button"}
+    //     />
+    //   </section>
 
-      <ModalConfirm
-        message={confirmMessage}
-        actionFunc={handleDeletePerson}
-        show={showDeletConfirm}
-        closeFunc={() => setShowDeleteConfirm(false)}
-      />
-    </main>
+    //   <section className="people__main-content">
+        
+
+    //     {/* <GridView
+    //       data={data}
+    //       showGrid={gridView}
+    //       getPositionName={getPositionName}
+    //       handleDeletePerson={handleDeleteClick}
+    //     /> */}
+
+    //     {/* {data && data.length === 0 && (
+    //       <div className="people__table--row-empty">
+    //         <span>no results</span>
+    //         <div></div>
+    //       </div>
+    //     )} */}
+    //   </section>
+
+    //   <ModalConfirm
+    //     message={confirmMessage}
+    //     actionFunc={handleDeletePerson}
+    //     show={showDeletConfirm}
+    //     closeFunc={() => setShowDeleteConfirm(false)}
+    //   />
+    // </main>
   );
 };
 
@@ -168,12 +204,12 @@ const ListView = ({
   data,
   showList,
   getPositionName,
+  handleEditClick,
   handleDeletePerson,
 }) => {
   return (
     showList && (
       <section className="people__list-content">
-        <div className="people__list-content--heading">person list</div>
         <div className="people__table people__table--header">
           <div>Person</div>
           <div>Position(s)</div>
@@ -182,7 +218,7 @@ const ListView = ({
         </div>
 
         <div className="people__table">
-          {data.map((d, i) => {
+          {data && data.map((d, i) => {
             return (
               <Fragment key={i}>
                 <div className="people__table--id-card">
@@ -202,11 +238,10 @@ const ListView = ({
                 <span className="people__table--positions">
                   {getPositionName(d.position)}
                 </span>
-                <span className="people__table--cell">{d.hiredate}</span>
+                <span className="people__table--dates">{d.hiredate}</span>
                 <span className="people__table--cell">
-                  <Link to={`/people/${d.id}`}>
-                    <ListButton icon={faPencilAlt} />
-                  </Link>
+                  <ListButton icon={faPencilAlt} 
+                    onClickHandler={() => handleEditClick(d)}/>
                 </span>
                 <span className="people__table--cell">
                   <ListButton

@@ -5,7 +5,6 @@ export { Home } from "./Home";
 export { Login } from "./Login";
 export { People } from "./People";
 export { PeopleForm } from "./PeopleForm";
+export { ScheduleForm } from "./ScheduleForm";
 export { Schedule } from "./Schedule";
-export { ScheduleList } from "./ScheduleList";
-export { ScheduleMobile } from "./ScheduleMobile";
 export { Sections } from "./Sections";

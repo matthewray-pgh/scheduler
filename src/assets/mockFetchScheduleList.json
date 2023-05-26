@@ -1,0 +1,32 @@
+[
+  {
+    "id": "ndujwagkifgjwfgg",
+    "name": "Server Schedule Test 1",
+    "description": "This is a test schedule",
+    "startdate": "2023-05-28",
+    "enddate": "2023-06-03",
+    "active": true,
+    "published": false,
+    "complete": false,
+    "group": null,
+    "created": "2021-05-28T12:00:00.000Z",
+    "createdby": "ndujwagkifgjwfgg",
+    "updated": null,
+    "updatedby": null
+  },
+  {
+    "id": "hksEHEFisezghjs,ijh",
+    "name": "Server Schedule Test 2",
+    "description": "This is a test schedule",
+    "startdate": "2023-06-04",
+    "enddate": "2023-06-10",
+    "active": true,
+    "published": false,
+    "complete": false,
+    "group": null,
+    "created": "2021-05-28T12:00:00.000Z",
+    "createdby": "joe bob",
+    "updated": null,
+    "updatedby": null
+  }
+]

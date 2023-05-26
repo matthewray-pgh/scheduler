@@ -24,8 +24,7 @@
   }
 
   &__button-container {
-    justify-self: right;
-    align-self: center;
+    display: grid;
   }
 
   &__grid {
