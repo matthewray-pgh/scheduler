@@ -18,8 +18,6 @@ import {
   ListButton,
 } from "../components/FormFieldButton.js";
 
-import { IconButton } from "../components/FormFieldButton.js";
-
 import useSchedulesApi from '../hooks/UseSchedulesApi.js';
 
 import '../styles/ScheduleList.scss';
@@ -57,25 +55,9 @@ export const Schedule = () => {
     // eslint-disable-next-line
   }, []);
 
-  const { deleteSchedule } = useSchedulesApi();
-
   const handleShowForm = () => {
     setShowForm(true);
   }
-
-  const handleDelete = async (id) => {
-    setLoading(true);
-    await deleteSchedule(id)
-      .then((result) => {
-        if (result.id) {
-          fetchData();
-        } else {
-          console.error("TODO: Display error on screen");
-          setLoading(false);
-        }
-      })
-      .then(() => setLoading(false));
-  };
 
   const handleEdit = (d) => {
     setForm(d);
@@ -89,7 +71,6 @@ export const Schedule = () => {
             schedules={schedules}
             loading={loading}
             handleShowForm={handleShowForm}
-            handleDeleteClick={handleDelete}
             handleEditClick={handleEdit}
           />
       }}
@@ -107,7 +88,7 @@ export const Schedule = () => {
 };
 
 export const FormView = ({ form, setForm, refreshListFetch, setShowForm }) => {
-  const { createSchedule, updateSchedule } = useSchedulesApi();
+  const { createSchedule, updateSchedule, deleteSchedule } = useSchedulesApi();
 
   const setInput = (key, value) => {
     console.log("setInput", key, value);
@@ -132,6 +113,13 @@ export const FormView = ({ form, setForm, refreshListFetch, setShowForm }) => {
   };
 
   const handleFormCancel = async () => {
+    await setForm(initialForm);
+    await setShowForm(false);
+  };
+
+  const handleDelete = async (id) => {
+    await deleteSchedule(id);
+    await refreshListFetch();
     await setForm(initialForm);
     await setShowForm(false);
   };
@@ -182,6 +170,11 @@ export const FormView = ({ form, setForm, refreshListFetch, setShowForm }) => {
       <div data-testid="form-cancel-container" style={{ display: "grid" }}>
         <FormFieldButton label="cancel" onClickHandler={handleFormCancel} />
       </div>
+      <div data-testid="form-delete-container" style={{ display: "grid" }}>
+        {form.id && (
+          <FormFieldButton label="delete" onClickHandler={handleDelete} />
+        )}
+      </div>
     </section>
   );
 };
@@ -191,7 +184,6 @@ export const ListView = ({
   schedules,
   handleShowForm,
   handleEditClick,
-  handleDeleteClick,
 }) => {
 
   return (
@@ -206,52 +198,47 @@ export const ListView = ({
           className="schedules-list__list-container"
         >
           {loading && <h1>Retrieving Schedules ...</h1>}
-          <div className="schedules-list__grid">
             {schedules.map((d, i) => {
               return (
-                <React.Fragment key={`${d.id}-${d.name}`}>
-                  <span className="schedules-list__grid--cell">
-                    <div className="schedules-list__grid--bold-text">
-                      {d.name}
-                    </div>
-                    <div>{d.description}</div>
-                  </span>
+                <div className="schedules-list__grid">
+                  <React.Fragment key={`${d.id}-${d.name}`}>
+                    <span className="schedules-list__grid--name-cell">
+                      <div className="schedules-list__grid--bold-text">
+                        {d.name}
+                      </div>
+                      <div>{d.description}</div>
+                    </span>
 
-                  <span className="schedules-list__grid--cell">
-                    {d.startdate ?? "--/--/----"} to {d.enddate ?? "--/--/----"}
-                  </span>
+                    <span className="schedules-list__grid--date-cell">
+                      {d.startdate ?? "--/--/----"} to{" "}
+                      {d.enddate ?? "--/--/----"}
+                    </span>
 
-                  <span className="schedules-list__grid--cell">
-                    [placeholder position tags]
-                  </span>
+                    <span className="schedules-list__grid--position-cell">
+                      [placeholder position tags]
+                    </span>
 
-                  <span className="schedules-list__grid--cell">
-                    <Link to={`/schedule/${d.id}`}>
+                    <span className="schedules-list__grid--btn-edit-cell">
                       <ListButton
-                        icon={faCalendarAlt}
-                        onClickHandler={() => {}}
+                        icon={faPencilAlt}
+                        onClickHandler={() => handleEditClick(d)}
                       />
-                    </Link>
-                  </span>
+                    </span>
 
-                  <span className="schedules-list__grid--cell">
-                    <ListButton
-                      icon={faPencilAlt}
-                      onClickHandler={() => handleEditClick(d)}
-                    />
-                  </span>
-
-                  <span className="schedules-list__grid--cell">
-                    <ListButton
-                      icon={faTrashAlt}
-                      onClickHandler={() => handleDeleteClick(d.id)}
-                    />
-                  </span>
-                </React.Fragment>
+                    <span className="schedules-list__grid--btn-schedule-cell">
+                      <Link to={`/schedule/${d.id}`}>
+                        <ListButton
+                          icon={faCalendarAlt}
+                          onClickHandler={() => {}}
+                        />
+                      </Link>
+                    </span>
+                  </React.Fragment>
+                </div>
               );
             })}
             {schedules && schedules.length === 0 && <p>No schedules found</p>}
-          </div>
+          {/* </div> */}
           <div className="schedules-list__button-container">
             <FormFieldButton
               label="add schedule"

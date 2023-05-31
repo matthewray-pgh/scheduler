@@ -1,11 +1,37 @@
 /* mobile */
-@media (max-width: 600px) {}
-
-/* full screen */
-@media (min-width: 1024px) {}
+@media (max-width: 600px) {
+  .schedules-list {
+    &__grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 40px 50px;
+      grid-template-areas: "title job edit goto"
+                           "date job edit goto";
+    }
+  }
+}
 
 /* small screen */
-@media (min-width: 768px) and (max-width: 1024px) {}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .schedules-list {
+    &__grid {
+      display: grid;
+      grid-template-columns: 2fr 2fr 50px 50px;
+      grid-template-areas: "title job edit goto"
+                           "date job edit goto";
+    }
+  }
+}
+
+/* full screen */
+@media (min-width: 1024px) {
+  .schedules-list {
+    &__grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr 1fr 50px 50px;
+      grid-template-areas: "title date job edit goto";
+    }
+  }
+}
 
 .schedules-list {
 
@@ -28,13 +54,47 @@
   }
 
   &__grid {
-    display: grid;
-    grid-template-columns: 3fr 1fr 1fr auto auto auto;
-
     margin: 10px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 0.8em;
+
+    background-color: var(--white);
     color: var(--dark);
+
+    &--name-cell {
+      // margin-bottom: 5px;
+      padding: 5px 10px;
+      grid-area: title;
+    }
+
+
+    &--date-cell {
+      // margin-bottom: 5px;
+      padding: 5px 10px;
+      grid-area: date;
+    }
+
+    &--position-cell {
+      // margin-bottom: 5px;
+      padding: 10px;
+      grid-area: job;
+    }
+
+    &--btn-schedule-cell {
+      // margin-bottom: 5px;
+      padding: 5px 10px;
+      grid-area: goto;
+      align-self: center;
+      justify-self: center;
+    }
+
+    &--btn-edit-cell {
+      // margin-bottom: 5px;
+      padding: 5px 10px;
+      grid-area: edit;
+      align-self: center;
+      justify-self: center;
+    }
 
     &--cell {
       margin-bottom: 5px;
