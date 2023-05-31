@@ -28,5 +28,35 @@
     "createdby": "joe bob",
     "updated": null,
     "updatedby": null
+  },
+  {
+    "id": "nsnljdfneaukhaeavbe",
+    "name": "Server Schedule Test 3",
+    "description": "This is a test schedule",
+    "startdate": "2023-06-11",
+    "enddate": "2023-06-17",
+    "active": true,
+    "published": false,
+    "complete": false,
+    "group": null,
+    "created": "2021-05-30T12:00:00.000Z",
+    "createdby": "matt ray",
+    "updated": null,
+    "updatedby": null
+  },
+  {
+    "id": "njkaubnfeurhgqlugaeh",
+    "name": "Server Schedule Test 4",
+    "description": "This is a test schedule",
+    "startdate": "2023-06-18",
+    "enddate": "2023-06-24",
+    "active": true,
+    "published": false,
+    "complete": false,
+    "group": null,
+    "created": "2021-05-30T12:00:00.000Z",
+    "createdby": "matt ray",
+    "updated": null,
+    "updatedby": null
   }
 ]

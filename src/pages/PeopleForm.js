@@ -157,11 +157,6 @@ export const PeopleForm = ({form, setForm, refreshListFetch, setShowForm}) => {
       </section>
 
       <section className="people__form">
-        <h2 className="people__form--header">
-          {/* {editMode ? "edit" : "add"} person */}
-          person
-        </h2>
-
         <div className="people__form--toast">
           {toasts && <Toast lists={toasts} setToastList={setToasts} />}
         </div>

@@ -66,7 +66,6 @@
     }
 
     &__form-view {
-      height: 100vh;
       z-index: 10;
 
       &--show {
@@ -74,15 +73,18 @@
         right: 0;
         top: 55px;
         width: 100%;
+        height: 100vh;
         display: block;
         transition: 500ms;
         background-color: var(--white);
+        overflow: hidden;
       }
     
       &--hide {
         width: 0;
         display: none;
         transition: 500ms;
+        overflow: scroll;
       }
     }
   }
