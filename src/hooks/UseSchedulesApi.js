@@ -25,8 +25,9 @@ function useSchedulesApi() {
 
   const fetchSchedule = async (id) => {
     try {
-      const scheduleData = []; //await API.graphql(graphqlOperation(getSchedules, { id: id }));
-      const schedules = scheduleData.data.getSchedules;
+      //const scheduleData = await API.graphql(graphqlOperation(getSchedules, { id: id }));
+      //const schedules = scheduleData.data.getSchedules;
+      const schedules = mockScheduleData.find((schedule) => schedule.id === id);
       return schedules;
     } catch (err) {
       console.log("error fetching schedules:", err);

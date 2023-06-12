@@ -1,5 +1,8 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBusinessTime } from "@fortawesome/free-solid-svg-icons";
 
 import { FormFieldButton } from "../components/FormFieldButton.js";
 import { ShiftCard } from "../components/ShiftCard.js";
@@ -10,8 +13,8 @@ import "../styles/Schedule.scss";
 
 export const ScheduleForm = () => {
   const [schedule, setSchedule] = useState({});
+  const [summary, setSummary] = useState({});
   const [shiftDays, setShiftDays] = useState([]);
-  const [shifts, setShifts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const { fetchSchedule } = useSchedulesApi();
@@ -23,119 +26,134 @@ export const ScheduleForm = () => {
     setLoading(true);
     const schedulePromise = fetchSchedule(id);
     schedulePromise.then((result) => {
-      setSchedule(result);
+      setSummary(result);
       setLoading(false);
+    });
+  };
+
+  const fetchPersonData = () => {
+    fetchPersonList().then((results) => {
+      if (results !== undefined && results.length > 0) {
+        const initialShifts = results.map((res, i) => {
+          return {
+            id: i,
+            scheduleId: urlParams.id,
+            personId: res.id,
+            name: `${res.firstname} ${res.lastname}`,
+            shifts: res.schedule,
+          };
+        });
+        setSchedule(initialShifts);
+      };
     });
   };
 
   useEffect(() => {
     fetchData(urlParams.id.toString());
+    fetchPersonData();
     // eslint-disable-next-line
   }, []);
 
-  const handleGenerateShiftsClick = () => {
-    const createDateRange = () => {
-      let currentDate = new Date(schedule.startdate.replace(/-/g, "/"));
-      const endDate = new Date(schedule.enddate.replace(/-/g, "/"));
-      let dateRange = [];
-      while (currentDate <= endDate){
-        dateRange.push(new Date(currentDate));
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-      return dateRange;
-    }
-    const scheduleDates = createDateRange();
-    setShiftDays(scheduleDates);
-
-    //populate employees
-    fetchPersonList()
-      .then((results) => { 
-        return results.map(person => {
-          return { id: person.id, shifts: scheduleDates };
-        })
-      }) 
-      .then((shiftsResults) => {
-        console.log("shifts results", shiftsResults);
-        setShifts(shiftsResults);
-      })
-  };
-
-  const formatDayOfWeekDate = (date) => {
-    var options = {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
+  useEffect(() => {
+    // eslint-disable-next-line no-extend-native
+    Date.prototype.addDays = function (days) {
+      var date = new Date(this.valueOf());
+      date.setDate(date.getDate() + days);
+      return date;
     };
 
-    return new Date(date).toLocaleDateString("en-us", options);
+    const getDates = (start, stop) => {
+      let dateArray = [];
+      let currentDate = start;
+      while (currentDate <= stop) {
+        dateArray.push(new Date(currentDate));
+        currentDate = currentDate.addDays(1);
+      }
+      return dateArray;
+    };
+
+    if (summary.startdate && summary.enddate) {
+      const start = summary.startdate.split("-");
+      const rangeStart = new Date(start[0], start[1] - 1, start[2]);
+
+      const end = summary.enddate.split("-");
+      const rangeEnd = new Date(end[0], end[1] - 1, end[2]);
+
+      const range = getDates(rangeStart, rangeEnd);
+      setShiftDays(range);
+    }
+  }, [summary]);
+
+  const handleBlockClick = (day, person) => {
+    console.log(`day: ${day}, person: ${person}`);
   }
 
   return (
     <main className="schedule">
-      <section className="schedule__heading--panel">
-        <h1>Schedule</h1>
-      </section>
-
       {loading && <h1>Retrieving Schedules ...</h1>}
 
       {!loading && (
-        <div className="schedule__details--panel">
-          <h3>Schedule Details</h3>
-          <div>
-            Dates: {schedule.startdate} - {schedule.enddate}
+        <div className="schedule__summary">
+          <div className="schedule__summary--icon">
+            <FontAwesomeIcon icon={faBusinessTime} />
           </div>
-          <div>Name: {schedule.name}</div>
-          <div>Description: {schedule.description}</div>
+          <div className="schedule__summary--details">
+            <div className="schedule__summary--details-title">{summary.name ? summary.name : "Name"}</div>
+            <div>
+              {" "}
+              {summary.description ? summary.description : "Description"}
+            </div>
+            <div>
+              {summary.startdate
+                ? `${summary.startdate} to ${summary.enddate}`
+                : "Start Date - End Date"}
+            </div>
+          </div>
         </div>
       )}
 
-      <section className="schedule__main-content">
-        {/* if no shifts exists */}
-        {shifts.length === 0 && (
-          <div style={{ display: "grid" }}>
-            <FormFieldButton
-              label="Generate Shifts"
-              onClickHandler={handleGenerateShiftsClick}
-            />
-          </div>
-        )}
+      <section
+        className="schedule__content"
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${shiftDays.length + 1}, 1fr)`,
+          gridGap: "3px",
+        }}
+      >
+        <div className="schedule__content--header"></div>
+        {shiftDays.length > 0 &&
+          shiftDays.map((day, i) => {
+            return (
+              <div className="schedule__content--heading" key={`${i}-${day}`}>
+                {day.getMonth() + 1}/{day.getDate()}
+              </div>
+            );
+          })}
 
-        {!loading && shifts.length > 0 && (
-          <section className="schedule__shifts">
-            <div
-              className="schedule__shifts--grid"
-              style={{
-                display: "grid",
-                gridTemplateColumns: `repeat(${shiftDays.length + 1}, 1fr)`,
-              }}
-            >
-              <div className="schedule__shifts--grid-header"></div>
-              {shiftDays.map((days, i) => {
-                return (
-                  <div className="schedule__shifts--grid-header">
-                    {formatDayOfWeekDate(days)}
-                  </div>
-                );
-              })}
-
-              {shifts.map((s, i) => {
-                return (
-                  <Fragment key={`shift-${s.id}-${i}`}>
-                    <div>{s.id}</div>
-                    {s.shifts.map((d, shiftIndex) => {
-                      return (
-                        <div>
-                          {/* <div key={`${d}-${shiftIndex}`}>{d.toString()}</div> */}
-                          <ShiftCard />
-                        </div>
-                      );
-                    })}
-                  </Fragment>
-                );
-              })}
-            </div>
-          </section>
-        )}
+        {schedule.length > 0 &&
+          schedule.map((sch, i) => {
+            return (
+              <React.Fragment key={`${i}-${sch.scheduleId}-${sch.personId}`}>
+                <div className="schedule__block--name">
+                  {sch.name ? sch.name : "unlisted"}
+                </div>
+                {sch.shifts.length > 0 &&
+                  sch.shifts.map((day, dayIndex) => {
+                    return (
+                      <div
+                        key={`${dayIndex}-${day}`}
+                        className={
+                          day ? "schedule__block" : "schedule__unavailable"
+                        }
+                        onClick={() => handleBlockClick(day, `${sch.name}`)}
+                      >
+                        {day ? "" : "unavailable"}
+                      </div>
+                    );
+                  })}
+              </React.Fragment>
+            );
+          })}
       </section>
     </main>
   );
