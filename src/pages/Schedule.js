@@ -2,10 +2,8 @@ import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 
 import { 
-  faTrashAlt, 
   faPencilAlt,
   faCalendarAlt,
-  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {

@@ -1,0 +1,11 @@
+[
+  { "id": 0, "name": "unassigned", "color": "#a2a2a2"},
+  { "id": 1, "name": "server", "color": "#4169ff" },
+  { "id": 2, "name": "bartender", "color": "#2ad8bb" },
+  { "id": 3, "name": "hostess", "color": "#d3830b" },
+  { "id": 4, "name": "barback", "color": "#a2a2a2" },
+  { "id": 5, "name": "cook", "color": "#a2a2a2" },
+  { "id": 6, "name": "FOH manager", "color": "#a2a2a2" },
+  { "id": 7, "name": "kitchen manager", "color": "#a2a2a2" },
+  { "id": 8, "name": "admin", "color": "#a2a2a2" }
+]
