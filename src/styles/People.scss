@@ -14,9 +14,8 @@
       &--header {
         & div {
           display: flex;
-          justify-content: center;
     
-          padding: 0 5px;
+          padding: 10px;
           font-weight: bold;
         }
     
@@ -300,31 +299,6 @@
     &--line-item {
       height: 30px;
       line-height: 30px;
-    }
-  }
-
-  &__position {
-    display: flex;
-    align-items: center;
-    justify-items: center;
-
-    margin: 5px;
-    padding: 5px 10px;
-    background-color: #b8b8b8;
-    color: #ffffff;
-    border-radius: 10px;
-    vertical-align: middle;
-
-    &--server {
-      background-color: #219c6f;
-    }
-
-    &--bartender {
-      background-color: #1f65bb;
-    }
-
-    &--hostess {
-      background-color: #40219c;
     }
   }
 }

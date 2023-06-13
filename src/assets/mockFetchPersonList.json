@@ -7,7 +7,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [null, null, [], [], [], null, null]
   },
@@ -19,7 +19,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [null, null, [], null, null, null, null]
   },
@@ -31,7 +31,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1,2],
     "active": false,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -43,7 +43,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, null, [], [], [], null]
   },
@@ -55,7 +55,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": false,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -67,7 +67,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -79,7 +79,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [null, null, [], [], [], null, []]
   },
@@ -91,7 +91,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [null, null, null, [], null, [], null]
   },
@@ -103,7 +103,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [null, null, null, null, null, null, null]
   },
@@ -115,7 +115,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -127,7 +127,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": false,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -139,7 +139,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -151,7 +151,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -163,7 +163,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [null, null, null, [], [], [], []]
   },
@@ -175,7 +175,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -187,7 +187,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -199,7 +199,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -211,7 +211,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -223,7 +223,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -235,7 +235,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -247,7 +247,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -259,7 +259,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -271,7 +271,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -283,7 +283,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -295,7 +295,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -307,7 +307,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -319,7 +319,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   },
@@ -331,7 +331,7 @@
     "phone": "(999)999-9999",
     "hireDate": "",
     "termDate": null,
-    "position": null,
+    "position": [1],
     "active": true,
     "schedule": [[], null, [], [], [], [], []]
   }

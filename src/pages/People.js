@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { PeopleForm } from "./PeopleForm.js";
+import { JobType } from "../components/JobType.js";
 import { ModalConfirm } from "../components/ModalConfirm";
 import usePersonAPI from "../hooks/UsePersonApi";
 
@@ -236,7 +237,7 @@ const ListView = ({
                 </div>
 
                 <span className="people__table--positions">
-                  {getPositionName(d.position)}
+                  <JobType jobId={d.position} />
                 </span>
                 <span className="people__table--dates">{d.hiredate}</span>
                 <span className="people__table--cell">
