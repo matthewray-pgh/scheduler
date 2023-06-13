@@ -46,7 +46,9 @@ export const SideNav = () => {
     <>
       <aside className="aside">
         <div className="aside__heading">
-          <h1>Scheduler</h1>
+          <div>
+            <h1>mySchedule</h1>
+          </div>
           <button
             className="aside__mobile-button"
             onClick={handleMobileMenuClick}
@@ -86,7 +88,7 @@ const Menu = ({ token, handleUserLogout, handleUserNavigate, activePage }) => {
         <li>
           <Link to="/dashboard" onClick={handleUserNavigate}>
             <FontAwesomeIcon className="aside__nav--icon" icon={faChartBar} />
-            <span>Dashboard</span>
+            <span className="aside__nav--text">Dashboard</span>
           </Link>
         </li>
         <li>
@@ -95,25 +97,19 @@ const Menu = ({ token, handleUserLogout, handleUserNavigate, activePage }) => {
               className="aside__nav--icon"
               icon={faCalendarAlt}
             />
-            <span>Schedule</span>
+            <span className="aside__nav--text">Schedule</span>
           </Link>
         </li>
-        {/* <li>
-          <Link to="/sections" onClick={handleUserNavigate}>
-            <FontAwesomeIcon className="aside__nav--icon" icon={faTasks} />
-            <span className="aside__nav--text">Sections</span>
-          </Link>
-        </li> */}
         <li>
           <Link to="/people" onClick={handleUserNavigate}>
             <FontAwesomeIcon className="aside__nav--icon" icon={faUsers} />
-            <span>People </span>
+            <span className="aside__nav--text">People </span>
           </Link>
         </li>
         <li>
           <Link to="/configuration" onClick={handleUserNavigate}>
             <FontAwesomeIcon className="aside__nav--icon" icon={faCogs} />
-            <span>Settings</span>
+            <span className="aside__nav--text">Settings</span>
           </Link>
         </li>
       </ul>

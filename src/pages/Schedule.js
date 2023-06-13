@@ -198,40 +198,37 @@ export const ListView = ({
           {loading && <h1>Retrieving Schedules ...</h1>}
             {schedules.map((d, i) => {
               return (
-                <div className="schedules-list__grid">
-                  <React.Fragment key={`${d.id}-${d.name}`}>
-                    <span className="schedules-list__grid--name-cell">
-                      <div className="schedules-list__grid--bold-text">
-                        {d.name}
-                      </div>
-                      <div>{d.description}</div>
-                    </span>
+                <div className="schedules-list__grid" key={`${d.id}-${d.name}`}>
+                  <span className="schedules-list__grid--name-cell">
+                    <div className="schedules-list__grid--bold-text">
+                      {d.name}
+                    </div>
+                    <div>{d.description}</div>
+                  </span>
 
-                    <span className="schedules-list__grid--date-cell">
-                      {d.startdate ?? "--/--/----"} to{" "}
-                      {d.enddate ?? "--/--/----"}
-                    </span>
+                  <span className="schedules-list__grid--date-cell">
+                    {d.startdate ?? "--/--/----"} to {d.enddate ?? "--/--/----"}
+                  </span>
 
-                    <span className="schedules-list__grid--position-cell">
-                      [placeholder position tags]
-                    </span>
+                  <span className="schedules-list__grid--position-cell">
+                    [placeholder position tags]
+                  </span>
 
-                    <span className="schedules-list__grid--btn-edit-cell">
+                  <span className="schedules-list__grid--btn-edit-cell">
+                    <ListButton
+                      icon={faPencilAlt}
+                      onClickHandler={() => handleEditClick(d)}
+                    />
+                  </span>
+
+                  <span className="schedules-list__grid--btn-schedule-cell">
+                    <Link to={`/schedule/${d.id}`}>
                       <ListButton
-                        icon={faPencilAlt}
-                        onClickHandler={() => handleEditClick(d)}
+                        icon={faCalendarAlt}
+                        onClickHandler={() => {}}
                       />
-                    </span>
-
-                    <span className="schedules-list__grid--btn-schedule-cell">
-                      <Link to={`/schedule/${d.id}`}>
-                        <ListButton
-                          icon={faCalendarAlt}
-                          onClickHandler={() => {}}
-                        />
-                      </Link>
-                    </span>
-                  </React.Fragment>
+                    </Link>
+                  </span>
                 </div>
               );
             })}
