@@ -78,13 +78,20 @@ $menu-font-color: #ffffff;
 }
 
 /* desktops */
-@media (min-width: 768) {
+@media (min-width: 768px) {
   
 }
 
 /* tablet */
 @media (min-width: 480px) and (max-width: 768px) {
+  
   .aside {
+    &__heading {
+      h1 {
+        display: none;
+      }
+    }
+
     &__nav{
       &--icon {
         font-size: 20px;

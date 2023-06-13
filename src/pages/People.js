@@ -7,20 +7,12 @@ import { ModalConfirm } from "../components/ModalConfirm";
 import usePersonAPI from "../hooks/UsePersonApi";
 
 import {
-  faUserCircle,
-  faPlus,
   faTrashAlt,
   faPencilAlt,
-  faThList,
-  faTh
 } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/People.scss";
 import { ListLayout } from "../layouts/ListLayout.js";
-
-// TODO: POSITION TAGS hook
-// import positionData from "../assets/positionsAPI.json";
-// import find from "lodash/find";
 
 import {
   IconButton,
