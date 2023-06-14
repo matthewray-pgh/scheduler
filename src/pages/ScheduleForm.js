@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBusinessTime } from "@fortawesome/free-solid-svg-icons";
 
 import { FormFieldButton } from "../components/FormFieldButton.js";
 import { ShiftCard } from "../components/ShiftCard.js";
+import { HeaderSummary } from "../components/HeaderDetails/HeaderDetails.jsx";
 import useSchedulesApi from "../hooks/UseSchedulesApi.js";
 import usePersonAPI from "../hooks/UsePersonApi.js";
 
@@ -93,23 +93,12 @@ export const ScheduleForm = () => {
       {loading && <h1>Retrieving Schedules ...</h1>}
 
       {!loading && (
-        <div className="schedule__summary">
-          <div className="schedule__summary--icon">
-            <FontAwesomeIcon icon={faBusinessTime} />
-          </div>
-          <div className="schedule__summary--details">
-            <div className="schedule__summary--details-title">{summary.name ? summary.name : "Name"}</div>
-            <div>
-              {" "}
-              {summary.description ? summary.description : "Description"}
-            </div>
-            <div>
-              {summary.startdate
-                ? `${summary.startdate} to ${summary.enddate}`
-                : "Start Date - End Date"}
-            </div>
-          </div>
-        </div>
+        <HeaderSummary 
+          icon={faBusinessTime}
+          title={summary.name ? summary.name : "Name"}
+          line1={summary.description ? summary.description : "Description"}
+          line2={summary.startdate ? `${summary.startdate} to ${summary.enddate}` : "Start Date - End Date"}
+        />
       )}
 
       <section

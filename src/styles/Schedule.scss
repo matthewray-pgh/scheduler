@@ -55,41 +55,13 @@
 }
 
 .schedule {
+  padding: 20px;
+
   &__heading {
     padding-left: 20px;
   }
 
-  &__summary {
-    padding: 10px 20px;
-
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-
-    &--details {
-      font-size: 0.75em;
-
-      & div {
-        padding: 1px 20px;
-      }
-    }
-
-    &--details-title {
-      font-weight: bold;
-    }
-
-    &--icon {
-      font-size: 1.5em;
-      text-align: center;
-      padding: 15px;
-
-      background-color: var(--primary-blue);
-      color: var(--white);
-    }
-  }
-
   &__content {
-    margin: 20px;
     padding: 10px;
     background-color: var(--white);
     box-shadow: 1px 1px 1px 1px #ddd;

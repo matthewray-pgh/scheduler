@@ -1,7 +1,7 @@
 .job-type {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  justify-items: center;
 
   color: var(--white);
   border-radius: 10px;
@@ -9,6 +9,6 @@
   &__content {
     border-radius: 8px;
     padding: 5px 15px;
-    margin-right: 5px;
+    margin: 3px;
   }
 }

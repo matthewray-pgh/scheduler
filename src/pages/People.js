@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react"; 
 import { Link } from "react-router-dom";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
 
 import { PeopleForm } from "./PeopleForm.js";
 import { JobType } from "../components/JobType.js";
@@ -18,6 +19,7 @@ import {
   IconButton,
   ListButton,
 } from "../components/FormFieldButton.js";
+import { HeaderDetails } from "../components/HeaderDetails/HeaderDetails.jsx";
 
 const intialForm = {
   id: null,
@@ -85,25 +87,6 @@ export const People = () => {
       });
   };
 
-  const getPositionName = (id) => {
-    // const data = find(positionData, ["id", parseInt(id)]);
-    return (
-      <>
-        {/* <span className="people__position people__position--server">
-          server
-        </span>
-        <span className="people__position people__position--bartender">
-          bartender
-        </span>
-        <span className="people__position people__position--hostess">
-          hostess
-        </span> */}
-        <span className="people__position">unassigned</span>
-      </>
-    );
-    // return data ? data.name : "unassigned";
-  };
-
   const handleListViewClick = () => {
     setListView(true);
     setGridView(false);
@@ -120,26 +103,36 @@ export const People = () => {
   };
 
   return (
-    <ListLayout
-      listComponent={() => {
-        return <ListView
-          data={data}
-          showList={listView}
-          getPositionName={getPositionName}
-          handleEditClick={handleEditClick}
-          handleDeletePerson={handleDeleteClick}
-        />
-      }}
-      formComponent={() => {
-        return <PeopleForm 
-          form={form}
-          setForm={setForm}
-          refreshListFetch={getPersons}
-          setShowForm={setShowForm}
-        />
-      }}
-      showForm={showForm}
-    />
+    <main className="people">
+      <HeaderDetails
+        icon={faUsers}
+        title="People"
+        subtitle="extra details here"
+      />
+      <ListLayout
+        listComponent={() => {
+          return (
+            <ListView
+              data={data}
+              showList={listView}
+              handleEditClick={handleEditClick}
+              handleDeletePerson={handleDeleteClick}
+            />
+          );
+        }}
+        formComponent={() => {
+          return (
+            <PeopleForm
+              form={form}
+              setForm={setForm}
+              refreshListFetch={getPersons}
+              setShowForm={setShowForm}
+            />
+          );
+        }}
+        showForm={showForm}
+      />
+    </main>
     // <main className="people__page">
     //   <div className="people__title">
     //     <h1>People</h1>
@@ -166,12 +159,10 @@ export const People = () => {
     //   </section>
 
     //   <section className="people__main-content">
-        
 
     //     {/* <GridView
     //       data={data}
     //       showGrid={gridView}
-    //       getPositionName={getPositionName}
     //       handleDeletePerson={handleDeleteClick}
     //     /> */}
 
@@ -196,7 +187,6 @@ export const People = () => {
 const ListView = ({
   data,
   showList,
-  getPositionName,
   handleEditClick,
   handleDeletePerson,
 }) => {
@@ -256,7 +246,6 @@ const ListView = ({
 const GridView = ({
   data, 
   showGrid, 
-  getPositionName, 
   handleDeletePerson}) => {
 
   return (
@@ -275,7 +264,7 @@ const GridView = ({
                   {d.firstname} {d.lastname}
                 </div>
                 <div className="people__grid--line-item">{d.email}</div>
-                <span className="">{getPositionName(d.position)}</span>
+                <span className=""><JobType jobId={d.position}/></span>
                 <div className="people__grid--line-item">{d.hiredate}</div>
                 <div className="people__grid--line-item">{d.termdate}</div>
                 <div>
