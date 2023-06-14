@@ -7,6 +7,7 @@ import "../styles/Dashboard.scss";
 
 import usePersonAPI from "../hooks/UsePersonApi";
 import useSchedulesAPI from "../hooks/UseSchedulesApi";
+import { HeaderDetails } from "../components/HeaderDetails/HeaderDetails";
 
 export const Dashboard = () => {
   const [personList, setPersonList] = useState(0);
@@ -43,18 +44,11 @@ export const Dashboard = () => {
 
   return (
     <main className="dashboard__main">
-      <section className="dashboard__header">
-        <div className="dashboard__header--icon">
-          <FontAwesomeIcon icon={faChartBar} />
-        </div>
-        <div className="dashboard__header--details">
-          <div className="dashboard__header--details-title">Dashboard</div>
-          <div className="dashboard__header--details-subtitle">
-            {" "}
-            extra details here
-          </div>
-        </div>
-      </section>
+      <HeaderDetails
+        title="Dashboard"
+        subtitle="extra details here"
+        icon={faChartBar}
+      />
 
       <section className="dashboard__widgets">
         <WidgetSummaryCard

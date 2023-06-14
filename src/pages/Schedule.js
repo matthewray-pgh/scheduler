@@ -20,6 +20,7 @@ import useSchedulesApi from '../hooks/UseSchedulesApi.js';
 
 import '../styles/ScheduleList.scss';
 import { ListLayout } from "../layouts/ListLayout.js";
+import { HeaderDetails } from "../components/HeaderDetails/HeaderDetails.jsx";
 
 const initialForm = {
   id: null,
@@ -187,9 +188,11 @@ export const ListView = ({
   return (
     <main className="schedules-list">
       <section className="schedules-list__main-content">
-        <section className="schedules-list__header-bar">
-          <h1>Schedules</h1>
-        </section>
+        <HeaderDetails
+          title="Schedules"
+          subtitle="manage schedules"
+          icon={faCalendarAlt}
+        />
 
         <section
           data-testid="schedule-list-container"

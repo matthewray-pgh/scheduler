@@ -1,0 +1,43 @@
+.header-detail {
+  padding-bottom: 20px;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+
+  &__icon {
+    font-size: 1.5em;
+    text-align: center;
+    padding: 15px 18px;
+
+    background-color: var(--primary-blue);
+    color: var(--white);
+  }
+
+  &__data {
+    padding-left: 20px;
+    
+    &--title {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+  
+    &--subtitle {
+      font-size: 0.75em;
+      font-weight: normal;
+    }
+  }
+
+  &__summary {
+    padding-left: 20px;
+    font-size: 0.75em;
+    
+    &--title {
+      font-weight: bold;
+    }
+  
+    &--detail {
+      font-weight: normal;
+    }
+  }
+}
